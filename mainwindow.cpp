@@ -6,12 +6,16 @@
 #include "createcommunication.h"
 #include "savefile.h"
 #include "modifycompany.h"
+#include "modifytables.h"
+#include "seetables.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QWidget::setWindowTitle("GLR Sponsorendatenbank");
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("sponsorendatenbank.db");
@@ -70,22 +74,14 @@ void MainWindow::on_pb_saveFile_clicked()
 
 void MainWindow::on_pb_modifyCompany_clicked()
 {
-    modifyCompany company;
-    company.setModal(true);
-    company.exec();
+    modifyTables *modifyTablesWindow;
+    modifyTablesWindow = new modifyTables();
+    modifyTablesWindow->show();
 }
 
-void MainWindow::on_pb_modifyPerson_clicked()
+void MainWindow::on_pb_seeTables_clicked()
 {
-
-}
-
-void MainWindow::on_pb_modifyActivity_clicked()
-{
-
-}
-
-void MainWindow::on_pb_modifyCommunication_clicked()
-{
-
+    seeTables tables;
+    tables.setModal(true);
+    tables.exec();
 }

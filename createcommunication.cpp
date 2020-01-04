@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QDir>
 #include "addfile.h"
+#include <ctime>
 
 static QFile file;
 
@@ -13,6 +14,8 @@ createCommunication::createCommunication(QWidget *parent) :
     ui(new Ui::createCommunication)
 {
     ui->setupUi(this);
+
+    QWidget::setWindowTitle("GLR Sponsorendatenbank - Kommunikation hinzufügen");
 
     QSqlQuery selectName;
     selectName.prepare("SELECT name FROM firmen");

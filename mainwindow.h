@@ -27,17 +27,11 @@ private slots:
 
     void on_pushButton_clicked();
 
-    void on_pushButton_2_clicked();
-
     void on_pb_saveFile_clicked();
 
     void on_pb_modifyCompany_clicked();
 
-    void on_pb_modifyPerson_clicked();
-
-    void on_pb_modifyActivity_clicked();
-
-    void on_pb_modifyCommunication_clicked();
+    void on_pb_seeTables_clicked();
 
 private:
     Ui::MainWindow *ui;

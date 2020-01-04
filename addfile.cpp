@@ -2,8 +2,8 @@
 #include "ui_addfile.h"
 #include <QFileDialog>
 
-QString fileName;
-QFile file;
+static QString fileName;
+static QFile file;
 
 addFile::addFile(QWidget *parent) :
     QDialog(parent),
@@ -32,6 +32,11 @@ void addFile::on_pb_selectFile_clicked()
 }
 
 void addFile::saveFileToDatabase() {
+    //aktuelles Datum
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+    QString date = QString::number(1900 + ltm->tm_year) + "-" + QString::number(1 + ltm->tm_mon) + "-" + QString::number(ltm->tm_mday);
+
     QSqlQuery selectId;
     selectId.prepare("SELECT id FROM kommunikationen ORDER BY id DESC LIMIT 1");
     selectId.exec();
@@ -49,7 +54,7 @@ void addFile::saveFileToDatabase() {
     insertCommunicationFileQuery.prepare("INSERT INTO kommunikation_dateien(kommunikation_id, datei, dateiname) VALUES (:communicationId, :fileContent, :fileNameWithoutPath)");
     insertCommunicationFileQuery.bindValue(":communicationId", communicationId);
     insertCommunicationFileQuery.bindValue(":fileContent", fileContent);
-    insertCommunicationFileQuery.bindValue(":fileNameWithoutPath", fileNameWithoutPath);
+    insertCommunicationFileQuery.bindValue(":fileNameWithoutPath", date + "-" + fileNameWithoutPath);
     insertCommunicationFileQuery.exec();
 
     if (insertCommunicationFileQuery.next())

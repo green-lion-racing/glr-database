@@ -1,18 +1,16 @@
 #include "createcompany.h"
 #include "ui_createcompany.h"
 #include <QString>
+#include <QVector>
+#include "error.h"
 
 createCompany::createCompany(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::createCompany)
 {
     ui->setupUi(this);
-    /*
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("sponsorendatenbank.db");
 
-    db.open();
-    */
+    QWidget::setWindowTitle("GLR Sponsorendatenbank - Unternehmen hinzufügen");
 }
 
 createCompany::~createCompany()
@@ -22,6 +20,7 @@ createCompany::~createCompany()
 
 void createCompany::on_buttonBox_accepted()
 {
+    bool nameIsNotDistinct = 0;
     QSqlQuery createCompanyQquery("CREATE TABLE IF NOT EXISTS firmen (id INTEGER PRIMARY KEY, name TEXT, aktiv BOOL, seit TEXT, bis TEXT, Rang TEXT, Leistungstyp TEXT, Infos TEXT)");
     QString name = ui->le_name->text();
     bool activ = 1;     //neu angelegte Sponosoren sind immer aktiv
@@ -39,5 +38,24 @@ void createCompany::on_buttonBox_accepted()
     insertCompanyQuery.bindValue(":type", type);
     insertCompanyQuery.bindValue(":info", info);
 
-    insertCompanyQuery.exec();
+    QSqlQuery selectName;
+    QVector<QString> allCompanyNames;
+    selectName.prepare("SELECT name FROM firmen");
+    selectName.exec();
+    while (selectName.next()) {
+        allCompanyNames.push_back(selectName.value(0).toString());
+    }
+
+    for (int i = 0; i < allCompanyNames.size(); i++) {
+        if (allCompanyNames[i] == name)
+            nameIsNotDistinct = 1;
+    }
+
+    if (!nameIsNotDistinct)
+        insertCompanyQuery.exec();
+    else {
+        error errorWindow;
+        errorWindow.setModal(true);
+        errorWindow.exec();
+    }
 }

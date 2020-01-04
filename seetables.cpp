@@ -1,13 +1,13 @@
-#include "modifycompany.h"
-#include "ui_modifycompany.h"
+#include "seetables.h"
+#include "ui_seetables.h"
 #include <QFileDialog>
 
 static int showCompanyName = 0;
 static bool tableCompanyActiv = 0;
 
-modifyCompany::modifyCompany(QWidget *parent) :
+seeTables::seeTables(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::modifyCompany)
+    ui(new Ui::seeTables)
 {
     ui->setupUi(this);
 
@@ -17,34 +17,21 @@ modifyCompany::modifyCompany(QWidget *parent) :
     QSqlQueryModel * modalComboBox = new QSqlQueryModel();
     modalComboBox->setQuery(selectTable);
     ui->cb_table->setModel(modalComboBox);
-    /*
-    ui->cb_rank->addItem("Gold");
-    ui->cb_rank->addItem("Silber");
-    ui->cb_rank->addItem("Bronze");
-    */
 }
 
-modifyCompany::~modifyCompany()
+seeTables::~seeTables()
 {
     delete ui;
 }
 
-
-void modifyCompany::on_buttonBox_accepted()
-{
-    modal->submitAll();
-}
-
-void modifyCompany::on_cb_table_currentTextChanged(const QString &arg1)
+void seeTables::on_cb_table_currentTextChanged(const QString &arg1)
 {
     ui->pb_download->setVisible(false);     //Button "pb_download" (alle herunterladen) nicht sichtbar
     ui->cb_companyName->setVisible(false);
-    ui->cb_rank->setVisible(false);
-    //Checkboxes
+   //Checkboxes
     ui->cb_gold->setVisible(false);
     ui->cb_silver->setVisible(false);
     ui->cb_bronze->setVisible(false);
-
 
     QString selectedTable = ui->cb_table->currentText();
     modal = new QSqlTableModel();
@@ -71,7 +58,7 @@ void modifyCompany::on_cb_table_currentTextChanged(const QString &arg1)
         //rank = ui->cb_rank->currentText();
         //filter = "firma = '" + rank + "'";
 
-        //modal->setFilter(filter);
+        modal->setFilter(filter);
         ui->cb_gold->setVisible(true);
         ui->cb_silver->setVisible(true);
         ui->cb_bronze->setVisible(true);
@@ -88,13 +75,13 @@ void modifyCompany::on_cb_table_currentTextChanged(const QString &arg1)
     }
 
     modal->select();
-    ui->tv_company->setSortingEnabled(true);
+    ui->tv_tables->setSortingEnabled(true);
     modal->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    ui->tv_company->setModel(modal);
-    ui->tv_company->setColumnHidden(0, true);
+    ui->tv_tables->setModel(modal);
+    ui->tv_tables->setColumnHidden(0, true);
 }
 
-void modifyCompany::on_pb_download_clicked()
+void seeTables::on_pb_download_clicked()
 {
     QString name;
     QByteArray fileContent;
@@ -129,79 +116,22 @@ void modifyCompany::on_pb_download_clicked()
     }
 }
 
-void modifyCompany::on_cb_companyName_currentTextChanged(const QString &arg1)
+void seeTables::on_cb_gold_stateChanged(int arg1)
 {
-    if (showCompanyName == 1) {
-        QString companyName;
-        QString filter;
 
-        modal->setTable("personen");
-
-        companyName = ui->cb_companyName->currentText();
-        filter = "firma = '" + companyName + "'";
-
-        modal->setFilter(filter);
-        modal->select();
-        ui->tv_company->setModel(modal);
-    }
 }
 
-void modifyCompany::on_cb_rank_currentTextChanged(const QString &arg1)
+void seeTables::on_cb_silver_stateChanged(int arg1)
 {
-    /*
-    if (tableCompanyActiv == 1) {
-        QString rank;
-        QString filter;
 
-        modal->setTable("firmen");
-
-        rank = ui->cb_rank->currentText();
-        filter = "rang = '" + rank + "'";
-
-        modal->setFilter(filter);
-        modal->select();
-        ui->tv_company->setModel(modal);
-    }
-    */
 }
 
-void modifyCompany::on_cb_gold_stateChanged(int arg1)
+void seeTables::on_cb_bronze_stateChanged(int arg1)
 {
-    if (ui->cb_silver->isChecked() && ui->cb_bronze->isChecked())
-        checkBoxGold("silver_bronze");
-    else if (ui->cb_silver->isChecked())
-        checkBoxGold("silver");
-    else if (ui->cb_bronze->isChecked())
-        checkBoxGold("bronze");
-    else
-        checkBoxGold();
+
 }
 
-void modifyCompany::on_cb_silver_stateChanged(int arg1)
-{
-    if (ui->cb_gold->isChecked() && ui->cb_bronze->isChecked())
-        checkBoxSilver("gold_bronze");
-    else if (ui->cb_gold->isChecked())
-        checkBoxSilver("gold");
-    else if (ui->cb_bronze->isChecked())
-        checkBoxSilver("bronze");
-    else
-        checkBoxSilver();
-}
-
-void modifyCompany::on_cb_bronze_stateChanged(int arg1)
-{
-    if (ui->cb_gold->isChecked() && ui->cb_silver->isChecked())
-        checkBoxBronze("gold_silver");
-    else if (ui->cb_gold->isChecked())
-        checkBoxBronze("gold");
-    else if (ui->cb_silver->isChecked())
-        checkBoxBronze("silver");
-    else
-        checkBoxBronze();
-}
-
-void modifyCompany::checkBoxGold(QString otherCheckedCheckBoxes) {
+void seeTables::checkBoxGold(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_gold->isChecked()) {
         //QString filter;
@@ -218,7 +148,7 @@ void modifyCompany::checkBoxGold(QString otherCheckedCheckBoxes) {
 
         modal->setFilter(filter);
         modal->select();
-        ui->tv_company->setModel(modal);
+        ui->tv_tables->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "silver") {
         modal->clear();
@@ -240,10 +170,10 @@ void modifyCompany::checkBoxGold(QString otherCheckedCheckBoxes) {
     modal->setTable("firmen");
     modal->setFilter(filter);
     modal->select();
-    ui->tv_company->setModel(modal);
+    ui->tv_tables->setModel(modal);
 }
 
-void modifyCompany::checkBoxSilver(QString otherCheckedCheckBoxes) {
+void seeTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_silver->isChecked()) {
         modal->setTable("firmen");
@@ -259,7 +189,7 @@ void modifyCompany::checkBoxSilver(QString otherCheckedCheckBoxes) {
 
         modal->setFilter(filter);
         modal->select();
-        ui->tv_company->setModel(modal);
+        ui->tv_tables->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "gold") {
         modal->clear();
@@ -281,10 +211,10 @@ void modifyCompany::checkBoxSilver(QString otherCheckedCheckBoxes) {
     modal->setTable("firmen");
     modal->select();
     modal->setFilter(filter);
-    ui->tv_company->setModel(modal);
+    ui->tv_tables->setModel(modal);
 }
 
-void modifyCompany::checkBoxBronze(QString otherCheckedCheckBoxes) {
+void seeTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_bronze->isChecked()) {
 
@@ -301,7 +231,7 @@ void modifyCompany::checkBoxBronze(QString otherCheckedCheckBoxes) {
 
         modal->setFilter(filter);
         modal->select();
-        ui->tv_company->setModel(modal);
+        ui->tv_tables->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "gold") {
         modal->clear();
@@ -323,5 +253,5 @@ void modifyCompany::checkBoxBronze(QString otherCheckedCheckBoxes) {
     modal->setTable("firmen");
     modal->setFilter(filter);
     modal->select();
-    ui->tv_company->setModel(modal);
+    ui->tv_tables->setModel(modal);
 }

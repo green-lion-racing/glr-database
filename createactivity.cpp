@@ -11,6 +11,8 @@ createActivity::createActivity(QWidget *parent) :
     QVector<QVector<QString>> companies;
     ui->setupUi(this);
 
+    QWidget::setWindowTitle("GLR Sponsorendatenbank - Leistung hinzufügen");
+
     QSqlQuery selectName;
     selectName.prepare("SELECT id, name FROM firmen");
     selectName.exec();
@@ -23,12 +25,6 @@ createActivity::createActivity(QWidget *parent) :
         ui->cb_company->addItem(companyNames[i]);
     }
 
-
-    /*
-    QSqlQueryModel * modal = new QSqlQueryModel();
-    modal->setQuery(selectName);
-    ui->cb_company->setModel(modal);
-    */
     QVector<QString> persons;
     QSqlQuery selectPersons;
 
