@@ -69,7 +69,6 @@ void seeTables::on_cb_table_currentTextChanged(const QString &arg1)
         ui->cb_companyName->setVisible(true);
         companyName = ui->cb_companyName->currentText();
         filter = "firma = '" + companyName + "'";
-
         modal->setFilter(filter);
         showCompanyName = 1;
     }
@@ -251,6 +250,19 @@ void seeTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
     }
     //modal->clear();
     modal->setTable("firmen");
+    modal->setFilter(filter);
+    modal->select();
+    ui->tv_tables->setModel(modal);
+}
+
+void seeTables::on_cb_companyName_currentTextChanged(const QString &arg1)
+{
+    ui->cb_companyName->setVisible(true);
+    QString companyName = ui->cb_companyName->currentText();
+    QString filter = "firma = '" + companyName + "'";
+    modal->select();
+    ui->tv_tables->setModel(modal);
+    modal->setFilter(filter);
     modal->setFilter(filter);
     modal->select();
     ui->tv_tables->setModel(modal);

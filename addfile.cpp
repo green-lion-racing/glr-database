@@ -33,16 +33,23 @@ void addFile::on_pb_selectFile_clicked()
 
 void addFile::saveFileToDatabase() {
     //aktuelles Datum
-    time_t now = time(0);
-    tm *ltm = localtime(&now);
-    QString date = QString::number(1900 + ltm->tm_year) + "-" + QString::number(1 + ltm->tm_mon) + "-" + QString::number(ltm->tm_mday);
+    //time_t now = time(0);
+    //tm *ltm = localtime(&now);
+    //QString date = QString::number(1900 + ltm->tm_year) + "-" + QString::number(1 + ltm->tm_mon) + "-" + QString::number(ltm->tm_mday);
 
-    QSqlQuery selectId;
+    QSqlQuery selectId, selectDate;
     selectId.prepare("SELECT id FROM kommunikationen ORDER BY id DESC LIMIT 1");
     selectId.exec();
     int communicationId = 0;
     while(selectId.next())
         communicationId = selectId.value(0).toInt();
+
+    selectDate.prepare("SELECT wann FROM kommunikationen WHERE id = :communicationId");
+    selectDate.bindValue(":communicationId", communicationId);
+    selectDate.exec();
+    QString date;
+    while(selectDate.next())
+        date = selectDate.value(0).toString();
 
     QByteArray fileContent = file.readAll();
 

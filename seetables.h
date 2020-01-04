@@ -27,6 +27,8 @@ private slots:
 
     void on_cb_bronze_stateChanged(int arg1);
 
+    void on_cb_companyName_currentTextChanged(const QString &arg1);
+
 private:
     Ui::seeTables *ui;
     QSqlTableModel *modal;

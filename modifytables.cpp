@@ -81,6 +81,8 @@ void modifyTables::on_cb_table_currentTextChanged(const QString &arg1)
         filter = "firma = '" + companyName + "'";
 
         modal->setFilter(filter);
+        modal->select();
+        ui->tv_table->setModel(modal);
         showCompanyName = 1;
     }
 
@@ -466,5 +468,20 @@ void modifyTables::on_pb_download_clicked()
         file.open(QIODevice::ReadWrite);
 
         file.write(fileContent);
+    }
+}
+
+void modifyTables::on_cb_companyName_currentTextChanged(const QString &arg1)
+{
+    QString selectedTable = ui->cb_table->currentText();
+    if (selectedTable == "personen") {
+        QString companyName = ui->cb_companyName->currentText();
+        QString filter = "firma = '" + companyName + "'";
+        modal->select();
+        ui->tv_table->setModel(modal);
+        modal->setFilter(filter);
+        modal->setFilter(filter);
+        modal->select();
+        ui->tv_table->setModel(modal);
     }
 }
