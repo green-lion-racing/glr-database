@@ -28,7 +28,7 @@ createPerson::~createPerson()
 void createPerson::on_buttonBox_accepted()
 {
     //QSqlQuery createPersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, firma TEXT,titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FOREIGN KEY (firma) REFERENCES firmen(name))");
-    QSqlQuery createPersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, firma TEXT,titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FirmenID INTEGER)");
+    QSqlQuery createPersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, firma TEXT,titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FirmenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id))");
     QString firstName = ui->le_firstName->text();
     bool activ = 1;     //neu angelgte Personen immer aktiv
 

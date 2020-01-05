@@ -63,18 +63,28 @@ void createCommunication::on_buttonBox_accepted()
 void createCommunication::on_pb_file_clicked()
 {
     //QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
-    QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT)");
+    QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id))");
     QString companyName = ui->cb_company->currentText();
     QString when = ui->le_when->text();
     QString what = ui->le_what->text();
     QString person = ui->cb_person->currentText();
 
+    QSqlQuery selectId;
+    selectId.prepare("SELECT id FROM firmen WHERE name = :companyName");
+    selectId.bindValue(":companyName", companyName);
+    selectId.exec();
+    int companyId = 0;
+    while(selectId.next())
+        companyId = (selectId.value(0).toString()).toInt();
+
+
     QSqlQuery insertCommunicationQuery;
-    insertCommunicationQuery.prepare("INSERT INTO kommunikationen(firma, ansprechpartner, wann, was) VALUES (:companyName, :person, :when, :what)");
+    insertCommunicationQuery.prepare("INSERT INTO kommunikationen(firma, ansprechpartner, wann, was, FirmenID) VALUES (:companyName, :person, :when, :what, :companyId)");
     insertCommunicationQuery.bindValue(":person", person);
     insertCommunicationQuery.bindValue(":companyName", companyName);
     insertCommunicationQuery.bindValue(":when", when);
     insertCommunicationQuery.bindValue(":what", what);
+    insertCommunicationQuery.bindValue(":companyId", companyId);
 
     insertCommunicationQuery.exec();
 
