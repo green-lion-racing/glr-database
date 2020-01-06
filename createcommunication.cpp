@@ -63,7 +63,7 @@ void createCommunication::on_buttonBox_accepted()
 void createCommunication::on_pb_file_clicked()
 {
     //QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
-    QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id))");
+    QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, PersonenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id), FOREIGN KEY(PersonenID) REFERENCES personen(id))");
     QString companyName = ui->cb_company->currentText();
     QString when = ui->le_when->text();
     QString what = ui->le_what->text();
@@ -77,14 +77,32 @@ void createCommunication::on_pb_file_clicked()
     while(selectId.next())
         companyId = (selectId.value(0).toString()).toInt();
 
+    // get firstName and surname via personId
+    int personIdIndex = std::distance(persons.begin(), std::find(persons.begin(), persons.end(), person));
+    //QString firstName;
+    //QString surname;
+    int personId = personIds[personIdIndex];
+
+    /*
+    QSqlQuery selectPersonId;
+    selectId.prepare("SELECT id FROM personen WHERE firma = :companyName AND vorname = :firstName AND nachname = :surname");
+    selectId.bindValue(":companyName", companyName);
+    selectId.bindValue(":firstName", firstName);
+    selectId.bindValue(":surname", surname);
+    selectId.exec();
+    int personId = 0;
+    while(selectId.next())
+        personId = (selectId.value(0).toString()).toInt();
+    */
 
     QSqlQuery insertCommunicationQuery;
-    insertCommunicationQuery.prepare("INSERT INTO kommunikationen(firma, ansprechpartner, wann, was, FirmenID) VALUES (:companyName, :person, :when, :what, :companyId)");
+    insertCommunicationQuery.prepare("INSERT INTO kommunikationen(firma, ansprechpartner, wann, was, FirmenID, PersonenID) VALUES (:companyName, :person, :when, :what, :companyId, :personId)");
     insertCommunicationQuery.bindValue(":person", person);
     insertCommunicationQuery.bindValue(":companyName", companyName);
     insertCommunicationQuery.bindValue(":when", when);
     insertCommunicationQuery.bindValue(":what", what);
     insertCommunicationQuery.bindValue(":companyId", companyId);
+    insertCommunicationQuery.bindValue(":personId", personId);
 
     insertCommunicationQuery.exec();
 
@@ -104,16 +122,18 @@ void createCommunication::on_cb_company_currentTextChanged(const QString &arg1)
 {
     ui->cb_person->clear();
 
-    QVector<QString> persons;
+    //QVector<QString> persons;
+    //QVector<int> personIds;
     QSqlQuery selectPersons;
 
     QString currentCompanyName = ui->cb_company->currentText();
 
-    selectPersons.prepare("SELECT vorname, nachname FROM personen WHERE firma = :currentCompanyName");
+    selectPersons.prepare("SELECT id, vorname, nachname FROM personen WHERE firma = :currentCompanyName");
     selectPersons.bindValue(":currentCompanyName", currentCompanyName);
     selectPersons.exec();
     while(selectPersons.next()) {
-        persons.push_back(selectPersons.value(0).toString() + " " + selectPersons.value(1).toString());
+        personIds.push_back(selectPersons.value(0).toInt());
+        persons.push_back(selectPersons.value(1).toString() + " " + selectPersons.value(2).toString());
     }
 
     for (int i = 0; i < persons.size(); i++) {

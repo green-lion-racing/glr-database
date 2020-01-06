@@ -25,6 +25,8 @@ private slots:
 
 private:
     Ui::createCommunication *ui;
+    QVector<QString> persons;
+    QVector<int> personIds;
 };
 
 #endif // CREATECOMMUNICATION_H
