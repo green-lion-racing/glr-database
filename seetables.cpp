@@ -12,7 +12,7 @@ seeTables::seeTables(QWidget *parent) :
     ui->setupUi(this);
 
     QSqlQuery selectTable;
-    selectTable.prepare("SELECT name FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master)WHERE type='table' ORDER BY name");
+    selectTable.prepare("SELECT name FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master)WHERE type='table' AND name NOT LIKE 'kommunikation_dateien' ORDER BY name");
     selectTable.exec();
     QSqlQueryModel * modalComboBox = new QSqlQueryModel();
     modalComboBox->setQuery(selectTable);
