@@ -74,10 +74,10 @@ void seeTables::on_cb_table_currentTextChanged(const QString &arg1)
     }
 
     modal->select();
-    ui->tv_tables->setSortingEnabled(true);
+    ui->tv_table->setSortingEnabled(true);
     modal->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    ui->tv_tables->setModel(modal);
-    ui->tv_tables->setColumnHidden(0, true);
+    ui->tv_table->setModel(modal);
+    ui->tv_table->setColumnHidden(0, true);
 }
 
 void seeTables::on_pb_download_clicked()
@@ -117,17 +117,82 @@ void seeTables::on_pb_download_clicked()
 
 void seeTables::on_cb_gold_stateChanged(int arg1)
 {
-
+    if (ui->cb_silver->isChecked() && ui->cb_bronze->isChecked() && ui->cb_supporter->isChecked())
+        checkBoxGold("silver_bronze_supporter");
+    else if (ui->cb_silver->isChecked() && ui->cb_bronze->isChecked())
+        checkBoxGold("silver_bronze");
+    else if (ui->cb_silver->isChecked() && ui->cb_supporter->isChecked())
+        checkBoxGold("silver_supporter");
+    else if (ui->cb_bronze->isChecked() && ui->cb_supporter->isChecked())
+        checkBoxGold("bronze_supporter");
+    else if (ui->cb_silver->isChecked())
+        checkBoxGold("silver");
+    else if (ui->cb_bronze->isChecked())
+        checkBoxGold("bronze");
+    else if (ui->cb_supporter->isChecked())
+        checkBoxGold("supporter");
+    else
+        checkBoxGold();
 }
 
 void seeTables::on_cb_silver_stateChanged(int arg1)
 {
-
+    if (ui->cb_silver->isChecked() && ui->cb_bronze->isChecked() && ui->cb_supporter->isChecked())
+        checkBoxSilver("gold_bronze_supporter");
+    else if (ui->cb_gold->isChecked() && ui->cb_bronze->isChecked())
+        checkBoxSilver("gold_bronze");
+    else if (ui->cb_gold->isChecked() && ui->cb_supporter->isChecked())
+        checkBoxSilver("gold_supporter");
+    else if (ui->cb_bronze->isChecked() && ui->cb_supporter->isChecked())
+        checkBoxSilver("bronze_supporter");
+    else if (ui->cb_gold->isChecked())
+        checkBoxSilver("gold");
+    else if (ui->cb_bronze->isChecked())
+        checkBoxSilver("bronze");
+    else if (ui->cb_supporter->isChecked())
+        checkBoxSilver("supporter");
+    else
+        checkBoxSilver();
 }
 
 void seeTables::on_cb_bronze_stateChanged(int arg1)
 {
+    if (ui->cb_gold->isChecked() && ui->cb_silver->isChecked() && ui->cb_supporter->isChecked())
+        checkBoxBronze("gold_silver_supporter");
+    else if (ui->cb_gold->isChecked() && ui->cb_silver->isChecked())
+        checkBoxBronze("gold_silver");
+    else if (ui->cb_gold->isChecked() && ui->cb_supporter->isChecked())
+        checkBoxBronze("gold_supporter");
+    else if (ui->cb_silver->isChecked() && ui->cb_supporter->isChecked())
+        checkBoxBronze("silver_supporter");
+    else if (ui->cb_gold->isChecked())
+        checkBoxBronze("gold");
+    else if (ui->cb_silver->isChecked())
+        checkBoxBronze("silver");
+    else if (ui->cb_supporter->isChecked())
+        checkBoxBronze("supporter");
+    else
+        checkBoxBronze();
+}
 
+void seeTables::on_cb_supporter_stateChanged(int arg1)
+{
+    if (ui->cb_gold->isChecked() && ui->cb_silver->isChecked() && ui->cb_bronze->isChecked())
+        checkBoxSupporter("gold_silver_bronze");
+    else if (ui->cb_gold->isChecked() && ui->cb_silver->isChecked())
+        checkBoxSupporter("gold_silver");
+    else if (ui->cb_gold->isChecked() && ui->cb_bronze->isChecked())
+        checkBoxSupporter("gold_bronze");
+    else if (ui->cb_silver->isChecked() && ui->cb_bronze->isChecked())
+        checkBoxSupporter("silver_bronze");
+    else if (ui->cb_gold->isChecked())
+        checkBoxSupporter("gold");
+    else if (ui->cb_silver->isChecked())
+        checkBoxSupporter("silver");
+    else if (ui->cb_bronze->isChecked())
+        checkBoxSupporter("bronze");
+    else
+        checkBoxSupporter();
 }
 
 void seeTables::checkBoxGold(QString otherCheckedCheckBoxes) {
@@ -140,14 +205,22 @@ void seeTables::checkBoxGold(QString otherCheckedCheckBoxes) {
             filter = "rang = 'Gold' OR rang = 'Silber'";
         else if (otherCheckedCheckBoxes == "bronze")
             filter = "rang = 'Gold' OR rang = 'Bronze'";
+        else if (otherCheckedCheckBoxes == "supporter")
+            filter = "rang = 'Silber' OR = 'Supporter'";
         else if (otherCheckedCheckBoxes == "silver_bronze")
             filter = "rang = 'Gold' OR rang = 'Silber' OR rang = 'Bronze'";
+        else if (otherCheckedCheckBoxes == "silver_supporter")
+            filter = "rang = 'Gold' OR rang = 'Silver' OR rang = 'Supporter'";
+        else if (otherCheckedCheckBoxes == "bronze_supporter")
+            filter = "rang = 'Gold' OR rang = 'Bronze' OR rang = 'Supporter'";
+        else if (otherCheckedCheckBoxes == "silver_bronze_supporter")
+            filter = "rang = 'Gold' OR rang = 'Silver' OR rang = 'Bronze' OR rang = 'Supporter'";
         else
             filter = "rang = 'Gold'";
 
         modal->setFilter(filter);
         modal->select();
-        ui->tv_tables->setModel(modal);
+        ui->tv_table->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "silver") {
         modal->clear();
@@ -157,9 +230,25 @@ void seeTables::checkBoxGold(QString otherCheckedCheckBoxes) {
         modal->clear();
         filter = "rang = 'Bronze'";
     }
+    else if (otherCheckedCheckBoxes == "supporter") {
+        modal->clear();
+        filter = "rang = 'Supporter'";
+    }
+    else if (otherCheckedCheckBoxes == "silver_supporter") {
+        modal->clear();
+        filter = "rang = 'Silver' OR rang = 'Supporter'";
+    }
+    else if (otherCheckedCheckBoxes == "bronze_supporter") {
+        modal->clear();
+        filter = "rang = 'Bronze' OR rang = 'Supporter'";
+    }
     else if (otherCheckedCheckBoxes == "silver_bronze") {
         modal->clear();
         filter = "rang = 'Silber' OR rang = 'Bronze'";
+    }
+    else if (otherCheckedCheckBoxes == "silver_bronze_supporter") {
+        modal->clear();
+        filter = "rang = 'Silber' OR rang = 'Bronze' OR rang = 'Supporter'";
     }
     else {
         modal->clear();
@@ -169,7 +258,7 @@ void seeTables::checkBoxGold(QString otherCheckedCheckBoxes) {
     modal->setTable("firmen");
     modal->setFilter(filter);
     modal->select();
-    ui->tv_tables->setModel(modal);
+    ui->tv_table->setModel(modal);
 }
 
 void seeTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
@@ -181,14 +270,22 @@ void seeTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
             filter = "rang = 'Silber' OR rang = 'Gold'";
         else if (otherCheckedCheckBoxes == "bronze")
             filter = "rang = 'Silber' OR rang = 'Bronze'";
+        else if (otherCheckedCheckBoxes == "supporter")
+            filter = "rang = 'Silber' OR = 'Supporter'";
         else if (otherCheckedCheckBoxes == "gold_bronze")
             filter = "rang = 'Silber' OR rang = 'Gold' OR rang = 'Bronze'";
+        else if (otherCheckedCheckBoxes == "gold_supporter")
+            filter = "rang = 'Silber' OR rang = 'Gold' OR rang = 'Supporter'";
+        else if (otherCheckedCheckBoxes == "bronze_supporter")
+            filter = "rang = 'Silber' OR rang = 'Bronze' OR rang = 'Supporter'";
+        else if (otherCheckedCheckBoxes == "gold_bronze_supporter")
+            filter = "rang = 'Silber' OR rang = 'Gold' OR rang = 'Bronze' OR rang = 'Supporter'";
         else
             filter = "rang = 'Silber'";
 
         modal->setFilter(filter);
         modal->select();
-        ui->tv_tables->setModel(modal);
+        ui->tv_table->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "gold") {
         modal->clear();
@@ -198,9 +295,25 @@ void seeTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
         modal->clear();
         filter = "rang = 'Bronze'";
     }
+    else if (otherCheckedCheckBoxes == "supporter") {
+        modal->clear();
+        filter = "rang = 'Supporter'";
+    }
+    else if (otherCheckedCheckBoxes == "gold_supporter") {
+        modal->clear();
+        filter = "rang = 'Gold' OR rang = 'Supporter'";
+    }
+    else if (otherCheckedCheckBoxes == "bronze_supporter") {
+        modal->clear();
+        filter = "rang = 'Bronze' OR rang = 'Supporter'";
+    }
     else if (otherCheckedCheckBoxes == "gold_bronze") {
         modal->clear();
         filter = "rang = 'Gold' OR rang = 'Bronze'";
+    }
+    else if (otherCheckedCheckBoxes == "gold_bronze_supporter") {
+        modal->clear();
+        filter = "rang = 'Gold' OR rang = 'Bronze' OR rang = 'Supporter'";
     }
     else {
         modal->clear();
@@ -210,7 +323,7 @@ void seeTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
     modal->setTable("firmen");
     modal->select();
     modal->setFilter(filter);
-    ui->tv_tables->setModel(modal);
+    ui->tv_table->setModel(modal);
 }
 
 void seeTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
@@ -223,14 +336,22 @@ void seeTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
             filter = "rang = 'Bronze' OR rang = 'Gold'";
         else if (otherCheckedCheckBoxes == "silver")
             filter = "rang = 'Bronze' OR rang = 'Silber'";
+        else if (otherCheckedCheckBoxes == "supporter")
+            filter = "rang = 'Silber' OR = 'Supporter'";
         else if (otherCheckedCheckBoxes == "gold_silver")
             filter = "rang = 'Bronze' OR rang = 'Gold' OR rang = 'Silber'";
+        else if (otherCheckedCheckBoxes == "gold_supporter")
+            filter = "rang = 'Bronze' OR rang = 'Gold' OR rang = 'Supporter'";
+        else if (otherCheckedCheckBoxes == "silver_silver")
+            filter = "rang = 'Bronze' OR rang = 'Silber' OR rang = 'Supporter'";
+        else if (otherCheckedCheckBoxes == "gold_silver_supporter")
+            filter = "rang = 'Bronze' OR rang = 'Gold' OR rang = 'Silber' OR rang = 'Supprter'";
         else
             filter = "rang = 'Bronze'";
 
         modal->setFilter(filter);
         modal->select();
-        ui->tv_tables->setModel(modal);
+        ui->tv_table->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "gold") {
         modal->clear();
@@ -238,11 +359,27 @@ void seeTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
     }
     else if (otherCheckedCheckBoxes == "silver") {
         modal->clear();
-        filter = "rang = 'Silver'";
+        filter = "rang = 'Silber'";
+    }
+    else if (otherCheckedCheckBoxes == "supporter") {
+        modal->clear();
+        filter = "rang = 'Supporter'";
+    }
+    else if (otherCheckedCheckBoxes == "gold_supporter") {
+        modal->clear();
+        filter = "rang = 'Gold' OR rang = 'Supporter'";
+    }
+    else if (otherCheckedCheckBoxes == "silver_supporter") {
+        modal->clear();
+        filter = "rang = 'Silber' OR rang = 'Supporter'";
     }
     else if (otherCheckedCheckBoxes == "gold_silver") {
         modal->clear();
         filter = "rang = 'Gold' OR rang = 'Silber'";
+    }
+    else if (otherCheckedCheckBoxes == "gold_silver_supporter") {
+        modal->clear();
+        filter = "rang = 'Gold' OR rang = 'Silber' OR rang = 'Supporter'";
     }
     else {
         modal->clear();
@@ -252,7 +389,73 @@ void seeTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
     modal->setTable("firmen");
     modal->setFilter(filter);
     modal->select();
-    ui->tv_tables->setModel(modal);
+    ui->tv_table->setModel(modal);
+}
+
+void seeTables::checkBoxSupporter(QString otherCheckedCheckBoxes) {
+    QString filter;
+    if (ui->cb_supporter->isChecked()) {
+
+        modal->setTable("firmen");
+
+        if (otherCheckedCheckBoxes == "gold")
+            filter = "rang = 'Supporter' OR rang = 'Gold'";
+        else if (otherCheckedCheckBoxes == "silver")
+            filter = "rang = 'Supporter' OR rang = 'Silber'";
+        else if (otherCheckedCheckBoxes == "bronze")
+            filter = "rang = 'Supporter' OR rang = 'Bronze'";
+        else if (otherCheckedCheckBoxes == "gold_silver")
+            filter = "rang = 'Supporter' OR rang = 'Gold' OR rang = 'Silber'";
+        else if (otherCheckedCheckBoxes == "gold_bronze")
+            filter = "rang = 'Supporter' OR rang = 'Gold' OR rang = 'Bronze'";
+        else if (otherCheckedCheckBoxes == "silver_bronze")
+            filter = "rang = 'Supporter' OR rang = 'Silber' OR rang = 'Bronze'";
+        else if (otherCheckedCheckBoxes == "gold_silver_bronze")
+            filter = "rang = 'Supporter' OR rang = 'Gold' OR rang = 'Silber' OR rang = 'Bronze'";
+        else
+            filter = "rang = 'Supporter'";
+
+        modal->setFilter(filter);
+        modal->select();
+        ui->tv_table->setModel(modal);
+    }
+    else if (otherCheckedCheckBoxes == "gold") {
+        modal->clear();
+        filter = "rang = 'Gold'";
+    }
+    else if (otherCheckedCheckBoxes == "silver") {
+        modal->clear();
+        filter = "rang = 'Silver'";
+    }
+    else if (otherCheckedCheckBoxes == "bronze") {
+        modal->clear();
+        filter = "rang = 'Bronze'";
+    }
+    else if (otherCheckedCheckBoxes == "gold_silver") {
+        modal->clear();
+        filter = "rang = 'Gold' OR rang = 'Silber'";
+    }
+    else if (otherCheckedCheckBoxes == "silver_Bronze") {
+        modal->clear();
+        filter = "rang = 'Silber' OR rang = 'Bronze'";
+    }
+    else if (otherCheckedCheckBoxes == "gold_bronze") {
+        modal->clear();
+        filter = "rang = 'Gold' OR rang = 'Bronze'";
+    }
+    else if (otherCheckedCheckBoxes == "gold_silver_bronze") {
+        modal->clear();
+        filter = "rang = 'Gold' OR rang = 'Silber' OR rang = 'Bronze'";
+    }
+    else {
+        modal->clear();
+        filter = "";
+    }
+    //modal->clear();
+    modal->setTable("firmen");
+    modal->setFilter(filter);
+    modal->select();
+    ui->tv_table->setModel(modal);
 }
 
 void seeTables::on_cb_companyName_currentTextChanged(const QString &arg1)
@@ -261,9 +464,9 @@ void seeTables::on_cb_companyName_currentTextChanged(const QString &arg1)
     QString companyName = ui->cb_companyName->currentText();
     QString filter = "firma = '" + companyName + "'";
     modal->select();
-    ui->tv_tables->setModel(modal);
+    ui->tv_table->setModel(modal);
     modal->setFilter(filter);
     modal->setFilter(filter);
     modal->select();
-    ui->tv_tables->setModel(modal);
+    ui->tv_table->setModel(modal);
 }

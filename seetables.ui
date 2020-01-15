@@ -51,7 +51,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QTableView" name="tv_tables"/>
+      <widget class="QCheckBox" name="cb_supporter">
+       <property name="text">
+        <string>Supporter</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableView" name="tv_table"/>
      </item>
     </layout>
    </item>
