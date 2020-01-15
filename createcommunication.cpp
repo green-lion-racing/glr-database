@@ -24,6 +24,11 @@ createCommunication::createCommunication(QWidget *parent) :
     modal->setQuery(selectName);
     ui->cb_company->setModel(modal);
 
+    // Do not display week numbers
+    ui->cw_calender->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+    // print initially selected date (today)
+    when = ui->cw_calender->selectedDate().toString("yyyy-MM-dd");      //Auswahl über Kalender Widget
+    ui->le_when->setText(when);
 }
 
 createCommunication::~createCommunication()
@@ -65,9 +70,10 @@ void createCommunication::on_pb_file_clicked()
     //QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
     QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, PersonenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id), FOREIGN KEY(PersonenID) REFERENCES personen(id))");
     QString companyName = ui->cb_company->currentText();
-    QString when = ui->le_when->text();
+    //QString when = ui->le_when->text();
     QString what = ui->le_what->text();
     QString person = ui->cb_person->currentText();
+    //when = ui->cw_calender->selectedDate().toString("yyyy-MM-dd");      //Auswahl über Kalender Widget
 
     QSqlQuery selectId;
     selectId.prepare("SELECT id FROM firmen WHERE name = :companyName");
@@ -140,4 +146,10 @@ void createCommunication::on_cb_company_currentTextChanged(const QString &arg1)
         ui->cb_person->addItem(persons[i]);
     }
 
+}
+
+void createCommunication::on_cw_calender_selectionChanged()
+{
+    when = ui->cw_calender->selectedDate().toString("yyyy-MM-dd");      //Auswahl über Kalender Widget
+    ui->le_when->setText(when);
 }

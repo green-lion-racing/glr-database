@@ -21,8 +21,11 @@ private slots:
 
     void on_cb_company_currentTextChanged(const QString &arg1);
 
+    void on_cw_calender_selectionChanged();
+
 private:
     Ui::createActivity *ui;
+    QString when;
 };
 
 #endif // CREATEACTIVITY_H

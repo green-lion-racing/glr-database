@@ -28,6 +28,11 @@ createActivity::createActivity(QWidget *parent) :
     QVector<QString> persons;
     QSqlQuery selectPersons;
 
+    // Do not display week numbers
+    ui->cw_calender->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+    // print initially selected date (today)
+    when = ui->cw_calender->selectedDate().toString("yyyy-MM-dd");      //Auswahl über Kalender Widget
+    ui->le_when->setText(when);
 }
 
 createActivity::~createActivity()
@@ -39,7 +44,7 @@ void createActivity::on_buttonBox_accepted()
 {
     QSqlQuery createActivityQquery("CREATE TABLE IF NOT EXISTS leistungen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, wert TEXT, was TEXT, infos TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
     QString person = ui->cb_person->currentText();
-    QString when = ui->le_when->text();
+    //QString when = ui->le_when->text();
     QString value = ui->le_value->text();
     QString what = ui->le_what->text();
     QString info = ui->te_info->toPlainText();
@@ -82,4 +87,10 @@ void createActivity::on_cb_company_currentTextChanged(const QString &arg1)
     for (int i = 0; i < persons.size(); i++) {
         ui->cb_person->addItem(persons[i]);
     }
+}
+
+void createActivity::on_cw_calender_selectionChanged()
+{
+    when = ui->cw_calender->selectedDate().toString("yyyy-MM-dd");      //Auswahl über Kalender Widget
+    ui->le_when->setText(when);
 }
