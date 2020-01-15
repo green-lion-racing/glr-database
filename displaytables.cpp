@@ -1,13 +1,13 @@
-#include "seetables.h"
-#include "ui_seetables.h"
+#include "displaytables.h"
+#include "ui_displaytables.h"
 #include <QFileDialog>
 
 static int showCompanyName = 0;
 static bool tableCompanyActiv = 0;
 
-seeTables::seeTables(QWidget *parent) :
+displayTables::displayTables(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::seeTables)
+    ui(new Ui::displayTables)
 {
     ui->setupUi(this);
 
@@ -19,12 +19,12 @@ seeTables::seeTables(QWidget *parent) :
     ui->cb_table->setModel(modalComboBox);
 }
 
-seeTables::~seeTables()
+displayTables::~displayTables()
 {
     delete ui;
 }
 
-void seeTables::on_cb_table_currentTextChanged(const QString &arg1)
+void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
 {
     ui->pb_download->setVisible(false);     //Button "pb_download" (alle herunterladen) nicht sichtbar
     ui->cb_companyName->setVisible(false);
@@ -80,7 +80,7 @@ void seeTables::on_cb_table_currentTextChanged(const QString &arg1)
     ui->tv_table->setColumnHidden(0, true);
 }
 
-void seeTables::on_pb_download_clicked()
+void displayTables::on_pb_download_clicked()
 {
     QString name;
     QByteArray fileContent;
@@ -115,7 +115,7 @@ void seeTables::on_pb_download_clicked()
     }
 }
 
-void seeTables::on_cb_gold_stateChanged(int arg1)
+void displayTables::on_cb_gold_stateChanged(int arg1)
 {
     if (ui->cb_silver->isChecked() && ui->cb_bronze->isChecked() && ui->cb_supporter->isChecked())
         checkBoxGold("silver_bronze_supporter");
@@ -135,7 +135,7 @@ void seeTables::on_cb_gold_stateChanged(int arg1)
         checkBoxGold();
 }
 
-void seeTables::on_cb_silver_stateChanged(int arg1)
+void displayTables::on_cb_silver_stateChanged(int arg1)
 {
     if (ui->cb_silver->isChecked() && ui->cb_bronze->isChecked() && ui->cb_supporter->isChecked())
         checkBoxSilver("gold_bronze_supporter");
@@ -155,7 +155,7 @@ void seeTables::on_cb_silver_stateChanged(int arg1)
         checkBoxSilver();
 }
 
-void seeTables::on_cb_bronze_stateChanged(int arg1)
+void displayTables::on_cb_bronze_stateChanged(int arg1)
 {
     if (ui->cb_gold->isChecked() && ui->cb_silver->isChecked() && ui->cb_supporter->isChecked())
         checkBoxBronze("gold_silver_supporter");
@@ -175,7 +175,7 @@ void seeTables::on_cb_bronze_stateChanged(int arg1)
         checkBoxBronze();
 }
 
-void seeTables::on_cb_supporter_stateChanged(int arg1)
+void displayTables::on_cb_supporter_stateChanged(int arg1)
 {
     if (ui->cb_gold->isChecked() && ui->cb_silver->isChecked() && ui->cb_bronze->isChecked())
         checkBoxSupporter("gold_silver_bronze");
@@ -195,7 +195,7 @@ void seeTables::on_cb_supporter_stateChanged(int arg1)
         checkBoxSupporter();
 }
 
-void seeTables::checkBoxGold(QString otherCheckedCheckBoxes) {
+void displayTables::checkBoxGold(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_gold->isChecked()) {
         //QString filter;
@@ -261,7 +261,7 @@ void seeTables::checkBoxGold(QString otherCheckedCheckBoxes) {
     ui->tv_table->setModel(modal);
 }
 
-void seeTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
+void displayTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_silver->isChecked()) {
         modal->setTable("firmen");
@@ -326,7 +326,7 @@ void seeTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
     ui->tv_table->setModel(modal);
 }
 
-void seeTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
+void displayTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_bronze->isChecked()) {
 
@@ -392,7 +392,7 @@ void seeTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
     ui->tv_table->setModel(modal);
 }
 
-void seeTables::checkBoxSupporter(QString otherCheckedCheckBoxes) {
+void displayTables::checkBoxSupporter(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_supporter->isChecked()) {
 
@@ -458,7 +458,7 @@ void seeTables::checkBoxSupporter(QString otherCheckedCheckBoxes) {
     ui->tv_table->setModel(modal);
 }
 
-void seeTables::on_cb_companyName_currentTextChanged(const QString &arg1)
+void displayTables::on_cb_companyName_currentTextChanged(const QString &arg1)
 {
     ui->cb_companyName->setVisible(true);
     QString companyName = ui->cb_companyName->currentText();

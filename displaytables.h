@@ -5,16 +5,16 @@
 #include <QtSql>
 
 namespace Ui {
-class seeTables;
+class displayTables;
 }
 
-class seeTables : public QDialog
+class displayTables : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit seeTables(QWidget *parent = nullptr);
-    ~seeTables();
+    explicit displayTables(QWidget *parent = nullptr);
+    ~displayTables();
 
 private slots:
     void on_cb_table_currentTextChanged(const QString &arg1);
@@ -29,13 +29,16 @@ private slots:
 
     void on_cb_companyName_currentTextChanged(const QString &arg1);
 
+    void on_cb_supporter_stateChanged(int arg1);
+
 private:
-    Ui::seeTables *ui;
+    Ui::displayTables *ui;
     QSqlTableModel *modal;
 
     void checkBoxGold(QString otherCheckedCheckBoxes = "nothing");
     void checkBoxSilver(QString otherCheckedCheckBoxes = "nothing");
     void checkBoxBronze(QString otherCheckedCheckBoxes = "nothing");
+    void checkBoxSupporter(QString otherCheckedCheckBoxes = "nothing");
 };
 
 #endif // SEETABLES_H

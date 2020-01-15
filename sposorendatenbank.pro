@@ -21,13 +21,13 @@ SOURCES += \
     createcommunication.cpp \
     createcompany.cpp \
     createperson.cpp \
+    displaytables.cpp \
     error.cpp \
     main.cpp \
     mainwindow.cpp \
     modifycompany.cpp \
     modifytables.cpp \
-    savefile.cpp \
-    seetables.cpp
+    savefile.cpp
 
 HEADERS += \
     addfile.h \
@@ -35,12 +35,12 @@ HEADERS += \
     createcommunication.h \
     createcompany.h \
     createperson.h \
+    displaytables.h \
     error.h \
     mainwindow.h \
     modifycompany.h \
     modifytables.h \
-    savefile.h \
-    seetables.h
+    savefile.h
 
 FORMS += \
     addfile.ui \
@@ -48,12 +48,12 @@ FORMS += \
     createcommunication.ui \
     createcompany.ui \
     createperson.ui \
+    displaytables.ui \
     error.ui \
     mainwindow.ui \
     modifycompany.ui \
     modifytables.ui \
-    savefile.ui \
-    seetables.ui
+    savefile.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

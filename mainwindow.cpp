@@ -7,7 +7,7 @@
 #include "savefile.h"
 #include "modifycompany.h"
 #include "modifytables.h"
-#include "seetables.h"
+#include "displaytables.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -81,7 +81,7 @@ void MainWindow::on_pb_modifyCompany_clicked()
 
 void MainWindow::on_pb_seeTables_clicked()
 {
-    seeTables tables;
+    displayTables tables;
     tables.setModal(true);
     tables.exec();
 }
