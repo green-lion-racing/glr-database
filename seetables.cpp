@@ -65,7 +65,7 @@ void seeTables::on_cb_table_currentTextChanged(const QString &arg1)
 
         tableCompanyActiv = 1;
     }
-    else if (selectedTable == "personen") {
+    else if (selectedTable == "personen" || selectedTable=="kommunikationen") {
         ui->cb_companyName->setVisible(true);
         companyName = ui->cb_companyName->currentText();
         filter = "firma = '" + companyName + "'";

@@ -75,7 +75,7 @@ void modifyTables::on_cb_table_currentTextChanged(const QString &arg1)
 
         tableCompanyActiv = 1;
     }
-    else if (selectedTable == "personen") {
+    else if (selectedTable == "personen" || selectedTable == "kommunikationen") {
         ui->cb_companyName->setVisible(true);
         companyName = ui->cb_companyName->currentText();
         filter = "firma = '" + companyName + "'";
@@ -474,7 +474,7 @@ void modifyTables::on_pb_download_clicked()
 void modifyTables::on_cb_companyName_currentTextChanged(const QString &arg1)
 {
     QString selectedTable = ui->cb_table->currentText();
-    if (selectedTable == "personen") {
+    if (selectedTable == "personen" || selectedTable == "kommunikationen") {
         QString companyName = ui->cb_companyName->currentText();
         QString filter = "firma = '" + companyName + "'";
         modal->select();
