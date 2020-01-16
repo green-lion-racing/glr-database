@@ -134,6 +134,8 @@ void createCommunication::on_cb_company_currentTextChanged(const QString &arg1)
 
     QString currentCompanyName = ui->cb_company->currentText();
 
+    persons.clear();
+
     selectPersons.prepare("SELECT id, vorname, nachname FROM personen WHERE firma = :currentCompanyName");
     selectPersons.bindValue(":currentCompanyName", currentCompanyName);
     selectPersons.exec();

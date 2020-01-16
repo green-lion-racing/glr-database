@@ -20,7 +20,7 @@ addFile::~addFile()
 void addFile::on_pb_selectFile_clicked()
 {
     //QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen", "C://");
-    //fileName = QFileDialog::getOpenFileName(this, "Datei öffnen", "C://");
+    //fileName = (this, "Datei öffnen", "C://");
     fileName = QFileDialog::getOpenFileName(this, "Datei öffnen");
     //qDebug() << fileName;
     //QFile file(fileName);
