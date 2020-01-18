@@ -33,7 +33,7 @@ private slots:
 
 private:
     Ui::displayTables *ui;
-    QSqlTableModel *modal;
+    QSqlQueryModel *modal;
 
     void checkBoxGold(QString otherCheckedCheckBoxes = "nothing");
     void checkBoxSilver(QString otherCheckedCheckBoxes = "nothing");
