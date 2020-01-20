@@ -470,3 +470,36 @@ void displayTables::on_cb_companyName_currentTextChanged(const QString &arg1)
     //modal->select();
     ui->tv_table->setModel(modal);
 }
+
+void displayTables::on_tv_table_clicked(const QModelIndex &index)
+{
+    int row = index.row();
+    QSqlRecord record = modal->record(row);
+    int id = record.value(0).toInt();
+
+
+    QString name;
+    QByteArray fileContent;
+    QVector<int> ids;
+    QString fileName;
+    QString filePath;
+    QFile file;
+
+    //fileName = QFileDialog::getSaveFileName(this, tr("Save Document"), name);
+    filePath = QFileDialog::getExistingDirectory(this, tr("Open Directory"));
+
+    QSqlQuery selectFileQuery;
+
+    selectFileQuery.prepare("SELECT datei, dateiname FROM kommunikation_dateien WHERE kommunikation_id = :id");
+    selectFileQuery.bindValue(":id", id);
+    selectFileQuery.exec();
+    while(selectFileQuery.next()) {
+        fileContent = selectFileQuery.value(0).toByteArray();
+        name = selectFileQuery.value(1).toString();
+    }
+    fileName = filePath + "\\" + name;
+    file.setFileName(fileName);
+    file.open(QIODevice::ReadWrite);
+
+    file.write(fileContent);
+}

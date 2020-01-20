@@ -31,6 +31,8 @@ private slots:
 
     void on_cb_supporter_stateChanged(int arg1);
 
+    void on_tv_table_clicked(const QModelIndex &index);
+
 private:
     Ui::displayTables *ui;
     QSqlQueryModel *modal;
