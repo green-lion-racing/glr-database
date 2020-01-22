@@ -128,7 +128,7 @@ void createCommunication::on_cb_company_currentTextChanged(const QString &arg1)
 {
     ui->cb_person->clear();
 
-    //QVector<QString> persons;
+    QVector<QString> persons;
     //QVector<int> personIds;
     QSqlQuery selectPersons;
 
