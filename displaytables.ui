@@ -63,7 +63,7 @@
      <item>
       <widget class="QPushButton" name="pb_save">
        <property name="text">
-        <string>PushButton</string>
+        <string>Ausgewählte Kommunikation herunterladen</string>
        </property>
       </widget>
      </item>

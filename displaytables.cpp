@@ -27,6 +27,7 @@ displayTables::~displayTables()
 void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
 {
     ui->pb_download->setVisible(false);     //Button "pb_download" (alle herunterladen) nicht sichtbar
+    ui->pb_save->setVisible(false);
     ui->cb_companyName->setVisible(false);
    //Checkboxes
     ui->cb_gold->setVisible(false);
@@ -66,6 +67,10 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
         tableCompanyActiv = 1;
     }
     else if (selectedTable == "personen" || selectedTable=="kommunikationen") {
+        if (selectedTable == "kommunikationen")
+            ui->pb_save->setVisible(true);
+
+        // display filter company name
         ui->cb_companyName->setVisible(true);
         companyName = ui->cb_companyName->currentText();
         filter = "firma = '" + companyName + "'";
@@ -475,9 +480,9 @@ void displayTables::on_tv_table_clicked(const QModelIndex &index)
 {
     int row = index.row();
     QSqlRecord record = modal->record(row);
-    int id = record.value(0).toInt();
+    id = record.value(0).toInt();
 
-
+    /*
     QString name;
     QByteArray fileContent;
     QVector<int> ids;
@@ -502,4 +507,34 @@ void displayTables::on_tv_table_clicked(const QModelIndex &index)
     file.open(QIODevice::ReadWrite);
 
     file.write(fileContent);
+    */
+}
+
+void displayTables::on_pb_save_clicked()
+{
+    QVector<QString> name;
+    QVector<QByteArray> fileContent;
+    QVector<int> ids;
+    QString fileName;
+    QString filePath;
+    QFile file;
+
+    //fileName = QFileDialog::getSaveFileName(this, tr("Save Document"), name);
+    filePath = QFileDialog::getExistingDirectory(this, tr("Open Directory"));
+
+    QSqlQuery selectFileQuery;
+
+    selectFileQuery.prepare("SELECT datei, dateiname FROM kommunikation_dateien WHERE kommunikation_id = :id");
+    selectFileQuery.bindValue(":id", id);
+    selectFileQuery.exec();
+    while(selectFileQuery.next()) {
+        fileContent.push_back(selectFileQuery.value(0).toByteArray());
+        name.push_back(selectFileQuery.value(1).toString());
+    }
+    for (int i = 0; i < name.length(); i++) {
+        fileName = filePath + "\\" + name[i];
+        file.setFileName(fileName);
+        file.open(QIODevice::ReadWrite);
+        file.write(fileContent[i]);
+    }
 }

@@ -33,9 +33,12 @@ private slots:
 
     void on_tv_table_clicked(const QModelIndex &index);
 
+    void on_pb_save_clicked();
+
 private:
     Ui::displayTables *ui;
     QSqlQueryModel *modal;
+    int id;
 
     void checkBoxGold(QString otherCheckedCheckBoxes = "nothing");
     void checkBoxSilver(QString otherCheckedCheckBoxes = "nothing");
