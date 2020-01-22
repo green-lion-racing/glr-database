@@ -39,6 +39,7 @@ private:
     Ui::displayTables *ui;
     QSqlQueryModel *modal;
     int id;
+    QString selectedTable;
 
     void checkBoxGold(QString otherCheckedCheckBoxes = "nothing");
     void checkBoxSilver(QString otherCheckedCheckBoxes = "nothing");

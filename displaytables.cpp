@@ -34,7 +34,7 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
     ui->cb_silver->setVisible(false);
     ui->cb_bronze->setVisible(false);
 
-    QString selectedTable = ui->cb_table->currentText();
+    selectedTable = ui->cb_table->currentText();
     modal = new QSqlTableModel();
     modal->setQuery("SELECT * FROM " + selectedTable);
 
@@ -74,7 +74,7 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
         ui->cb_companyName->setVisible(true);
         companyName = ui->cb_companyName->currentText();
         filter = "firma = '" + companyName + "'";
-        //modal->setFilter(filter);
+        modal->setQuery("SELECT * FROM " + selectedTable + " WHERE firma = '" + companyName  + "'");
         showCompanyName = 1;
     }
 
@@ -467,13 +467,15 @@ void displayTables::on_cb_companyName_currentTextChanged(const QString &arg1)
 {
     ui->cb_companyName->setVisible(true);
     QString companyName = ui->cb_companyName->currentText();
-    QString filter = "firma = '" + companyName + "'";
+    modal->setQuery("SELECT * FROM " + selectedTable + " WHERE firma = '" + companyName  + "'");
+    /*QString filter = "firma = '" + companyName + "'";
     //modal->select();
     ui->tv_table->setModel(modal);
     //modal->setFilter(filter);
     //modal->setFilter(filter);
     //modal->select();
     ui->tv_table->setModel(modal);
+    */
 }
 
 void displayTables::on_tv_table_clicked(const QModelIndex &index)
