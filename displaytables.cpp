@@ -27,15 +27,16 @@ displayTables::~displayTables()
 void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
 {
     ui->pb_download->setVisible(false);     //Button "pb_download" (alle herunterladen) nicht sichtbar
+    ui->pb_save->setVisible(false);
     ui->cb_companyName->setVisible(false);
    //Checkboxes
     ui->cb_gold->setVisible(false);
     ui->cb_silver->setVisible(false);
     ui->cb_bronze->setVisible(false);
 
-    QString selectedTable = ui->cb_table->currentText();
+    selectedTable = ui->cb_table->currentText();
     modal = new QSqlTableModel();
-    modal->setTable(selectedTable);
+    modal->setQuery("SELECT * FROM " + selectedTable);
 
     QString companyName;
     QString rank;
@@ -58,7 +59,7 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
         //rank = ui->cb_rank->currentText();
         //filter = "firma = '" + rank + "'";
 
-        modal->setFilter(filter);
+        //modal->setFilter(filter);
         ui->cb_gold->setVisible(true);
         ui->cb_silver->setVisible(true);
         ui->cb_bronze->setVisible(true);
@@ -66,16 +67,20 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
         tableCompanyActiv = 1;
     }
     else if (selectedTable == "personen" || selectedTable=="kommunikationen") {
+        if (selectedTable == "kommunikationen")
+            ui->pb_save->setVisible(true);
+
+        // display filter company name
         ui->cb_companyName->setVisible(true);
         companyName = ui->cb_companyName->currentText();
         filter = "firma = '" + companyName + "'";
-        modal->setFilter(filter);
+        modal->setQuery("SELECT * FROM " + selectedTable + " WHERE firma = '" + companyName  + "'");
         showCompanyName = 1;
     }
 
-    modal->select();
+    //modal->select();
     ui->tv_table->setSortingEnabled(true);
-    modal->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    //modal->setEditStrategy(QSqlTableModel::OnManualSubmit);
     ui->tv_table->setModel(modal);
     ui->tv_table->setColumnHidden(0, true);
 }
@@ -199,7 +204,7 @@ void displayTables::checkBoxGold(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_gold->isChecked()) {
         //QString filter;
-        modal->setTable("firmen");
+        //modal->setTable("firmen");
 
         if (otherCheckedCheckBoxes == "silver")
             filter = "rang = 'Gold' OR rang = 'Silber'";
@@ -218,8 +223,8 @@ void displayTables::checkBoxGold(QString otherCheckedCheckBoxes) {
         else
             filter = "rang = 'Gold'";
 
-        modal->setFilter(filter);
-        modal->select();
+        //modal->setFilter(filter);
+        //modal->select();
         ui->tv_table->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "silver") {
@@ -255,16 +260,16 @@ void displayTables::checkBoxGold(QString otherCheckedCheckBoxes) {
         filter = "";
     }
     //modal->clear();
-    modal->setTable("firmen");
-    modal->setFilter(filter);
-    modal->select();
+    //modal->setTable("firmen");
+    //modal->setFilter(filter);
+    //modal->select();
     ui->tv_table->setModel(modal);
 }
 
 void displayTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_silver->isChecked()) {
-        modal->setTable("firmen");
+        //modal->setTable("firmen");
 
         if (otherCheckedCheckBoxes == "gold")
             filter = "rang = 'Silber' OR rang = 'Gold'";
@@ -283,8 +288,8 @@ void displayTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
         else
             filter = "rang = 'Silber'";
 
-        modal->setFilter(filter);
-        modal->select();
+        //modal->setFilter(filter);
+        //modal->select();
         ui->tv_table->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "gold") {
@@ -320,9 +325,9 @@ void displayTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
         filter = "";
     }
    // modal->clear();
-    modal->setTable("firmen");
-    modal->select();
-    modal->setFilter(filter);
+    //modal->setTable("firmen");
+    //modal->select();
+    //modal->setFilter(filter);
     ui->tv_table->setModel(modal);
 }
 
@@ -330,7 +335,7 @@ void displayTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_bronze->isChecked()) {
 
-        modal->setTable("firmen");
+        //modal->setTable("firmen");
 
         if (otherCheckedCheckBoxes == "gold")
             filter = "rang = 'Bronze' OR rang = 'Gold'";
@@ -349,9 +354,9 @@ void displayTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
         else
             filter = "rang = 'Bronze'";
 
-        modal->setFilter(filter);
-        modal->select();
-        ui->tv_table->setModel(modal);
+        //modal->setFilter(filter);
+        //modal->select();
+        //ui->tv_table->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "gold") {
         modal->clear();
@@ -386,9 +391,9 @@ void displayTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
         filter = "";
     }
     //modal->clear();
-    modal->setTable("firmen");
-    modal->setFilter(filter);
-    modal->select();
+    //modal->setTable("firmen");
+    //modal->setFilter(filter);
+    //modal->select();
     ui->tv_table->setModel(modal);
 }
 
@@ -396,7 +401,7 @@ void displayTables::checkBoxSupporter(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_supporter->isChecked()) {
 
-        modal->setTable("firmen");
+        //modal->setTable("firmen");
 
         if (otherCheckedCheckBoxes == "gold")
             filter = "rang = 'Supporter' OR rang = 'Gold'";
@@ -415,8 +420,8 @@ void displayTables::checkBoxSupporter(QString otherCheckedCheckBoxes) {
         else
             filter = "rang = 'Supporter'";
 
-        modal->setFilter(filter);
-        modal->select();
+        //modal->setFilter(filter);
+        //modal->select();
         ui->tv_table->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "gold") {
@@ -452,9 +457,9 @@ void displayTables::checkBoxSupporter(QString otherCheckedCheckBoxes) {
         filter = "";
     }
     //modal->clear();
-    modal->setTable("firmen");
-    modal->setFilter(filter);
-    modal->select();
+    //modal->setTable("firmen");
+    //modal->setFilter(filter);
+    //modal->select();
     ui->tv_table->setModel(modal);
 }
 
@@ -462,11 +467,76 @@ void displayTables::on_cb_companyName_currentTextChanged(const QString &arg1)
 {
     ui->cb_companyName->setVisible(true);
     QString companyName = ui->cb_companyName->currentText();
-    QString filter = "firma = '" + companyName + "'";
-    modal->select();
+    modal->setQuery("SELECT * FROM " + selectedTable + " WHERE firma = '" + companyName  + "'");
+    /*QString filter = "firma = '" + companyName + "'";
+    //modal->select();
     ui->tv_table->setModel(modal);
-    modal->setFilter(filter);
-    modal->setFilter(filter);
-    modal->select();
+    //modal->setFilter(filter);
+    //modal->setFilter(filter);
+    //modal->select();
     ui->tv_table->setModel(modal);
+    */
+}
+
+void displayTables::on_tv_table_clicked(const QModelIndex &index)
+{
+    int row = index.row();
+    QSqlRecord record = modal->record(row);
+    id = record.value(0).toInt();
+
+    /*
+    QString name;
+    QByteArray fileContent;
+    QVector<int> ids;
+    QString fileName;
+    QString filePath;
+    QFile file;
+
+    //fileName = QFileDialog::getSaveFileName(this, tr("Save Document"), name);
+    filePath = QFileDialog::getExistingDirectory(this, tr("Open Directory"));
+
+    QSqlQuery selectFileQuery;
+
+    selectFileQuery.prepare("SELECT datei, dateiname FROM kommunikation_dateien WHERE kommunikation_id = :id");
+    selectFileQuery.bindValue(":id", id);
+    selectFileQuery.exec();
+    while(selectFileQuery.next()) {
+        fileContent = selectFileQuery.value(0).toByteArray();
+        name = selectFileQuery.value(1).toString();
+    }
+    fileName = filePath + "\\" + name;
+    file.setFileName(fileName);
+    file.open(QIODevice::ReadWrite);
+
+    file.write(fileContent);
+    */
+}
+
+void displayTables::on_pb_save_clicked()
+{
+    QVector<QString> name;
+    QVector<QByteArray> fileContent;
+    QVector<int> ids;
+    QString fileName;
+    QString filePath;
+    QFile file;
+
+    //fileName = QFileDialog::getSaveFileName(this, tr("Save Document"), name);
+    filePath = QFileDialog::getExistingDirectory(this, tr("Open Directory"));
+
+    QSqlQuery selectFileQuery;
+
+    selectFileQuery.prepare("SELECT datei, dateiname FROM kommunikation_dateien WHERE kommunikation_id = :id");
+    selectFileQuery.bindValue(":id", id);
+    selectFileQuery.exec();
+    while(selectFileQuery.next()) {
+        fileContent.push_back(selectFileQuery.value(0).toByteArray());
+        name.push_back(selectFileQuery.value(1).toString());
+    }
+    for (int i = 0; i < name.length(); i++) {
+        fileName = filePath + "\\" + name[i];
+        file.setFileName(fileName);
+        file.open(QIODevice::ReadWrite);
+        file.write(fileContent[i]);
+    }
 }
