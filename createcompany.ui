@@ -96,12 +96,29 @@
        <item row="6" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>Ort</string>
+          <string>PLZ</string>
          </property>
         </widget>
        </item>
        <item row="6" column="1">
-        <widget class="QLineEdit" name="le_city"/>
+        <widget class="QLineEdit" name="le_zip"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Ort</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Land</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLineEdit" name="le_country"/>
        </item>
        <item row="9" column="0">
         <widget class="QLabel" name="label_6">
@@ -113,25 +130,8 @@
        <item row="9" column="1">
         <widget class="QLineEdit" name="le_info"/>
        </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>PLZ</string>
-         </property>
-        </widget>
-       </item>
        <item row="7" column="1">
-        <widget class="QLineEdit" name="le_zip"/>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>Land</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QLineEdit" name="le_country"/>
+        <widget class="QLineEdit" name="le_city"/>
        </item>
       </layout>
      </item>
@@ -156,8 +156,8 @@
   <tabstop>le_typ</tabstop>
   <tabstop>le_street</tabstop>
   <tabstop>le_houseNumber</tabstop>
-  <tabstop>le_city</tabstop>
   <tabstop>le_zip</tabstop>
+  <tabstop>le_city</tabstop>
   <tabstop>le_country</tabstop>
   <tabstop>le_info</tabstop>
  </tabstops>
