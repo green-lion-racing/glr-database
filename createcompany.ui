@@ -149,6 +149,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>le_name</tabstop>
+  <tabstop>le_since</tabstop>
+  <tabstop>le_until</tabstop>
+  <tabstop>le_typ</tabstop>
+  <tabstop>le_street</tabstop>
+  <tabstop>le_houseNumber</tabstop>
+  <tabstop>le_city</tabstop>
+  <tabstop>le_zip</tabstop>
+  <tabstop>le_country</tabstop>
+  <tabstop>le_info</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

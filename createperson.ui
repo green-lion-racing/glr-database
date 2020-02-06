@@ -260,6 +260,18 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>cb_company</tabstop>
+  <tabstop>le_title</tabstop>
+  <tabstop>le_firstName</tabstop>
+  <tabstop>le_surname</tabstop>
+  <tabstop>le_phone</tabstop>
+  <tabstop>le_fax</tabstop>
+  <tabstop>le_email</tabstop>
+  <tabstop>le_position</tabstop>
+  <tabstop>cb_you</tabstop>
+  <tabstop>le_language</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
