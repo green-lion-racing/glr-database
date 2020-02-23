@@ -536,7 +536,8 @@ void displayTables::on_pb_save_clicked()
         name.push_back(selectFileQuery.value(1).toString());
     }
     for (int i = 0; i < name.length(); i++) {
-        fileName = filePath + "\\" + name[i];
+        //fileName = filePath + "\\" + name[i];
+        fileName = filePath + "/" + name[i];
         file.setFileName(fileName);
         file.open(QIODevice::ReadWrite);
         file.write(fileContent[i]);
