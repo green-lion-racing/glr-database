@@ -51,6 +51,7 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
     QSqlQueryModel * modalComboBox = new QSqlQueryModel();
     modalComboBox->setQuery(selectName);
     ui->cb_companyName->setModel(modalComboBox);
+    ui->cb_companyName->setVisible(false);
 
     if (selectedTable == "kommunikation_dateien")   //Button "pb_download" (alle herunterladen) nur bei dieser Tabelle sichtbar
         ui->pb_download->setVisible(true);
@@ -60,6 +61,7 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
         //filter = "firma = '" + rank + "'";
 
         //modal->setFilter(filter);
+        modal->setQuery("SELECT * FROM " + selectedTable);
         ui->cb_gold->setVisible(true);
         ui->cb_silver->setVisible(true);
         ui->cb_bronze->setVisible(true);
@@ -73,7 +75,7 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
         // display filter company name
         ui->cb_companyName->setVisible(true);
         companyName = ui->cb_companyName->currentText();
-        filter = "firma = '" + companyName + "'";
+        //filter = "firma = '" + companyName + "'";
         modal->setQuery("SELECT * FROM " + selectedTable + " WHERE firma = '" + companyName  + "'");
         showCompanyName = 1;
     }
