@@ -8,6 +8,7 @@
 #include "modifycompany.h"
 #include "modifytables.h"
 #include "displaytables.h"
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -17,6 +18,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     QWidget::setWindowTitle("GLR Sponsorendatenbank");
 
+    ui->pb_createCompany->setEnabled(false);
+    ui->pb_createPerson->setEnabled(false);
+    ui->pb_createActivity->setEnabled(false);
+    ui->pb_createCommunication->setEnabled(false);
+    ui->pb_modifyTables->setEnabled(false);
+    ui->pb_seeTables->setEnabled(false);
+    /*
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("sponsorendatenbank.db");
 
@@ -24,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->l_db_status->setText("Öffnen fehlgeschalgen");
     else
         ui->l_db_status->setText("Verbunden");
+    */
 }
 
 MainWindow::~MainWindow()
@@ -32,7 +41,7 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_pB_createCompany_clicked()
+void MainWindow::on_pb_createCompany_clicked()
 {
     createCompany company;
     company.setModal(true);
@@ -51,14 +60,14 @@ void MainWindow::on_pb_createPerson_clicked()
     person.exec();
 }
 
-void MainWindow::on_pB_createActivity_clicked()
+void MainWindow::on_pb_createActivity_clicked()
 {
     createActivity activity;
     activity.setModal(true);
     activity.exec();
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pb_createCommunication_clicked()
 {
     createCommunication communication;
     communication.setModal(true);
@@ -72,7 +81,7 @@ void MainWindow::on_pb_saveFile_clicked()
     save.exec();
 }
 
-void MainWindow::on_pb_modifyCompany_clicked()
+void MainWindow::on_pb_modifyTables_clicked()
 {
     modifyTables *modifyTablesWindow;
     modifyTablesWindow = new modifyTables();
@@ -84,4 +93,24 @@ void MainWindow::on_pb_seeTables_clicked()
     displayTables tables;
     tables.setModal(true);
     tables.exec();
+}
+
+void MainWindow::on_openDatabase_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen");
+    //qDebug() << fileName;
+    //QFile file(fileName);
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(fileName);
+    if (!db.open())
+        ui->l_db_status->setText("Öffnen fehlgeschalgen");
+    else {
+        ui->l_db_status->setText("Verbunden");
+        ui->pb_createCompany->setEnabled(true);
+        ui->pb_createPerson->setEnabled(true);
+        ui->pb_createActivity->setEnabled(true);
+        ui->pb_createCommunication->setEnabled(true);
+        ui->pb_modifyTables->setEnabled(true);
+        ui->pb_seeTables->setEnabled(true);
+    }
 }

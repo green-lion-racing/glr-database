@@ -19,8 +19,6 @@ public:
 private slots:
     void on_buttonBox_accepted();
 
-    void on_pb_file_clicked();
-
     void on_cb_company_currentTextChanged(const QString &arg1);
 
     void on_cw_calender_selectionChanged();

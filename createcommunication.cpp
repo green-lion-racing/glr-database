@@ -38,35 +38,6 @@ createCommunication::~createCommunication()
 
 void createCommunication::on_buttonBox_accepted()
 {
-    /*
-    QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, wann TEXT, was TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
-    QString companyName = ui->cb_company->currentText();
-    QString when = ui->le_when->text();
-    QString what = ui->le_what->text();
-
-    //QSqlQuery selectId("SELECT id FROM kommunikationen ORDER BY id DESC LIMIT 1");
-    //while (selectId.next()) {
-        //nextId = (selectId.value(0).toInt())+
-
-    QSqlQuery insertCommunicationQuery;
-    insertCommunicationQuery.prepare("INSERT INTO kommunikationen(firma, wann, was) VALUES (:companyName, :when, :what)");
-    //insertCommunicationQuery.bindValue(":id", nextId);
-    insertCommunicationQuery.bindValue(":companyName", companyName);
-    insertCommunicationQuery.bindValue(":when", when);
-    insertCommunicationQuery.bindValue(":what", what);
-
-    insertCommunicationQuery.exec();
-
-    if (insertCommunicationQuery.next())
-    {
-    } else {
-        qDebug() << "SqLite error:" << insertCommunicationQuery.lastError().text() << ", SqLite error code:" << insertCommunicationQuery.lastError().number();
-    }
-    */
-}
-
-void createCommunication::on_pb_file_clicked()
-{
     //QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
     QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, PersonenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id), FOREIGN KEY(PersonenID) REFERENCES personen(id))");
     QString companyName = ui->cb_company->currentText();

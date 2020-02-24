@@ -19,19 +19,21 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pB_createCompany_clicked();
+    void on_pb_createCompany_clicked();
 
     void on_pb_createPerson_clicked();
 
-    void on_pB_createActivity_clicked();
+    void on_pb_createActivity_clicked();
 
-    void on_pushButton_clicked();
+    void on_pb_createCommunication_clicked();
 
     void on_pb_saveFile_clicked();
 
-    void on_pb_modifyCompany_clicked();
+    void on_pb_modifyTables_clicked();
 
     void on_pb_seeTables_clicked();
+
+    void on_openDatabase_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -28,30 +28,24 @@
       </property>
      </spacer>
     </item>
-    <item row="1" column="2">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+    <item row="3" column="0">
+     <widget class="QLabel" name="l_db_status">
+      <property name="text">
+       <string>Keine Datenbank geöffnet</string>
       </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>259</width>
-        <height>149</height>
-       </size>
-      </property>
-     </spacer>
+     </widget>
     </item>
     <item row="1" column="1">
      <layout class="QGridLayout" name="gridLayout">
       <item row="2" column="0">
-       <widget class="QPushButton" name="pB_createActivity">
+       <widget class="QPushButton" name="pb_createActivity">
         <property name="text">
          <string>Leistung hinzufügen</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="pb_createCommunication">
         <property name="text">
          <string>Kommunikation hinzufügen</string>
         </property>
@@ -65,33 +59,13 @@
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QPushButton" name="pB_createCompany">
+       <widget class="QPushButton" name="pb_createCompany">
         <property name="text">
          <string>Unternehmen hizufügen</string>
         </property>
        </widget>
       </item>
      </layout>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="l_db_status">
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="2">
-     <spacer name="verticalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>259</width>
-        <height>269</height>
-       </size>
-      </property>
-     </spacer>
     </item>
     <item row="0" column="1">
      <spacer name="verticalSpacer">
@@ -119,10 +93,36 @@
       </property>
      </spacer>
     </item>
+    <item row="1" column="2">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>259</width>
+        <height>149</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="3" column="2">
+     <spacer name="verticalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>259</width>
+        <height>269</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
     <item row="1" column="3">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QPushButton" name="pb_modifyCompany">
+       <widget class="QPushButton" name="pb_modifyTables">
         <property name="text">
          <string>Einträge bearbeiten</string>
         </property>
@@ -145,11 +145,23 @@
      <x>0</x>
      <y>0</y>
      <width>1288</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuDatei">
+    <property name="title">
+     <string>Datei</string>
+    </property>
+    <addaction name="openDatabase"/>
+   </widget>
+   <addaction name="menuDatei"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="openDatabase">
+   <property name="text">
+    <string>Datenbank öffnen</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
