@@ -97,7 +97,7 @@ void MainWindow::on_pb_seeTables_clicked()
 
 void MainWindow::on_openDatabase_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen");
+    QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen","","DB (*.db)");
     //qDebug() << fileName;
     //QFile file(fileName);
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
