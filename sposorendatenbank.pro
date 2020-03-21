@@ -27,6 +27,7 @@ SOURCES += \
     mainwindow.cpp \
     modifycompany.cpp \
     modifytables.cpp \
+    passwordinput.cpp \
     savefile.cpp
 
 HEADERS += \
@@ -40,6 +41,7 @@ HEADERS += \
     mainwindow.h \
     modifycompany.h \
     modifytables.h \
+    passwordinput.h \
     savefile.h
 
 FORMS += \
@@ -53,6 +55,7 @@ FORMS += \
     mainwindow.ui \
     modifycompany.ui \
     modifytables.ui \
+    passwordinput.ui \
     savefile.ui
 
 # Default rules for deployment.

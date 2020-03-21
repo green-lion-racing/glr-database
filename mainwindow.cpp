@@ -8,6 +8,7 @@
 #include "modifycompany.h"
 #include "modifytables.h"
 #include "displaytables.h"
+#include "passwordinput.h"
 #include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -100,6 +101,32 @@ void MainWindow::on_openDatabase_triggered()
     QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen","","DB (*.db)");
     //qDebug() << fileName;
     //QFile file(fileName);
+
+    passwordInput password;
+    password.setModal(true);
+    password.exec();
+
+    qDebug() << enteredPassword;
+    QSqlDatabase dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
+    dbconn.setDatabaseName(fileName);
+    dbconn.setPassword(enteredPassword);
+    // to encrpyt existing database
+    //dbconn.setConnectOptions("QSQLITE_CREATE_KEY");
+
+    if (!dbconn.open()) {
+        ui->l_db_status->setText("Öffnen fehlgeschalgen");
+    }
+    else {
+        ui->l_db_status->setText("Verbunden");
+        ui->pb_createCompany->setEnabled(true);
+        ui->pb_createPerson->setEnabled(true);
+        ui->pb_createActivity->setEnabled(true);
+        ui->pb_createCommunication->setEnabled(true);
+        ui->pb_modifyTables->setEnabled(true);
+        ui->pb_seeTables->setEnabled(true);
+    }
+
+    /*
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(fileName);
     if (!db.open())
@@ -113,4 +140,5 @@ void MainWindow::on_openDatabase_triggered()
         ui->pb_modifyTables->setEnabled(true);
         ui->pb_seeTables->setEnabled(true);
     }
+    */
 }
