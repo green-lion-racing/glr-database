@@ -106,7 +106,6 @@ void MainWindow::on_openDatabase_triggered()
     password.setModal(true);
     password.exec();
 
-    qDebug() << enteredPassword;
     QSqlDatabase dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
     dbconn.setDatabaseName(fileName);
     dbconn.setPassword(enteredPassword);
