@@ -2,7 +2,7 @@
 #include "ui_createperson.h"
 
 createPerson::createPerson(QWidget *parent) :
-    QDialog(parent),
+    QDialog(parent,Qt::FramelessWindowHint),
     ui(new Ui::createPerson)
 {
     ui->setupUi(this);

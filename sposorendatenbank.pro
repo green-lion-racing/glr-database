@@ -23,6 +23,7 @@ SOURCES += \
     createperson.cpp \
     displaytables.cpp \
     error.cpp \
+    login.cpp \
     main.cpp \
     mainwindow.cpp \
     modifycompany.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     createperson.h \
     displaytables.h \
     error.h \
+    login.h \
     mainwindow.h \
     modifycompany.h \
     modifytables.h \
@@ -52,6 +54,7 @@ FORMS += \
     createperson.ui \
     displaytables.ui \
     error.ui \
+    login.ui \
     mainwindow.ui \
     modifycompany.ui \
     modifytables.ui \
@@ -62,3 +65,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc

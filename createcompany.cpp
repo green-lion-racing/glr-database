@@ -5,7 +5,7 @@
 #include "error.h"
 
 createCompany::createCompany(QWidget *parent) :
-    QDialog(parent),
+    QDialog(parent,Qt::FramelessWindowHint),
     ui(new Ui::createCompany)
 {
     ui->setupUi(this);

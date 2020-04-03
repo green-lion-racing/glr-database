@@ -3,7 +3,7 @@
 #include <QVector>
 
 createActivity::createActivity(QWidget *parent) :
-    QDialog(parent),
+    QDialog(parent,Qt::FramelessWindowHint),        // Frameless window
     ui(new Ui::createActivity)
 {
     QVector<QString> companyNames;
