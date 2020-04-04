@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
     QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/icon_arrow.png"), QLineEdit::TrailingPosition);
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::on_icon_clicked);
 
+    // Set l_title "GLR Sponsorentanbank" in different colors
+    ui->l_title->setText("<font color=\'green\'>GLR</font> <font color=\'white\'>Sponsorendatenbank</font>");
+
     ui->pb_createCompany->setEnabled(false);
     ui->pb_createPerson->setEnabled(false);
     ui->pb_createActivity->setEnabled(false);

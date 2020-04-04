@@ -8,6 +8,10 @@ QLineEdit {
     color: black;
     background-color: white;
     border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 QPushButton {
@@ -20,4 +24,5 @@ QPushButton {
 #l_title {
     font: 40px;
     color: white;
+    margin-bottom: 15px;
 }

@@ -146,14 +146,18 @@
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="l_title">
-            <property name="text">
-             <string>GLR Sponsorendatenbank</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="l_title">
+              <property name="text">
+               <string>l_title</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
