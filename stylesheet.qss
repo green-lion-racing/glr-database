@@ -24,5 +24,7 @@ QPushButton {
 #l_title {
     font: 40px;
     color: white;
-    margin-bottom: 15px;
+    margin-top: 35px;
+    margin-bottom: 35px;
 }
+

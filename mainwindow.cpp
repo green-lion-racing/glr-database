@@ -10,6 +10,8 @@
 #include "displaytables.h"
 #include "passwordinput.h"
 #include <QFileDialog>
+#include <QPixmap>
+#include <QKeyEvent>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,7 +26,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::on_icon_clicked);
 
     // Set l_title "GLR Sponsorentanbank" in different colors
-    ui->l_title->setText("<font color=\'green\'>GLR</font> <font color=\'white\'>Sponsorendatenbank</font>");
+    ui->l_title->setText("<font color=\'#00CC00\'>GLR</font> <font color=\'white\'>Sponsorendatenbank</font>");
+
+    // display GLR logo at l_logo
+    QPixmap logo("/home/tobias/Downloads/logo_SS2018_HP_color.png");
+    ui->l_logo->setPixmap(logo);
 
     ui->pb_createCompany->setEnabled(false);
     ui->pb_createPerson->setEnabled(false);
@@ -50,11 +56,49 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::on_icon_clicked() {
+    openDatabase();
+}
+
+void MainWindow::keyPressEvent(QKeyEvent * event) {
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+        openDatabase();
+    }
+}
+
+void MainWindow::openDatabase() {
+    //QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen","","DB (*.db)");
+    QString fileName = "sponsorendatenbank.db";
+    //qDebug() << fileName;
+    //QFile file(fileName);
+
+    //passwordInput password;
+    //password.setModal(true);
+    //password.exec();
+
+    enteredPassword = ui->le_password->text();
+
+    QSqlDatabase dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
+    dbconn.setDatabaseName(fileName);
+    dbconn.setPassword(enteredPassword);
+    // to encrpyt existing database
+    //dbconn.setConnectOptions("QSQLITE_CREATE_KEY");
+
+    if (!dbconn.open()) {
+        ui->l_db_status->setText("Öffnen fehlgeschalgen");
+    }
+    else {
+        ui->l_db_status->setText("Verbunden");
+        ui->pb_createCompany->setEnabled(true);
+        ui->pb_createPerson->setEnabled(true);
+        ui->pb_createActivity->setEnabled(true);
+        ui->pb_createCommunication->setEnabled(true);
+        ui->pb_modifyTables->setEnabled(true);
+        ui->pb_seeTables->setEnabled(true);
+    }
     //this->hide();
     //mainWindow.show();
     ui->stackedWidget->setCurrentIndex(0);
 }
-
 
 void MainWindow::on_pb_createCompany_clicked()
 {

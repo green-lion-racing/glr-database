@@ -39,5 +39,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    void keyPressEvent(QKeyEvent * event);
+
+    void openDatabase();
 };
 #endif // MAINWINDOW_H
