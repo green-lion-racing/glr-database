@@ -23,7 +23,6 @@ SOURCES += \
     createperson.cpp \
     displaytables.cpp \
     error.cpp \
-    login.cpp \
     main.cpp \
     mainwindow.cpp \
     modifycompany.cpp \
@@ -39,7 +38,6 @@ HEADERS += \
     createperson.h \
     displaytables.h \
     error.h \
-    login.h \
     mainwindow.h \
     modifycompany.h \
     modifytables.h \
@@ -54,7 +52,6 @@ FORMS += \
     createperson.ui \
     displaytables.ui \
     error.ui \
-    login.ui \
     mainwindow.ui \
     modifycompany.ui \
     modifytables.ui \
