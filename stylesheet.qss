@@ -1,0 +1,27 @@
+QWidget {
+    color: black;
+    background-color: #005f69;
+}
+
+QLineEdit {
+    font: 20px;
+    color: black;
+    background-color: white;
+    border-radius: 10px;
+}
+
+QPushButton {
+    border: 0px;
+    background: white;
+    border-radius: 10px;
+    padding:10px;
+}
+
+#l_title {
+    font: 40px;
+    color: white;
+}
+
+#le_password {
+
+}
