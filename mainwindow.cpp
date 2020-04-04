@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->setCurrentIndex(1);
     QWidget::setWindowTitle("GLR Sponsorendatenbank");
 
-    QAction *actionClickLogIn = ui->le_password->addAction(QIcon("/home/tobias/Downloads/icon_arrow.png"), QLineEdit::TrailingPosition);
+    QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/icon_arrow.png"), QLineEdit::TrailingPosition);
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::on_icon_clicked);
 
     ui->pb_createCompany->setEnabled(false);
