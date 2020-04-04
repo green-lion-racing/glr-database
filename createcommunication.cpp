@@ -10,7 +10,7 @@
 static QFile file;
 
 createCommunication::createCommunication(QWidget *parent) :
-    QDialog(parent),
+    QDialog(parent,Qt::FramelessWindowHint),
     ui(new Ui::createCommunication)
 {
     ui->setupUi(this);

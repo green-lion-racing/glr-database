@@ -19,6 +19,8 @@ public:
     ~MainWindow();
 
 private slots:
+    void on_icon_clicked();
+
     void on_pb_createCompany_clicked();
 
     void on_pb_createPerson_clicked();

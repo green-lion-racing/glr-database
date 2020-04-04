@@ -17,7 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->stackedWidget->setCurrentIndex(1);
     QWidget::setWindowTitle("GLR Sponsorendatenbank");
+
+    QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/icon_arrow.png"), QLineEdit::TrailingPosition);
+    connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::on_icon_clicked);
 
     ui->pb_createCompany->setEnabled(false);
     ui->pb_createPerson->setEnabled(false);
@@ -39,6 +43,13 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::on_icon_clicked() {
+    //this->hide();
+    //mainWindow.show();
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 
