@@ -21,7 +21,3 @@ QPushButton {
     font: 40px;
     color: white;
 }
-
-#le_password {
-
-}

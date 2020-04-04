@@ -14,145 +14,126 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-<<<<<<< Updated upstream
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="1" column="4">
-     <spacer name="horizontalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-=======
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
        <number>1</number>
->>>>>>> Stashed changes
       </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>260</width>
-        <height>149</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="l_db_status">
-      <property name="text">
-       <string>Keine Datenbank geöffnet</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="0">
-       <widget class="QPushButton" name="pb_createActivity">
+      <widget class="QWidget" name="page_5">
+       <widget class="QWidget" name="verticalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>100</y>
+          <width>261</width>
+          <height>521</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QPushButton" name="pb_createPerson">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Person hinzufügen</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_createCompany">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="baseSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Unternehmen hizufügen</string>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
+           <property name="default">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_createActivity">
+           <property name="text">
+            <string>Leistung hinzufügen</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_createCommunication">
+           <property name="text">
+            <string>Kommunikation hinzufügen</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="verticalLayoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>120</y>
+          <width>191</width>
+          <height>491</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPushButton" name="pb_seeTables">
+           <property name="text">
+            <string>Tabellen ansehen</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_modifyTables">
+           <property name="text">
+            <string>Einträge bearbeiten</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QLabel" name="l_db_status">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>650</y>
+          <width>180</width>
+          <height>17</height>
+         </rect>
+        </property>
         <property name="text">
-         <string>Leistung hinzufügen</string>
+         <string>Keine Datenbank geöffnet</string>
         </property>
        </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="pb_createCommunication">
-        <property name="text">
-         <string>Kommunikation hinzufügen</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="pb_createPerson">
-        <property name="text">
-         <string>Person hinzufügen</string>
-        </property>
-       </widget>
-<<<<<<< Updated upstream
-      </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="pb_createCompany">
-        <property name="text">
-         <string>Unternehmen hizufügen</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="0" column="1">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="0">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>260</width>
-        <height>149</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="2">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>259</width>
-        <height>149</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="3" column="2">
-     <spacer name="verticalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>259</width>
-        <height>269</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="3">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QPushButton" name="pb_modifyTables">
-        <property name="text">
-         <string>Einträge bearbeiten</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pb_seeTables">
-        <property name="text">
-         <string>Tabellen ansehen</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-=======
       </widget>
       <widget class="QWidget" name="page_6">
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <spacer name="verticalSpacer_2">
+           <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -175,7 +156,7 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
              <spacer name="horizontalSpacer">
               <property name="orientation">
@@ -193,13 +174,13 @@
              <widget class="QLineEdit" name="le_password">
               <property name="minimumSize">
                <size>
-                <width>450</width>
+                <width>480</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>450</width>
+                <width>480</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -227,7 +208,7 @@
            </layout>
           </item>
           <item>
-           <spacer name="verticalSpacer">
+           <spacer name="verticalSpacer_2">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -244,7 +225,6 @@
        </layout>
       </widget>
      </widget>
->>>>>>> Stashed changes
     </item>
    </layout>
   </widget>
