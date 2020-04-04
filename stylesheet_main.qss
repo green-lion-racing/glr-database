@@ -1,6 +1,6 @@
 QWidget {
     color: black;
-    background-color: #005f69;
+    background-color: white;
 }
 
 QDialog {
@@ -30,10 +30,4 @@ QPushButton {
     color: white;
     margin-top: 35px;
     margin-bottom: 35px;
-}
-
-#l_wrongPassword {
-    color: #FF0000;
-    font: 20px;
-    margin-top: 20px;
 }

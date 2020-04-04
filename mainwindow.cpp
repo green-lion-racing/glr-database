@@ -32,12 +32,16 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap logo("/home/tobias/Downloads/logo_SS2018_HP_color.png");
     ui->l_logo->setPixmap(logo);
 
+    // disable push buttons
     ui->pb_createCompany->setEnabled(false);
     ui->pb_createPerson->setEnabled(false);
     ui->pb_createActivity->setEnabled(false);
     ui->pb_createCommunication->setEnabled(false);
     ui->pb_modifyTables->setEnabled(false);
     ui->pb_seeTables->setEnabled(false);
+
+    // no text in l_wrongPassword at the beginning
+    ui->l_wrongPassword->setText("");
     /*
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("sponsorendatenbank.db");
@@ -60,7 +64,7 @@ void MainWindow::on_icon_clicked() {
 }
 
 void MainWindow::keyPressEvent(QKeyEvent * event) {
-    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+    if (ui->stackedWidget->currentIndex() == 1 && (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)) {
         openDatabase();
     }
 }
@@ -83,10 +87,21 @@ void MainWindow::openDatabase() {
     // to encrpyt existing database
     //dbconn.setConnectOptions("QSQLITE_CREATE_KEY");
 
-    if (!dbconn.open()) {
+    if (!dbconn.open() || enteredPassword == "") {
         ui->l_db_status->setText("Öffnen fehlgeschalgen");
+        ui->l_wrongPassword->setText("Falsches Passwort!");
     }
     else {
+        ui->stackedWidget->setCurrentIndex(0);
+
+        // use different stylesheet for main menu
+        QFile file(":/stylesheets/stylesheet_main.qss");
+        file.open(QFile::ReadOnly);
+        QString stylesheet = QLatin1String(file.readAll());
+
+        qApp->setStyleSheet(stylesheet);
+
+        // activate push button
         ui->l_db_status->setText("Verbunden");
         ui->pb_createCompany->setEnabled(true);
         ui->pb_createPerson->setEnabled(true);
@@ -95,9 +110,6 @@ void MainWindow::openDatabase() {
         ui->pb_modifyTables->setEnabled(true);
         ui->pb_seeTables->setEnabled(true);
     }
-    //this->hide();
-    //mainWindow.show();
-    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void MainWindow::on_pb_createCompany_clicked()

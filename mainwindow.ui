@@ -20,7 +20,7 @@
       <property name="currentIndex">
        <number>1</number>
       </property>
-      <widget class="QWidget" name="page_5">
+      <widget class="QWidget" name="page_main">
        <widget class="QWidget" name="verticalLayoutWidget">
         <property name="geometry">
          <rect>
@@ -128,7 +128,7 @@
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="page_6">
+      <widget class="QWidget" name="page_logIn">
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -226,6 +226,16 @@
              </spacer>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="l_wrongPassword">
+            <property name="text">
+             <string>l_wrongPassword</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="verticalSpacer_2">
