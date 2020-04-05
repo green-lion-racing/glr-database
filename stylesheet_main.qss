@@ -4,18 +4,19 @@ QWidget {
 }
 
 QDialog {
-    background: #A9A9A9;
+    background-color: #DCDCDC;
 }
 
-#le_password {
+QLineEdit, QComboBox {
     font: 20px;
-    color: black;
-    background-color: white;
-    border-radius: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    border-radius: 8px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+QLabel {
+    background-color: #DCDCDC;
+    font: 18px;
 }
 
 QPushButton {
