@@ -17,7 +17,7 @@ public:
     ~createPerson();
 
 private slots:
-    void on_buttonBox_accepted();
+    void on_pb_okay_clicked();
 
 private:
     Ui::createPerson *ui;

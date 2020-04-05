@@ -25,7 +25,7 @@ createPerson::~createPerson()
     delete ui;
 }
 
-void createPerson::on_buttonBox_accepted()
+void createPerson::on_pb_okay_clicked()
 {
     //QSqlQuery createPersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, firma TEXT,titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FOREIGN KEY (firma) REFERENCES firmen(name))");
     QSqlQuery createPersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, firma TEXT,titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FirmenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id))");
@@ -67,10 +67,13 @@ void createPerson::on_buttonBox_accepted()
 
     insertPersonQuery.exec();
 
+    /*
     if (insertPersonQuery.next())
     {
     } else {
         qDebug() << "SqLite error:" << insertPersonQuery.lastError().text() << ", SqLite error code:" << insertPersonQuery.lastError().number();
     }
+    */
 
+    this->accept();
 }
