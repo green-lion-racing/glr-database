@@ -88,7 +88,6 @@ void MainWindow::openDatabase() {
     //dbconn.setConnectOptions("QSQLITE_CREATE_KEY");
 
     if (!dbconn.open() || enteredPassword == "") {
-        ui->l_db_status->setText("Öffnen fehlgeschalgen");
         ui->l_wrongPassword->setText("Falsches Passwort!");
     }
     else {
@@ -102,7 +101,6 @@ void MainWindow::openDatabase() {
         qApp->setStyleSheet(stylesheet);
 
         // activate push button
-        ui->l_db_status->setText("Verbunden");
         ui->pb_createCompany->setEnabled(true);
         ui->pb_createPerson->setEnabled(true);
         ui->pb_createActivity->setEnabled(true);
@@ -183,10 +181,9 @@ void MainWindow::on_openDatabase_triggered()
     //dbconn.setConnectOptions("QSQLITE_CREATE_KEY");
 
     if (!dbconn.open()) {
-        ui->l_db_status->setText("Öffnen fehlgeschalgen");
+
     }
     else {
-        ui->l_db_status->setText("Verbunden");
         ui->pb_createCompany->setEnabled(true);
         ui->pb_createPerson->setEnabled(true);
         ui->pb_createActivity->setEnabled(true);
