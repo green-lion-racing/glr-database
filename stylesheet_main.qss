@@ -33,6 +33,7 @@ QPushButton {
     margin-top: 20px;
     border-radius: 12px;
     font: 18px;
+    min-width: 70px;
 }
 
 #l_title {
@@ -40,4 +41,19 @@ QPushButton {
     color: white;
     margin-top: 35px;
     margin-bottom: 35px;
+}
+
+#l_dialogTitle {
+    font: 25px;
+    font-weight: bold;
+}
+
+#pb_close {
+    background-color: transparent;
+    border-image:url(:/img/img/icon_close.png);
+    max-width: 10px;
+    min-width: 10px;
+    min-height: 10px;
+    max-height: 10px;
+    border-radius: 0px;
 }

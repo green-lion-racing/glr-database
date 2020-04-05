@@ -4,6 +4,7 @@
         <file>stylesheet_main.qss</file>
     </qresource>
     <qresource prefix="/img">
-        <file>icon_arrow.png</file>
+        <file>img/icon_arrow.png</file>
+        <file>img/icon_close.png</file>
     </qresource>
 </RCC>

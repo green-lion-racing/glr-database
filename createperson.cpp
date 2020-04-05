@@ -77,3 +77,8 @@ void createPerson::on_pb_okay_clicked()
 
     this->accept();
 }
+
+void createPerson::on_pb_close_clicked()
+{
+    this->reject();
+}

@@ -19,6 +19,8 @@ public:
 private slots:
     void on_pb_okay_clicked();
 
+    void on_pb_close_clicked();
+
 private:
     Ui::createPerson *ui;
 };
