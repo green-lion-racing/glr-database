@@ -87,6 +87,9 @@ void MainWindow::openDatabase() {
     // to encrpyt existing database
     //dbconn.setConnectOptions("QSQLITE_CREATE_KEY");
 
+    // to remove password
+    //dbconn.setConnectOptions("QSQLITE_REMOVE_KEY");
+
     if (!dbconn.open() || enteredPassword == "") {
         ui->l_wrongPassword->setText("Falsches Passwort!");
     }
