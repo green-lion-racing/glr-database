@@ -17,7 +17,10 @@ public:
     ~createCompany();
 
 private slots:
-    void on_buttonBox_accepted();
+    void on_pb_okay_clicked();
+
+    void on_pb_close_clicked();
+
 private:
     Ui::createCompany *ui;
 };

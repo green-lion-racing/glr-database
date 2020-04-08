@@ -22,15 +22,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->setCurrentIndex(1);
     QWidget::setWindowTitle("GLR Sponsorendatenbank");
 
+    // display GLR logo at l_logo
+    QPixmap logo(":/img/img/logo_glr.png");
+    ui->l_logo->setPixmap(logo);
+
+
     QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/icon_arrow.png"), QLineEdit::TrailingPosition);
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::on_icon_clicked);
 
     // Set l_title "GLR Sponsorentanbank" in different colors
     ui->l_title->setText("<font color=\'#00CC00\'>GLR</font> <font color=\'white\'>Sponsorendatenbank</font>");
-
-    // display GLR logo at l_logo
-    QPixmap logo("/home/tobias/Downloads/logo_SS2018_HP_color.png");
-    ui->l_logo->setPixmap(logo);
 
     // disable push buttons
     ui->pb_createCompany->setEnabled(false);

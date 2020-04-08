@@ -18,7 +18,7 @@ createCompany::~createCompany()
     delete ui;
 }
 
-void createCompany::on_buttonBox_accepted()
+void createCompany::on_pb_okay_clicked()
 {
     bool nameIsNotDistinct = 0;
     QSqlQuery createCompanyQquery("CREATE TABLE IF NOT EXISTS firmen (id INTEGER PRIMARY KEY, name TEXT, aktiv BOOL, seit TEXT, bis TEXT, Rang TEXT, Leistungstyp TEXT, Str TEXT, Hausnummer TEXT, Ort TEXT, PLZ INTEGER, Land TEXT, Infos TEXT)");
@@ -70,4 +70,11 @@ void createCompany::on_buttonBox_accepted()
         errorWindow.setModal(true);
         errorWindow.exec();
     }
+
+    this->accept();
+}
+
+void createCompany::on_pb_close_clicked()
+{
+    this->reject();
 }
