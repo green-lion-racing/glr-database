@@ -30,6 +30,13 @@ MainWindow::MainWindow(QWidget *parent)
     QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/icon_arrow.png"), QLineEdit::TrailingPosition);
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::on_icon_clicked);
 
+    //
+    QPixmap pixmap_createPerson = QPixmap(":/img/img/icon_close.png");
+    ui->pb_createPerson->setPixmap(pixmap_createPerson);
+    //QIcon icon_createPerson;
+    //icon_createPerson.addFile(QString::fromUtf8(":/img/img/icon_close"), QSize(), QIcon::Normal, QIcon::Off);
+    //ui->pb_createPerson->setIcon(icon_createPerson);
+
     // Set l_title "GLR Sponsorentanbank" in different colors
     ui->l_title->setText("<font color=\'#00CC00\'>GLR</font> <font color=\'white\'>Sponsorendatenbank</font>");
 

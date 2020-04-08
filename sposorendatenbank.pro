@@ -28,6 +28,7 @@ SOURCES += \
     modifycompany.cpp \
     modifytables.cpp \
     passwordinput.cpp \
+    pushbuttonicon.cpp \
     savefile.cpp
 
 HEADERS += \
@@ -42,6 +43,7 @@ HEADERS += \
     modifycompany.h \
     modifytables.h \
     passwordinput.h \
+    pushbuttonicon.h \
     savefile.h
 
 FORMS += \
