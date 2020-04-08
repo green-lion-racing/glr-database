@@ -26,6 +26,11 @@ QPushButton {
     padding:10px;
 }
 
+QTextEdit {
+    border: 0px;
+    border-radius: 8px;
+}
+
 #pb_okay {
     background-color: #32CD32;
     color: white;

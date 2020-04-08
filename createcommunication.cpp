@@ -36,7 +36,39 @@ createCommunication::~createCommunication()
     delete ui;
 }
 
-void createCommunication::on_buttonBox_accepted()
+void createCommunication::on_cb_company_currentTextChanged(const QString &arg1)
+{
+    ui->cb_person->clear();
+
+    QVector<QString> persons;
+    //QVector<int> personIds;
+    QSqlQuery selectPersons;
+
+    QString currentCompanyName = ui->cb_company->currentText();
+
+    persons.clear();
+
+    selectPersons.prepare("SELECT id, vorname, nachname FROM personen WHERE firma = :currentCompanyName");
+    selectPersons.bindValue(":currentCompanyName", currentCompanyName);
+    selectPersons.exec();
+    while(selectPersons.next()) {
+        personIds.push_back(selectPersons.value(0).toInt());
+        persons.push_back(selectPersons.value(1).toString() + " " + selectPersons.value(2).toString());
+    }
+
+    for (int i = 0; i < persons.size(); i++) {
+        ui->cb_person->addItem(persons[i]);
+    }
+
+}
+
+void createCommunication::on_cw_calender_selectionChanged()
+{
+    when = ui->cw_calender->selectedDate().toString("yyyy-MM-dd");      //Auswahl über Kalender Widget
+    ui->le_when->setText(when);
+}
+
+void createCommunication::on_pb_okay_clicked()
 {
     //QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
     QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, PersonenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id), FOREIGN KEY(PersonenID) REFERENCES personen(id))");
@@ -95,34 +127,7 @@ void createCommunication::on_buttonBox_accepted()
     file.exec();
 }
 
-void createCommunication::on_cb_company_currentTextChanged(const QString &arg1)
+void createCommunication::on_pb_close_clicked()
 {
-    ui->cb_person->clear();
-
-    QVector<QString> persons;
-    //QVector<int> personIds;
-    QSqlQuery selectPersons;
-
-    QString currentCompanyName = ui->cb_company->currentText();
-
-    persons.clear();
-
-    selectPersons.prepare("SELECT id, vorname, nachname FROM personen WHERE firma = :currentCompanyName");
-    selectPersons.bindValue(":currentCompanyName", currentCompanyName);
-    selectPersons.exec();
-    while(selectPersons.next()) {
-        personIds.push_back(selectPersons.value(0).toInt());
-        persons.push_back(selectPersons.value(1).toString() + " " + selectPersons.value(2).toString());
-    }
-
-    for (int i = 0; i < persons.size(); i++) {
-        ui->cb_person->addItem(persons[i]);
-    }
-
-}
-
-void createCommunication::on_cw_calender_selectionChanged()
-{
-    when = ui->cw_calender->selectedDate().toString("yyyy-MM-dd");      //Auswahl über Kalender Widget
-    ui->le_when->setText(when);
+    this->reject();
 }

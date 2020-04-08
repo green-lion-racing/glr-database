@@ -17,11 +17,14 @@ public:
     ~createActivity();
 
 private slots:
-    void on_buttonBox_accepted();
 
     void on_cb_company_currentTextChanged(const QString &arg1);
 
     void on_cw_calender_selectionChanged();
+
+    void on_pb_okay_clicked();
+
+    void on_pb_close_clicked();
 
 private:
     Ui::createActivity *ui;

@@ -40,33 +40,6 @@ createActivity::~createActivity()
     delete ui;
 }
 
-void createActivity::on_buttonBox_accepted()
-{
-    QSqlQuery createActivityQquery("CREATE TABLE IF NOT EXISTS leistungen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, wert TEXT, was TEXT, infos TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
-    QString person = ui->cb_person->currentText();
-    //QString when = ui->le_when->text();
-    QString value = ui->le_value->text();
-    QString what = ui->le_what->text();
-    QString info = ui->te_info->toPlainText();
-    QString companyName = ui->cb_company->currentText();
-    QSqlQuery insertActivityQuery;
-    insertActivityQuery.prepare("INSERT INTO leistungen(firma, ansprechpartner, wann, wert, was, infos) VALUES (:companyName, :person, :when, :value, :what, :info)");
-    insertActivityQuery.bindValue(":companyName", companyName);
-    insertActivityQuery.bindValue(":person", person);
-    insertActivityQuery.bindValue(":when", when);
-    insertActivityQuery.bindValue(":value", value);
-    insertActivityQuery.bindValue(":what", what);
-    insertActivityQuery.bindValue(":info", info);
-
-    insertActivityQuery.exec();
-
-    if (insertActivityQuery.next())
-    {
-    } else {
-        qDebug() << "SqLite error:" << insertActivityQuery.lastError().text() << ", SqLite error code:" << insertActivityQuery.lastError().number();
-    }
-}
-
 void createActivity::on_cb_company_currentTextChanged(const QString &arg1)
 {
 
@@ -93,4 +66,38 @@ void createActivity::on_cw_calender_selectionChanged()
 {
     when = ui->cw_calender->selectedDate().toString("yyyy-MM-dd");      //Auswahl über Kalender Widget
     ui->le_when->setText(when);
+}
+
+void createActivity::on_pb_okay_clicked()
+{
+    QSqlQuery createActivityQquery("CREATE TABLE IF NOT EXISTS leistungen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, wert TEXT, was TEXT, infos TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
+    QString person = ui->cb_person->currentText();
+    //QString when = ui->le_when->text();
+    QString value = ui->le_value->text();
+    QString what = ui->le_what->text();
+    QString info = ui->te_info->toPlainText();
+    QString companyName = ui->cb_company->currentText();
+    QSqlQuery insertActivityQuery;
+    insertActivityQuery.prepare("INSERT INTO leistungen(firma, ansprechpartner, wann, wert, was, infos) VALUES (:companyName, :person, :when, :value, :what, :info)");
+    insertActivityQuery.bindValue(":companyName", companyName);
+    insertActivityQuery.bindValue(":person", person);
+    insertActivityQuery.bindValue(":when", when);
+    insertActivityQuery.bindValue(":value", value);
+    insertActivityQuery.bindValue(":what", what);
+    insertActivityQuery.bindValue(":info", info);
+
+    insertActivityQuery.exec();
+
+    if (insertActivityQuery.next())
+    {
+    } else {
+        qDebug() << "SqLite error:" << insertActivityQuery.lastError().text() << ", SqLite error code:" << insertActivityQuery.lastError().number();
+    }
+
+    this->accept();
+}
+
+void createActivity::on_pb_close_clicked()
+{
+    this->reject();
 }
