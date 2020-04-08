@@ -37,11 +37,15 @@ private slots:
 
     void on_openDatabase_triggered();
 
+    void on_actionPasswort_entfernen_triggered();
+
 private:
     Ui::MainWindow *ui;
 
     void keyPressEvent(QKeyEvent * event);
 
     void openDatabase();
+
+    QSqlDatabase dbconn;
 };
 #endif // MAINWINDOW_H

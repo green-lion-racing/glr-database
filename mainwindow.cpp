@@ -81,7 +81,8 @@ void MainWindow::openDatabase() {
 
     enteredPassword = ui->le_password->text();
 
-    QSqlDatabase dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
+    //QSqlDatabase dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
+    dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
     dbconn.setDatabaseName(fileName);
     dbconn.setPassword(enteredPassword);
     // to encrpyt existing database
@@ -210,4 +211,28 @@ void MainWindow::on_openDatabase_triggered()
         ui->pb_seeTables->setEnabled(true);
     }
     */
+}
+
+void MainWindow::on_actionPasswort_entfernen_triggered()
+{
+    QString fileName = "sponsorendatenbank.db";
+
+    enteredPassword = ui->le_password->text();
+    dbconn.close();
+    //QSqlDatabase dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
+    dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
+    dbconn.setDatabaseName(fileName);
+    dbconn.setPassword(enteredPassword);
+    // to encrpyt existing database
+    //dbconn.setConnectOptions("QSQLITE_CREATE_KEY");
+
+    // to remove password
+    dbconn.setConnectOptions("QSQLITE_REMOVE_KEY");
+
+    if (!dbconn.open() || enteredPassword == "") {
+        ui->l_wrongPassword->setText("Passwort wurde entfernt!");
+    }
+    else {
+        ui->l_wrongPassword->setText("Passwort konnte nicht entfernt werden!");
+    }
 }
