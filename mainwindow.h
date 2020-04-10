@@ -39,6 +39,8 @@ private slots:
 
     void on_actionPasswort_entfernen_triggered();
 
+    void on_tb_createPerson_triggered(QAction *arg1);
+
 private:
     Ui::MainWindow *ui;
 

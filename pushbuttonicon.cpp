@@ -13,7 +13,7 @@ PushButtonIcon::~PushButtonIcon()
 QSize PushButtonIcon::sizeHint() const
 {
     const auto parentHint = QPushButton::sizeHint();
-    // merge??
+    // margin??
     return QSize(parentHint.width() + m_pixmap.width(), std::max(parentHint.height(), m_pixmap.height()));
 }
 

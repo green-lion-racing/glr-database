@@ -31,11 +31,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::on_icon_clicked);
 
     //
-    QPixmap pixmap_createPerson = QPixmap(":/img/img/icon_close.png");
+    QPixmap pixmap_createPerson = QPixmap(":/img/img/icon_person.png");
     ui->pb_createPerson->setPixmap(pixmap_createPerson);
-    //QIcon icon_createPerson;
-    //icon_createPerson.addFile(QString::fromUtf8(":/img/img/icon_close"), QSize(), QIcon::Normal, QIcon::Off);
-    //ui->pb_createPerson->setIcon(icon_createPerson);
+
+    ui->tb_createPerson->setIcon(QIcon(":img/img/icon_person.png"));
+    /*
+    auto act = new QAction();
+    act->setIcon(QIcon(":/img/img/icon_person.png"));
+    act->setText("Person hinzufügen");
+    ui->tb_createPerson->setDefaultAction(act);
+    */
 
     // Set l_title "GLR Sponsorentanbank" in different colors
     ui->l_title->setText("<font color=\'#00CC00\'>GLR</font> <font color=\'white\'>Sponsorendatenbank</font>");
@@ -243,4 +248,11 @@ void MainWindow::on_actionPasswort_entfernen_triggered()
     else {
         ui->l_wrongPassword->setText("Passwort konnte nicht entfernt werden!");
     }
+}
+
+void MainWindow::on_tb_createPerson_triggered(QAction *arg1)
+{
+    createPerson person;
+    person.setModal(true);
+    person.exec();
 }

@@ -7,5 +7,6 @@
         <file>img/icon_arrow.png</file>
         <file>img/icon_close.png</file>
         <file>img/logo_glr.png</file>
+        <file>img/icon_person.png</file>
     </qresource>
 </RCC>

@@ -23,7 +23,7 @@ QPushButton {
     border: 0px;
     background-color: #A9A9A9;
     border-radius: 10px;
-    padding:10px;
+    padding: 10px;
 }
 
 QTextEdit {
@@ -31,8 +31,15 @@ QTextEdit {
     border-radius: 8px;
 }
 
+QToolButton {
+    border: 0px;
+    background-color: #A9A9A9;
+    border-radius: 10px;
+    padding: 10px;
+}
+
 #pb_createPerson {
-    min-height: 100px;
+
     text-align: bottom;
 }
 
