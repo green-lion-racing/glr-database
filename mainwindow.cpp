@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pb_createPerson->setPixmap(pixmap_createPerson);
 
     ui->tb_createPerson->setIcon(QIcon(":img/img/icon_person.png"));
+    ui->tb_createPerson->setIconSize(QSize(200,200));
     /*
     auto act = new QAction();
     act->setIcon(QIcon(":/img/img/icon_person.png"));
@@ -250,7 +251,7 @@ void MainWindow::on_actionPasswort_entfernen_triggered()
     }
 }
 
-void MainWindow::on_tb_createPerson_triggered(QAction *arg1)
+void MainWindow::on_tb_createPerson_clicked()
 {
     createPerson person;
     person.setModal(true);

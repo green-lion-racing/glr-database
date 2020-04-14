@@ -35,7 +35,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>...</string>
+               <string>Person hinzufügen</string>
               </property>
               <property name="toolButtonStyle">
                <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -260,7 +260,7 @@
      <x>0</x>
      <y>0</y>
      <width>1312</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
