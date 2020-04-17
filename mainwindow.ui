@@ -46,53 +46,12 @@
              </widget>
             </item>
             <item>
-             <widget class="PushButtonIcon" name="pb_createPerson">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Person hinzufügen</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QToolButton" name="tb_createCompany">
               <property name="text">
                <string>Unternehmen hinzufügen</string>
               </property>
               <property name="toolButtonStyle">
                <enum>Qt::ToolButtonTextUnderIcon</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pb_createCompany">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Unternehmen hizufügen</string>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-              <property name="default">
-               <bool>false</bool>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -290,7 +249,7 @@
      <x>0</x>
      <y>0</y>
      <width>1312</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
@@ -314,13 +273,6 @@
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>PushButtonIcon</class>
-   <extends>QPushButton</extends>
-   <header location="global">pushbuttonicon.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
