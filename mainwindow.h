@@ -21,13 +21,7 @@ public:
 private slots:
     void on_icon_clicked();
 
-    void on_pb_createActivity_clicked();
-
     void on_pb_saveFile_clicked();
-
-    void on_pb_modifyTables_clicked();
-
-    void on_pb_seeTables_clicked();
 
     void on_openDatabase_triggered();
 
@@ -38,6 +32,12 @@ private slots:
     void on_tb_createCompany_clicked();
 
     void on_tb_createCommunication_clicked();
+
+    void on_tb_createActivity_clicked();
+
+    void on_tb_modifyTables_clicked();
+
+    void on_tb_displayTables_clicked();
 
 private:
     Ui::MainWindow *ui;

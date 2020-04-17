@@ -84,9 +84,18 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pb_createActivity">
+             <widget class="QToolButton" name="tb_createActivity">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Leistung hinzufügen</string>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>
@@ -111,13 +120,6 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pb_modifyTables">
-              <property name="text">
-               <string>Einträge bearbeiten</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QToolButton" name="tb_displayTables">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -130,13 +132,6 @@
               </property>
               <property name="toolButtonStyle">
                <enum>Qt::ToolButtonTextUnderIcon</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pb_seeTables">
-              <property name="text">
-               <string>Tabellen ansehen</string>
               </property>
              </widget>
             </item>

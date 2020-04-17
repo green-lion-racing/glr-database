@@ -42,6 +42,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tb_createCommunication->setIcon(QIcon(":img/img/icon_communication.png"));
     ui->tb_createCommunication->setIconSize(QSize(200,200));
 
+    // tb_createActivity
+    ui->tb_createActivity->setIcon(QIcon(":img/img/icon_activity.png"));
+    ui->tb_createActivity->setIconSize(QSize(200,200));
+
     // tb_modifyTables
     ui->tb_modifyTables->setIcon(QIcon(":img/img/icon_edit.png"));
     ui->tb_modifyTables->setIconSize(QSize(200,200));
@@ -59,11 +63,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Set l_title "GLR Sponsorentanbank" in different colors
     ui->l_title->setText("<font color=\'#66D104\'>GLR</font> <font color=\'white\'>Sponsorendatenbank</font>");
-
-    // disable push buttons
-    ui->pb_createActivity->setEnabled(false);
-    ui->pb_modifyTables->setEnabled(false);
-    ui->pb_seeTables->setEnabled(false);
 
     // no text in l_wrongPassword at the beginning
     ui->l_wrongPassword->setText("");
@@ -128,19 +127,7 @@ void MainWindow::openDatabase() {
         QString stylesheet = QLatin1String(file.readAll());
 
         qApp->setStyleSheet(stylesheet);
-
-        // activate push button
-        ui->pb_createActivity->setEnabled(true);
-        ui->pb_modifyTables->setEnabled(true);
-        ui->pb_seeTables->setEnabled(true);
     }
-}
-
-void MainWindow::on_pb_createActivity_clicked()
-{
-    createActivity activity;
-    activity.setModal(true);
-    activity.exec();
 }
 
 void MainWindow::on_pb_saveFile_clicked()
@@ -148,20 +135,6 @@ void MainWindow::on_pb_saveFile_clicked()
     saveFile save;
     save.setModal(true);
     save.exec();
-}
-
-void MainWindow::on_pb_modifyTables_clicked()
-{
-    modifyTables *modifyTablesWindow;
-    modifyTablesWindow = new modifyTables();
-    modifyTablesWindow->show();
-}
-
-void MainWindow::on_pb_seeTables_clicked()
-{
-    displayTables tables;
-    tables.setModal(true);
-    tables.exec();
 }
 
 void MainWindow::on_openDatabase_triggered()
@@ -184,9 +157,7 @@ void MainWindow::on_openDatabase_triggered()
 
     }
     else {
-        ui->pb_createActivity->setEnabled(true);
-        ui->pb_modifyTables->setEnabled(true);
-        ui->pb_seeTables->setEnabled(true);
+
     }
 
     /*
@@ -249,4 +220,25 @@ void MainWindow::on_tb_createCommunication_clicked()
     createActivity activity;
     activity.setModal(true);
     activity.exec();
+}
+
+void MainWindow::on_tb_createActivity_clicked()
+{
+    createActivity activity;
+    activity.setModal(true);
+    activity.exec();
+}
+
+void MainWindow::on_tb_modifyTables_clicked()
+{
+    modifyTables *modifyTablesWindow;
+    modifyTablesWindow = new modifyTables();
+    modifyTablesWindow->show();
+}
+
+void MainWindow::on_tb_displayTables_clicked()
+{
+    displayTables tables;
+    tables.setModal(true);
+    tables.exec();
 }
