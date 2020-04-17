@@ -47,6 +47,12 @@
             </item>
             <item>
              <widget class="QToolButton" name="tb_createCompany">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Unternehmen hinzufügen</string>
               </property>
@@ -75,6 +81,12 @@
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
              <widget class="QToolButton" name="tb_modifyTables">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Einträge bearbeiten</string>
               </property>
@@ -92,6 +104,12 @@
             </item>
             <item>
              <widget class="QToolButton" name="tb_displayTables">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Tabellen anshen</string>
               </property>

@@ -5,6 +5,7 @@ QWidget {
 
 QDialog {
     background: #A9A9A9;
+    border: 20px;
 }
 
 #le_password {
