@@ -5,6 +5,7 @@ QWidget {
 
 QDialog {
     background-color: #DCDCDC;
+    border-radius: 20px;
 }
 
 QLineEdit, QComboBox {

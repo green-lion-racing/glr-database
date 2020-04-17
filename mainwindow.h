@@ -21,10 +21,6 @@ public:
 private slots:
     void on_icon_clicked();
 
-    void on_pb_createCompany_clicked();
-
-    void on_pb_createPerson_clicked();
-
     void on_pb_createActivity_clicked();
 
     void on_pb_createCommunication_clicked();
