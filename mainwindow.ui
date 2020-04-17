@@ -128,7 +128,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Tabellen anshen</string>
+               <string>Tabellen ansehen</string>
               </property>
               <property name="toolButtonStyle">
                <enum>Qt::ToolButtonTextUnderIcon</enum>
