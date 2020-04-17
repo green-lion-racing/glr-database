@@ -41,6 +41,8 @@ private slots:
 
     void on_tb_createPerson_clicked();
 
+    void on_tb_createCompany_clicked();
+
 private:
     Ui::MainWindow *ui;
 

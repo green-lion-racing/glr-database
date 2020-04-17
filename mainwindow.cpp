@@ -33,9 +33,22 @@ MainWindow::MainWindow(QWidget *parent)
     //
     QPixmap pixmap_createPerson = QPixmap(":/img/img/icon_person.png");
     ui->pb_createPerson->setPixmap(pixmap_createPerson);
-
+    // tb_createPerson
     ui->tb_createPerson->setIcon(QIcon(":img/img/icon_person.png"));
     ui->tb_createPerson->setIconSize(QSize(200,200));
+
+    // tb_createCompany
+    ui->tb_createCompany->setIcon(QIcon(":img/img/icon_company.png"));
+    ui->tb_createCompany->setIconSize(QSize(200,200));
+
+    // tb_modifyTables
+    ui->tb_modifyTables->setIcon(QIcon(":img/img/icon_edit.png"));
+    ui->tb_modifyTables->setIconSize(QSize(200,200));
+
+    // tb_displayTables
+    ui->tb_displayTables->setIcon(QIcon(":img/img/icon_lens.png"));
+    ui->tb_displayTables->setIconSize(QSize(200,200));
+
     /*
     auto act = new QAction();
     act->setIcon(QIcon(":/img/img/icon_person.png"));
@@ -126,25 +139,6 @@ void MainWindow::openDatabase() {
         ui->pb_modifyTables->setEnabled(true);
         ui->pb_seeTables->setEnabled(true);
     }
-}
-
-void MainWindow::on_pb_createCompany_clicked()
-{
-    createCompany company;
-    company.setModal(true);
-    company.exec();
-    //QSqlQuery createCompanyQquery("CREATE TABLE firmen (id INTEGER PRIMARY KEY, name TEXT, aktiv BOOL, seit TEXT, bis TEXT, Rang TEXT, Leistungstyp TEXT, Infos TEXT)");
-    //QSqlQuery insertCompanyQuery("INSERT INTO firmen(name) VALUES ('Firma 1')");
-
-}
-
-void MainWindow::on_pb_createPerson_clicked()
-{
-    //QSqlQuery createPersonQuery("CREATE TABLE personen (id INTEGER PRIMARY KEY, firma TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, du_sie TEXT, aktiv BOOL, FOREIGN KEY (firma) REFERENCES firmen(name))");
-    //QSqlQuery insertPersonQuerry("INSERT INTO personen(vorname, nachname) VALUES ('Vorname1', 'Nachname1')");
-    createPerson person;
-    person.setModal(true);
-    person.exec();
 }
 
 void MainWindow::on_pb_createActivity_clicked()
@@ -256,4 +250,11 @@ void MainWindow::on_tb_createPerson_clicked()
     createPerson person;
     person.setModal(true);
     person.exec();
+}
+
+void MainWindow::on_tb_createCompany_clicked()
+{
+    createCompany company;
+    company.setModal(true);
+    company.exec();
 }

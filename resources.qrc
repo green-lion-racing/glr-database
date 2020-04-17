@@ -8,5 +8,8 @@
         <file>img/icon_close.png</file>
         <file>img/logo_glr.png</file>
         <file>img/icon_person.png</file>
+        <file>img/icon_company.png</file>
+        <file>img/icon_edit.png</file>
+        <file>img/icon_lens.png</file>
     </qresource>
 </RCC>

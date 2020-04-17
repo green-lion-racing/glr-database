@@ -59,6 +59,16 @@
              </widget>
             </item>
             <item>
+             <widget class="QToolButton" name="tb_createCompany">
+              <property name="text">
+               <string>Unternehmen hinzufügen</string>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="pb_createCompany">
               <property name="minimumSize">
                <size>
@@ -105,9 +115,29 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
+             <widget class="QToolButton" name="tb_modifyTables">
+              <property name="text">
+               <string>Einträge bearbeiten</string>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="pb_modifyTables">
               <property name="text">
                <string>Einträge bearbeiten</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tb_displayTables">
+              <property name="text">
+               <string>Tabellen anshen</string>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>
