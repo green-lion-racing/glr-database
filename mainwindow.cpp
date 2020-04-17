@@ -30,9 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/icon_arrow.png"), QLineEdit::TrailingPosition);
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::on_icon_clicked);
 
-    //
-    QPixmap pixmap_createPerson = QPixmap(":/img/img/icon_person.png");
-    ui->pb_createPerson->setPixmap(pixmap_createPerson);
     // tb_createPerson
     ui->tb_createPerson->setIcon(QIcon(":img/img/icon_person.png"));
     ui->tb_createPerson->setIconSize(QSize(200,200));
@@ -60,8 +57,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->l_title->setText("<font color=\'#00CC00\'>GLR</font> <font color=\'white\'>Sponsorendatenbank</font>");
 
     // disable push buttons
-    ui->pb_createCompany->setEnabled(false);
-    ui->pb_createPerson->setEnabled(false);
     ui->pb_createActivity->setEnabled(false);
     ui->pb_createCommunication->setEnabled(false);
     ui->pb_modifyTables->setEnabled(false);
@@ -132,8 +127,6 @@ void MainWindow::openDatabase() {
         qApp->setStyleSheet(stylesheet);
 
         // activate push button
-        ui->pb_createCompany->setEnabled(true);
-        ui->pb_createPerson->setEnabled(true);
         ui->pb_createActivity->setEnabled(true);
         ui->pb_createCommunication->setEnabled(true);
         ui->pb_modifyTables->setEnabled(true);
@@ -196,8 +189,6 @@ void MainWindow::on_openDatabase_triggered()
 
     }
     else {
-        ui->pb_createCompany->setEnabled(true);
-        ui->pb_createPerson->setEnabled(true);
         ui->pb_createActivity->setEnabled(true);
         ui->pb_createCommunication->setEnabled(true);
         ui->pb_modifyTables->setEnabled(true);
