@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     QWidget::setWindowTitle("GLR Sponsorendatenbank");
 
     // display GLR logo at l_logo
-    QPixmap logo(":/img/img/logo_glr.png");
+    QPixmap logo(":/img/img/logo_glr_white.png");
     ui->l_logo->setPixmap(logo);
 
 
@@ -37,6 +37,10 @@ MainWindow::MainWindow(QWidget *parent)
     // tb_createCompany
     ui->tb_createCompany->setIcon(QIcon(":img/img/icon_company.png"));
     ui->tb_createCompany->setIconSize(QSize(200,200));
+
+    // tb_createCommunication
+    ui->tb_createCommunication->setIcon(QIcon(":img/img/icon_communication.png"));
+    ui->tb_createCommunication->setIconSize(QSize(200,200));
 
     // tb_modifyTables
     ui->tb_modifyTables->setIcon(QIcon(":img/img/icon_edit.png"));
@@ -54,11 +58,10 @@ MainWindow::MainWindow(QWidget *parent)
     */
 
     // Set l_title "GLR Sponsorentanbank" in different colors
-    ui->l_title->setText("<font color=\'#00CC00\'>GLR</font> <font color=\'white\'>Sponsorendatenbank</font>");
+    ui->l_title->setText("<font color=\'#66D104\'>GLR</font> <font color=\'white\'>Sponsorendatenbank</font>");
 
     // disable push buttons
     ui->pb_createActivity->setEnabled(false);
-    ui->pb_createCommunication->setEnabled(false);
     ui->pb_modifyTables->setEnabled(false);
     ui->pb_seeTables->setEnabled(false);
 
@@ -128,7 +131,6 @@ void MainWindow::openDatabase() {
 
         // activate push button
         ui->pb_createActivity->setEnabled(true);
-        ui->pb_createCommunication->setEnabled(true);
         ui->pb_modifyTables->setEnabled(true);
         ui->pb_seeTables->setEnabled(true);
     }
@@ -139,13 +141,6 @@ void MainWindow::on_pb_createActivity_clicked()
     createActivity activity;
     activity.setModal(true);
     activity.exec();
-}
-
-void MainWindow::on_pb_createCommunication_clicked()
-{
-    createCommunication communication;
-    communication.setModal(true);
-    communication.exec();
 }
 
 void MainWindow::on_pb_saveFile_clicked()
@@ -190,7 +185,6 @@ void MainWindow::on_openDatabase_triggered()
     }
     else {
         ui->pb_createActivity->setEnabled(true);
-        ui->pb_createCommunication->setEnabled(true);
         ui->pb_modifyTables->setEnabled(true);
         ui->pb_seeTables->setEnabled(true);
     }
@@ -248,4 +242,11 @@ void MainWindow::on_tb_createCompany_clicked()
     createCompany company;
     company.setModal(true);
     company.exec();
+}
+
+void MainWindow::on_tb_createCommunication_clicked()
+{
+    createActivity activity;
+    activity.setModal(true);
+    activity.exec();
 }

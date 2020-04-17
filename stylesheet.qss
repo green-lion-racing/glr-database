@@ -1,6 +1,6 @@
 QWidget {
     color: black;
-    background-color: #005f69;
+    background-color: #043F53;
 }
 
 QDialog {

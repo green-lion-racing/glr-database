@@ -23,8 +23,6 @@ private slots:
 
     void on_pb_createActivity_clicked();
 
-    void on_pb_createCommunication_clicked();
-
     void on_pb_saveFile_clicked();
 
     void on_pb_modifyTables_clicked();
@@ -38,6 +36,8 @@ private slots:
     void on_tb_createPerson_clicked();
 
     void on_tb_createCompany_clicked();
+
+    void on_tb_createCommunication_clicked();
 
 private:
     Ui::MainWindow *ui;

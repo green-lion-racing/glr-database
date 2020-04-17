@@ -13,5 +13,6 @@
         <file>img/icon_lens.png</file>
         <file>img/icon_activity.png</file>
         <file>img/icon_communication.png</file>
+        <file>img/logo_glr_white.png</file>
     </qresource>
 </RCC>

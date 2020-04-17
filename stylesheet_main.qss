@@ -4,7 +4,7 @@ QWidget {
 }
 
 QDialog {
-    background-color: #DCDCDC;
+    background-color: #E5E5E5;
 }
 
 QLineEdit, QComboBox {
@@ -15,13 +15,13 @@ QLineEdit, QComboBox {
 }
 
 QLabel {
-    background-color: #DCDCDC;
+    background-color: #E5E5E5;
     font: 18px;
 }
 
 QPushButton {
     border: 0px;
-    background-color: #A9A9A9;
+    background-color: #66D104;
     border-radius: 10px;
     padding: 10px;
 }
@@ -33,7 +33,7 @@ QTextEdit {
 
 QToolButton {
     border: 0px;
-    background-color: #DCDCDC;
+    background-color: #E5E5E5;
     border-radius: 10px;
     padding: 10px;
     font-size: 18px;

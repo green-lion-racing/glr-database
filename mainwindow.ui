@@ -37,6 +37,12 @@
               <property name="text">
                <string>Person hinzufügen</string>
               </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
               <property name="toolButtonStyle">
                <enum>Qt::ToolButtonTextUnderIcon</enum>
               </property>
@@ -62,9 +68,18 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pb_createCommunication">
+             <widget class="QToolButton" name="tb_createCommunication">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Kommunikation hinzufügen</string>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>
