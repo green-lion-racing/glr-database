@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->sw_main->setCurrentIndex(1);
     QWidget::setWindowTitle("GLR Sponsorendatenbank");
 
     // display GLR logo at l_logo
@@ -88,7 +88,7 @@ void MainWindow::on_icon_clicked() {
 }
 
 void MainWindow::keyPressEvent(QKeyEvent * event) {
-    if (ui->stackedWidget->currentIndex() == 1 && (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)) {
+    if (ui->sw_main->currentIndex() == 1 && (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)) {
         openDatabase();
     }
 }
@@ -119,7 +119,7 @@ void MainWindow::openDatabase() {
         ui->l_wrongPassword->setText("Falsches Passwort!");
     }
     else {
-        ui->stackedWidget->setCurrentIndex(0);
+        ui->sw_main->setCurrentIndex(0);
 
         // use different stylesheet for main menu
         QFile file(":/stylesheets/stylesheet_main.qss");
