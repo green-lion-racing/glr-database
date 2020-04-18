@@ -26,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap logo(":/img/img/logo_glr_white.png");
     ui->l_logo->setPixmap(logo);
 
-
-    QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/icon_arrow.png"), QLineEdit::TrailingPosition);
+    //QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/img/icon_arrow.png"), QLineEdit::TrailingPosition);
+    QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/img/icon_arrow.png"), QLineEdit::TrailingPosition);
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::on_icon_clicked);
 
     // tb_createPerson

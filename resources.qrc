@@ -4,7 +4,6 @@
         <file>stylesheet_main.qss</file>
     </qresource>
     <qresource prefix="/img">
-        <file>img/icon_arrow.png</file>
         <file>img/icon_close.png</file>
         <file>img/logo_glr.png</file>
         <file>img/icon_person.png</file>
@@ -14,5 +13,6 @@
         <file>img/icon_activity.png</file>
         <file>img/icon_communication.png</file>
         <file>img/logo_glr_white.png</file>
+        <file>img/icon_arrow.png</file>
     </qresource>
 </RCC>
