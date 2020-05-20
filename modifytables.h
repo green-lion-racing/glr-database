@@ -41,6 +41,7 @@ private:
     void checkBoxSilver(QString otherCheckedCheckBoxes = "nothing");
     void checkBoxBronze(QString otherCheckedCheckBoxes = "nothing");
     void checkBoxSupporter(QString otherCheckedCheckBoxes = "nothing");
+    QString getCompanyId();
 };
 
 #endif // MODIFYTABLES_H

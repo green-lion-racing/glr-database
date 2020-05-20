@@ -78,7 +78,20 @@ void modifyTables::on_cb_table_currentTextChanged(const QString &arg1)
     else if (selectedTable == "personen" || selectedTable == "kommunikationen") {
         ui->cb_companyName->setVisible(true);
         companyName = ui->cb_companyName->currentText();
-        filter = "firma = '" + companyName + "'";
+        // get company-id from selected company
+        /*
+        QSqlQuery getCompanyId;
+        getCompanyId.prepare("SELECT id FROM firmen WHERE name = :companyName");
+        getCompanyId.bindValue(":companyName", companyName);
+        getCompanyId.exec();
+
+        QString companyId;
+        while (getCompanyId.next())
+            companyId = getCompanyId.value(0).toString();
+        */
+        QString companyId = getCompanyId();
+        //filter = "firma = '" + companyName + "'";
+        filter = "FirmenID = '" + companyId + "'";
 
         modal->setFilter(filter);
         modal->select();
@@ -475,8 +488,8 @@ void modifyTables::on_cb_companyName_currentTextChanged(const QString &arg1)
 {
     QString selectedTable = ui->cb_table->currentText();
     if (selectedTable == "personen" || selectedTable == "kommunikationen") {
-        QString companyName = ui->cb_companyName->currentText();
-        QString filter = "firma = '" + companyName + "'";
+        QString companyId = getCompanyId();
+        QString filter = "FirmenID = '" + companyId + "'";
         modal->select();
         ui->tv_table->setModel(modal);
         modal->setFilter(filter);
@@ -484,4 +497,18 @@ void modifyTables::on_cb_companyName_currentTextChanged(const QString &arg1)
         modal->select();
         ui->tv_table->setModel(modal);
     }
+}
+
+QString modifyTables::getCompanyId () {
+    QSqlQuery queryCompanyId;
+    QString companyName = ui->cb_companyName->currentText();
+    queryCompanyId.prepare("SELECT id FROM firmen WHERE name = :companyName");
+    queryCompanyId.bindValue(":companyName", companyName);
+    queryCompanyId.exec();
+
+    QString companyId;
+    while (queryCompanyId.next())
+        companyId = queryCompanyId.value(0).toString();
+
+    return companyId;
 }
