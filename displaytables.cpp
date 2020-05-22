@@ -73,17 +73,18 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
         companyName = ui->cb_companyName->currentText();
         showCompanyName = 1;
 
+        QString companyId = getCompanyId();
         if (selectedTable == "kommunikationen") {
             ui->pb_save->setVisible(true);
 
-            modal->setQuery("SELECT k.id, k.firma, k.ansprechpartner, k.wann, k.was, count(*) FROM kommunikationen k, kommunikation_dateien d  WHERE k.firma = '" + companyName  + "' AND k.id = d.kommunikation_id GROUP BY kommunikation_id");
+            modal->setQuery("SELECT k.id, k.firma, k.ansprechpartner, k.wann, k.was, count(*) FROM kommunikationen k, kommunikation_dateien d  WHERE k.FirmenID = '" + companyId + "' AND k.id = d.kommunikation_id GROUP BY kommunikation_id");
         }
         else {
             // display filter company name
             //ui->cb_companyName->setVisible(true);
             //companyName = ui->cb_companyName->currentText();
             //filter = "firma = '" + companyName + "'";
-            modal->setQuery("SELECT * FROM " + selectedTable + " WHERE firma = '" + companyName  + "'");
+            modal->setQuery("SELECT * FROM " + selectedTable + " WHERE FirmenId = '" + companyId + "'");
             //showCompanyName = 1;
         }
     }
@@ -478,8 +479,9 @@ void displayTables::on_cb_companyName_currentTextChanged(const QString &arg1)
 {
     ui->cb_companyName->setVisible(true);
     QString companyName = ui->cb_companyName->currentText();
+    QString companyId = getCompanyId();
     if (selectedTable == "kommunikationen")
-        modal->setQuery("SELECT k.id, k.firma, k.ansprechpartner, k.wann, k.was, count(*) FROM kommunikationen k, kommunikation_dateien d  WHERE k.firma = '" + companyName  + "' AND k.id = d.kommunikation_id GROUP BY kommunikation_id");
+        modal->setQuery("SELECT k.id, k.firma, k.ansprechpartner, k.wann, k.was, count(*) FROM kommunikationen k, kommunikation_dateien d  WHERE k.FirmenID = '" + companyId + "' AND k.id = d.kommunikation_id GROUP BY kommunikation_id");
     else
         modal->setQuery("SELECT * FROM " + selectedTable + " WHERE firma = '" + companyName  + "'");
     /*QString filter = "firma = '" + companyName + "'";
@@ -555,3 +557,18 @@ void displayTables::on_pb_save_clicked()
         file.write(fileContent[i]);
     }
 }
+
+QString displayTables::getCompanyId () {
+    QSqlQuery queryCompanyId;
+    QString companyName = ui->cb_companyName->currentText();
+    queryCompanyId.prepare("SELECT id FROM firmen WHERE name = :companyName");
+    queryCompanyId.bindValue(":companyName", companyName);
+    queryCompanyId.exec();
+
+    QString companyId;
+    while (queryCompanyId.next())
+        companyId = queryCompanyId.value(0).toString();
+
+    return companyId;
+}
+
