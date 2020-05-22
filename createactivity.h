@@ -29,6 +29,7 @@ private slots:
 private:
     Ui::createActivity *ui;
     QString when;
+    QString getCompanyId();
 };
 
 #endif // CREATEACTIVITY_H

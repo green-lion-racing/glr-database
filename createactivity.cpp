@@ -48,10 +48,10 @@ void createActivity::on_cb_company_currentTextChanged(const QString &arg1)
     QVector<QString> persons;
     QSqlQuery selectPersons;
 
-    QString currentCompanyName = ui->cb_company->currentText();
-
-    selectPersons.prepare("SELECT vorname, nachname FROM personen WHERE firma = :currentCompanyName");
-    selectPersons.bindValue(":currentCompanyName", currentCompanyName);
+    //QString currentCompanyName = ui->cb_company->currentText();
+    QString currentCompanyId = getCompanyId();
+    selectPersons.prepare("SELECT vorname, nachname FROM personen WHERE FirmenID = :currentCompanyId");
+    selectPersons.bindValue(":currentCompanyId", currentCompanyId);
     selectPersons.exec();
     while(selectPersons.next()) {
         persons.push_back(selectPersons.value(0).toString() + " " + selectPersons.value(1).toString());
@@ -100,4 +100,18 @@ void createActivity::on_pb_okay_clicked()
 void createActivity::on_pb_close_clicked()
 {
     this->reject();
+}
+
+QString createActivity::getCompanyId () {
+    QSqlQuery queryCompanyId;
+    QString companyName = ui->cb_company->currentText();
+    queryCompanyId.prepare("SELECT id FROM firmen WHERE name = :companyName");
+    queryCompanyId.bindValue(":companyName", companyName);
+    queryCompanyId.exec();
+
+    QString companyId;
+    while (queryCompanyId.next())
+        companyId = queryCompanyId.value(0).toString();
+
+    return companyId;
 }
