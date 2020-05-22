@@ -30,6 +30,7 @@ private:
     QVector<QString> persons;
     QVector<int> personIds;
     QString when;
+    QString getCompanyId();
 };
 
 #endif // CREATECOMMUNICATION_H

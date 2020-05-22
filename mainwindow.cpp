@@ -220,9 +220,9 @@ void MainWindow::on_tb_createCompany_clicked()
 
 void MainWindow::on_tb_createCommunication_clicked()
 {
-    createActivity activity;
-    activity.setModal(true);
-    activity.exec();
+    createCommunication communicaion;
+    communicaion.setModal(true);
+    communicaion.exec();
 }
 
 void MainWindow::on_tb_createActivity_clicked()
