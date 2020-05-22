@@ -137,8 +137,11 @@ void MainWindow::on_pb_saveFile_clicked()
     save.exec();
 }
 
+// Ueberarbeiten!!!
 void MainWindow::on_openDatabase_triggered()
 {
+    // Funktion ueberarbeiten!!!
+    // Überschneidung mit openDatabase()!!!
     QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen","","DB (*.db)");
     //qDebug() << fileName;
     //QFile file(fileName);
