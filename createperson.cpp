@@ -28,7 +28,8 @@ createPerson::~createPerson()
 void createPerson::on_pb_okay_clicked()
 {
     //QSqlQuery createPersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, firma TEXT,titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FOREIGN KEY (firma) REFERENCES firmen(name))");
-    QSqlQuery createPersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, firma TEXT,titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FirmenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id))");
+    //QSqlQuery createPersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, firma TEXT, titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FirmenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id))");
+    QSqlQuery createPersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FirmenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id))");
     QString firstName = ui->le_firstName->text();
     bool activ = 1;     //neu angelgte Personen immer aktiv
 
@@ -51,8 +52,7 @@ void createPerson::on_pb_okay_clicked()
     while(selectId.next())
         companyId = (selectId.value(0).toString()).toInt();
 
-    insertPersonQuery.prepare("INSERT INTO personen(firma, titel, vorname, nachname, telefon, fax, email, Position, du_sie, sprache, aktiv, FirmenID) VALUES (:companyName, :title, :firstName, :surname, :phone, :fax, :email, :position, :you, :language, :activ, :companyId)");
-    insertPersonQuery.bindValue(":companyName", companyName);
+    insertPersonQuery.prepare("INSERT INTO personen(titel, vorname, nachname, telefon, fax, email, Position, du_sie, sprache, aktiv, FirmenID) VALUES (:title, :firstName, :surname, :phone, :fax, :email, :position, :you, :language, :activ, :companyId)");
     insertPersonQuery.bindValue(":title", title);
     insertPersonQuery.bindValue(":firstName", firstName);
     insertPersonQuery.bindValue(":surname", surname);
