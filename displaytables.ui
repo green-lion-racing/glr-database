@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>675</width>
-    <height>458</height>
+    <width>458</width>
+    <height>423</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,6 +16,13 @@
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="l_dialogTitle">
+       <property name="text">
+        <string>Tabellen ansehen</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QComboBox" name="cb_table"/>
      </item>

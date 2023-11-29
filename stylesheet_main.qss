@@ -3,6 +3,10 @@ QWidget {
     background-color: white;
 }
 
+QWidget #centralwidget_modify_tables{
+    background: #E5E5E5;
+}
+
 QDialog {
     background-color: #E5E5E5;
 }
@@ -39,13 +43,16 @@ QToolButton {
     font-size: 20px;
 }
 
+QCheckBox {
+    background: #E5E5E5;
+}
+
 #sw_main {
     margin-left: 200px;
     margin-right: 200px;
 }
 
 #pb_createPerson {
-
     text-align: bottom;
 }
 
@@ -62,7 +69,6 @@ QToolButton {
 #l_title {
     font: 40px;
     color: white;
-    margin-top: 35px;
 }
 
 #l_dialogTitle {

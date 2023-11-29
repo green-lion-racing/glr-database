@@ -6,19 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>525</height>
+    <width>510</width>
+    <height>445</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="centralwidget_modify_tables">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QLabel" name="l_dialogTitle">
+        <property name="text">
+         <string>Tabellen bearbeiten</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QComboBox" name="cb_table"/>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cb_companyName"/>
       </item>
       <item>
        <widget class="QPushButton" name="pb_download">
@@ -26,9 +36,6 @@
          <string>Alle herunterladen</string>
         </property>
        </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="cb_companyName"/>
       </item>
       <item>
        <widget class="QCheckBox" name="cb_gold">
@@ -72,17 +79,6 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
