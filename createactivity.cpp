@@ -91,7 +91,7 @@ void createActivity::on_pb_okay_clicked()
     if (insertActivityQuery.next())
     {
     } else {
-        qDebug() << "SqLite error:" << insertActivityQuery.lastError().text() << ", SqLite error code:" << insertActivityQuery.lastError().number();
+        qDebug() << "QSQLITE error:" << insertActivityQuery.lastError().text() << ", QSQLITE error code:" << insertActivityQuery.lastError().nativeErrorCode();
     }
 
     this->accept();

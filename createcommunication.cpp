@@ -119,7 +119,7 @@ void createCommunication::on_pb_okay_clicked()
     if (insertCommunicationQuery.next())
     {
     } else {
-        qDebug() << "SqLite error:" << insertCommunicationQuery.lastError().text() << ", SqLite error code:" << insertCommunicationQuery.lastError().number();
+        qDebug() << "QSQLITE error:" << insertCommunicationQuery.lastError().text() << ", QSQLITE error code:" << insertCommunicationQuery.lastError().nativeErrorCode();
     }
 
     close();    //Fenster schließen, um zu dem Nächsten zukommen (Dateien anhängen)

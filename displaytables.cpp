@@ -12,10 +12,12 @@ displayTables::displayTables(QWidget *parent) :
     ui->setupUi(this);
 
     QSqlQuery selectTable;
-    selectTable.prepare("SELECT name FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master)WHERE type='table' AND name NOT LIKE 'kommunikation_dateien' ORDER BY name");
+    selectTable.prepare("SELECT name FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master)WHERE type='table' ORDER BY name");
     selectTable.exec();
+
     QSqlQueryModel * modalComboBox = new QSqlQueryModel();
     modalComboBox->setQuery(selectTable);
+
     ui->cb_table->setModel(modalComboBox);
 }
 
@@ -33,6 +35,7 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
     ui->cb_gold->setVisible(false);
     ui->cb_silver->setVisible(false);
     ui->cb_bronze->setVisible(false);
+    ui->cb_supporter->setVisible(false);
 
     selectedTable = ui->cb_table->currentText();
     modal = new QSqlTableModel();
@@ -65,6 +68,7 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
         ui->cb_gold->setVisible(true);
         ui->cb_silver->setVisible(true);
         ui->cb_bronze->setVisible(true);
+        ui->cb_supporter->setVisible(true);
 
         tableCompanyActiv = 1;
     }

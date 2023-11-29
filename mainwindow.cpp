@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
     // no text in l_wrongPassword at the beginning
     ui->l_wrongPassword->setText("");
     /*
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    QSqlDatabase db = QSqlDatabase::addDatabase("QQSQLITE");
     db.setDatabaseName("sponsorendatenbank.db");
 
     if (!db.open())
@@ -94,26 +94,26 @@ void MainWindow::keyPressEvent(QKeyEvent * event) {
 }
 
 void MainWindow::openDatabase() {
-    //QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen","","DB (*.db)");
+//    QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen","","DB (*.db)");
     QString fileName = "sponsorendatenbank.db";
     //qDebug() << fileName;
     //QFile file(fileName);
 
-    //passwordInput password;
-    //password.setModal(true);
-    //password.exec();
+//    passwordInput password;
+//    password.setModal(true);
+//    password.exec();
 
     enteredPassword = ui->le_password->text();
 
-    //QSqlDatabase dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
-    dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
+    //QSqlDatabase dbconn = QSqlDatabase::addDatabase("QSQLITE");
+    dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn.setDatabaseName(fileName);
     dbconn.setPassword(enteredPassword);
     // to encrpyt existing database
-    //dbconn.setConnectOptions("QSQLITE_CREATE_KEY");
+    //dbconn.setConnectOptions("QQSQLITE_CREATE_KEY");
 
     // to remove password
-    //dbconn.setConnectOptions("QSQLITE_REMOVE_KEY");
+    //dbconn.setConnectOptions("QQSQLITE_REMOVE_KEY");
 
     if (!dbconn.open() || enteredPassword == "") {
         ui->l_wrongPassword->setText("Falsches Passwort!");
@@ -146,15 +146,15 @@ void MainWindow::on_openDatabase_triggered()
     //qDebug() << fileName;
     //QFile file(fileName);
 
-    passwordInput password;
-    password.setModal(true);
-    password.exec();
+    //passwordInput password;
+    //password.setModal(true);
+    //password.exec();
 
-    QSqlDatabase dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
+    QSqlDatabase dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn.setDatabaseName(fileName);
     dbconn.setPassword(enteredPassword);
     // to encrpyt existing database
-    //dbconn.setConnectOptions("QSQLITE_CREATE_KEY");
+    //dbconn.setConnectOptions("QQSQLITE_CREATE_KEY");
 
     if (!dbconn.open()) {
 
@@ -164,7 +164,7 @@ void MainWindow::on_openDatabase_triggered()
     }
 
     /*
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    QSqlDatabase db = QSqlDatabase::addDatabase("QQSQLITE");
     db.setDatabaseName(fileName);
     if (!db.open())
         ui->l_db_status->setText("Öffnen fehlgeschalgen");
@@ -186,15 +186,15 @@ void MainWindow::on_actionPasswort_entfernen_triggered()
 
     enteredPassword = ui->le_password->text();
     dbconn.close();
-    //QSqlDatabase dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
-    dbconn = QSqlDatabase::addDatabase("SQLITECIPHER");
+    //QSqlDatabase dbconn = QSqlDatabase::addDatabase("QSQLITE");
+    dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn.setDatabaseName(fileName);
     dbconn.setPassword(enteredPassword);
     // to encrpyt existing database
-    //dbconn.setConnectOptions("QSQLITE_CREATE_KEY");
+    //dbconn.setConnectOptions("QQSQLITE_CREATE_KEY");
 
     // to remove password
-    dbconn.setConnectOptions("QSQLITE_REMOVE_KEY");
+    dbconn.setConnectOptions("QQSQLITE_REMOVE_KEY");
 
     if (!dbconn.open() || enteredPassword == "") {
         ui->l_wrongPassword->setText("Passwort wurde entfernt!");

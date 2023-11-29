@@ -68,7 +68,7 @@ void addFile::saveFileToDatabase() {
     if (insertCommunicationFileQuery.next())
     {
     } else {
-        qDebug() << "SqLite error:" << insertCommunicationFileQuery.lastError().text() << ", SqLite error code:" << insertCommunicationFileQuery.lastError().number();
+        qDebug() << "QSQLITE error:" << insertCommunicationFileQuery.lastError().text() << ", QSQLITE error code:" << insertCommunicationFileQuery.lastError().nativeErrorCode();
     }
 }
 

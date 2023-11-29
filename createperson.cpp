@@ -71,7 +71,7 @@ void createPerson::on_pb_okay_clicked()
     if (insertPersonQuery.next())
     {
     } else {
-        qDebug() << "SqLite error:" << insertPersonQuery.lastError().text() << ", SqLite error code:" << insertPersonQuery.lastError().number();
+        qDebug() << "QSQLITE error:" << insertPersonQuery.lastError().text() << ", QSQLITE error code:" << insertPersonQuery.lastError().number();
     }
     */
 
