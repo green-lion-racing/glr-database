@@ -2,7 +2,7 @@
 #include "ui_createperson.h"
 
 createPerson::createPerson(QWidget *parent) :
-    QDialog(parent,Qt::FramelessWindowHint),
+    QDialog(parent/*,Qt::FramelessWindowHint*/),
     ui(new Ui::createPerson)
 {
     ui->setupUi(this);
@@ -76,9 +76,4 @@ void createPerson::on_pb_okay_clicked()
     */
 
     this->accept();
-}
-
-void createPerson::on_pb_close_clicked()
-{
-    this->reject();
 }

@@ -10,7 +10,7 @@
 static QFile file;
 
 createCommunication::createCommunication(QWidget *parent) :
-    QDialog(parent,Qt::FramelessWindowHint),
+    QDialog(parent/*,Qt::FramelessWindowHint*/),
     ui(new Ui::createCommunication)
 {
     ui->setupUi(this);
@@ -126,11 +126,6 @@ void createCommunication::on_pb_okay_clicked()
     addFile file;
     file.setModal(true);
     file.exec();
-}
-
-void createCommunication::on_pb_close_clicked()
-{
-    this->reject();
 }
 
 QString createCommunication::getCompanyId () {

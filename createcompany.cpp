@@ -5,7 +5,7 @@
 #include "error.h"
 
 createCompany::createCompany(QWidget *parent) :
-    QDialog(parent,Qt::FramelessWindowHint),
+    QDialog(parent/*,Qt::FramelessWindowHint*/),
     ui(new Ui::createCompany)
 {
     ui->setupUi(this);
@@ -72,9 +72,4 @@ void createCompany::on_pb_okay_clicked()
     }
 
     this->accept();
-}
-
-void createCompany::on_pb_close_clicked()
-{
-    this->reject();
 }

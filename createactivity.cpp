@@ -3,7 +3,7 @@
 #include <QVector>
 
 createActivity::createActivity(QWidget *parent) :
-    QDialog(parent,Qt::FramelessWindowHint),        // Frameless window
+    QDialog(parent/*,Qt::FramelessWindowHint*/),        // Frameless window no more
     ui(new Ui::createActivity)
 {
     QVector<QString> companyNames;
@@ -95,11 +95,6 @@ void createActivity::on_pb_okay_clicked()
     }
 
     this->accept();
-}
-
-void createActivity::on_pb_close_clicked()
-{
-    this->reject();
 }
 
 QString createActivity::getCompanyId () {

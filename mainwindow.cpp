@@ -4,8 +4,6 @@
 #include "createperson.h"
 #include "createactivity.h"
 #include "createcommunication.h"
-#include "savefile.h"
-#include "modifycompany.h"
 #include "modifytables.h"
 #include "displaytables.h"
 #include "passwordinput.h"
