@@ -101,17 +101,28 @@ void MainWindow::openDatabase() {
 //    password.setModal(true);
 //    password.exec();
 
-    enteredPassword = ui->le_password->text();
+    //enteredPassword = ui->le_password->text();
 
     //QSqlDatabase dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn.setDatabaseName(fileName);
-    dbconn.setPassword(enteredPassword);
+    //dbconn.setPassword(enteredPassword);
+
     // to encrpyt existing database
     //dbconn.setConnectOptions("QQSQLITE_CREATE_KEY");
 
     // to remove password
     //dbconn.setConnectOptions("QQSQLITE_REMOVE_KEY");
+
+
+    ui->sw_main->setCurrentIndex(0);
+
+    // use different stylesheet for main menu
+    QFile file(":/stylesheets/stylesheet_main.qss");
+    file.open(QFile::ReadOnly);
+    QString stylesheet = QLatin1String(file.readAll());
+
+    qApp->setStyleSheet(stylesheet);
 
     if (!dbconn.open() || enteredPassword == "") {
         ui->l_wrongPassword->setText("Falsches Passwort!");
@@ -150,9 +161,17 @@ void MainWindow::on_openDatabase_triggered()
 
     QSqlDatabase dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn.setDatabaseName(fileName);
-    dbconn.setPassword(enteredPassword);
+    //dbconn.setPassword(enteredPassword);
+
     // to encrpyt existing database
     //dbconn.setConnectOptions("QQSQLITE_CREATE_KEY");
+
+    // use different stylesheet for main menu
+    QFile file(":/stylesheets/stylesheet_main.qss");
+    file.open(QFile::ReadOnly);
+    QString stylesheet = QLatin1String(file.readAll());
+
+    qApp->setStyleSheet(stylesheet);
 
     if (!dbconn.open()) {
 
