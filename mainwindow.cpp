@@ -128,12 +128,12 @@ void MainWindow::openDatabase() {
     }
 }
 
-void MainWindow::on_pb_saveFile_clicked()
-{
-    saveFile save;
-    save.setModal(true);
-    save.exec();
-}
+//void MainWindow::on_pb_saveFile_clicked()
+//{
+//    saveFile save;
+//    save.setModal(true);
+//    save.exec();
+//}
 
 // Ueberarbeiten!!!
 void MainWindow::on_openDatabase_triggered()

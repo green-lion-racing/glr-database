@@ -21,7 +21,7 @@ public:
 private slots:
     void on_icon_clicked();
 
-    void on_pb_saveFile_clicked();
+//    void on_pb_saveFile_clicked();
 
     void on_openDatabase_triggered();
 
