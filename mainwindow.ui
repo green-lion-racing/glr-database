@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="sw_main">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_main">
        <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -373,23 +373,29 @@
      <x>0</x>
      <y>0</y>
      <width>941</width>
-     <height>21</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
     <property name="title">
      <string>Datei</string>
     </property>
+    <widget class="QMenu" name="menuPasswort_entfernen">
+     <property name="title">
+      <string>Passwort entfernen</string>
+     </property>
+     <addaction name="actionhinzuf_gen"/>
+     <addaction name="action_ndern"/>
+     <addaction name="actionentfernen"/>
+    </widget>
     <addaction name="openDatabase"/>
-    <addaction name="actionPasswort_entfernen"/>
-   </widget>
-   <widget class="QMenu" name="menu_ber">
-    <property name="title">
-     <string>Über</string>
-    </property>
+    <addaction name="actionDatenbank_schlie_en"/>
+    <addaction name="separator"/>
+    <addaction name="menuPasswort_entfernen"/>
+    <addaction name="separator"/>
+    <addaction name="action_ber"/>
    </widget>
    <addaction name="menuDatei"/>
-   <addaction name="menu_ber"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="openDatabase">
@@ -397,12 +403,42 @@
     <string>Datenbank öffnen</string>
    </property>
   </action>
-  <action name="actionPasswort_entfernen">
+  <action name="actionhinzuf_gen">
    <property name="text">
-    <string>Passwort entfernen</string>
+    <string>hinzufügen</string>
+   </property>
+  </action>
+  <action name="action_ndern">
+   <property name="text">
+    <string>ändern</string>
+   </property>
+  </action>
+  <action name="actionentfernen">
+   <property name="text">
+    <string>entfernen</string>
+   </property>
+  </action>
+  <action name="actionDatenbank_schlie_en">
+   <property name="text">
+    <string>Datenbank schließen</string>
+   </property>
+  </action>
+  <action name="action_ber">
+   <property name="text">
+    <string>Über</string>
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>le_password</tabstop>
+  <tabstop>tb_createMember</tabstop>
+  <tabstop>tb_createCompany</tabstop>
+  <tabstop>tb_createPerson</tabstop>
+  <tabstop>tb_createCommunication</tabstop>
+  <tabstop>tb_createActivity</tabstop>
+  <tabstop>tb_displayTables</tabstop>
+  <tabstop>tb_modifyTables</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
