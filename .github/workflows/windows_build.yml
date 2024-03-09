@@ -40,7 +40,7 @@ jobs:
           host:         windows
           target:       desktop
           dir:          ${{ runner.temp }}
-          modules:      qtcharts qt3d
+          modules:      qtcharts
           setup-python: false
 
       - name: (4) Download JOM
