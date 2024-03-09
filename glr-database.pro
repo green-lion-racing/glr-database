@@ -23,6 +23,7 @@ SOURCES += \
     createactivity.cpp \
     createcommunication.cpp \
     createcompany.cpp \
+    createmember.cpp \
     createperson.cpp \
     displaytables.cpp \
     error.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     createactivity.h \
     createcommunication.h \
     createcompany.h \
+    createmember.h \
     createperson.h \
     displaytables.h \
     error.h \
@@ -54,6 +56,7 @@ FORMS += \
     createactivity.ui \
     createcommunication.ui \
     createcompany.ui \
+    createmember.ui \
     createperson.ui \
     displaytables.ui \
     error.ui \

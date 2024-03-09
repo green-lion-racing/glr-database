@@ -32,6 +32,7 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
 {
     ui->pb_download->setVisible(false);     //Button "pb_download" (alle herunterladen) nicht sichtbar
     ui->pb_save->setVisible(false);
+    ui->pb_signature->setVisible(false);
     ui->cb_companyName->setVisible(false);
    //Checkboxes
     ui->cb_gold->setVisible(false);
@@ -93,6 +94,8 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
             modal->setQuery("SELECT * FROM " + selectedTable + " WHERE FirmenId = '" + companyId + "'");
             //showCompanyName = 1;
         }
+    } else if (selectedTable == "mitglieder") {
+        ui->pb_signature->setVisible(true);
     }
 
     //modal->select();
@@ -534,11 +537,42 @@ void displayTables::on_tv_table_clicked(const QModelIndex &index)
     */
 }
 
+void displayTables::on_pb_signature_clicked()
+{
+    QString fileName;
+    QString fileContent;
+    QFile file;
+
+    QSqlQuery selectFileQuery;
+    selectFileQuery.prepare("SELECT vorname, nachname, position, telefon, email_glr FROM mitglieder WHERE id = :id");
+    selectFileQuery.bindValue(":id", id);
+    selectFileQuery.exec();
+    selectFileQuery.next();
+
+    fileContent = "Mit freundlichen Grüßen<br><br><table><tr><th style='text-align: left;'><b>" + selectFileQuery.value(0).toString() + " " + selectFileQuery.value(1).toString() +
+                  "<br>" + selectFileQuery.value(2).toString() +
+                  "<br><span style='color:#99cc00;'>Green</span> Lion Racing</b></th><th style='padding-left: 50px;'><img src='https://glracing.de/wp-content/uploads/2024/03/black_inline_transparent.png' alt='' style='height:53px;'></th></tr></table><br>Bergische Universität Wuppertal<br>Raum W.08.40<br>Gaußstraße 20, 42119 Wuppertal, Deutschland<br><br><a href='tel:" +
+                  selectFileQuery.value(3).toString() +
+                  "'>" +
+                  selectFileQuery.value(3).toString() +
+                  "</a><br><a href='mailto:" +
+                  selectFileQuery.value(4).toString() +
+                  "'>" +
+                  selectFileQuery.value(4).toString() +
+                  "</a><br><a href='https://glracing.de/'>glracing.de</a>";
+
+    QString filter = "HTML Files (*.html)";
+    fileName = QFileDialog::getSaveFileName(this, tr("Signatur speichern"), "Signatur " + selectFileQuery.value(0).toByteArray() + " " + selectFileQuery.value(1).toByteArray() + ".html", filter, &filter);
+
+    file.setFileName(fileName);
+    file.open(QIODevice::ReadWrite);
+    file.write(fileContent.toUtf8());
+}
+
 void displayTables::on_pb_save_clicked()
 {
     QVector<QString> name;
     QVector<QByteArray> fileContent;
-    QVector<int> ids;
     QString fileName;
     QString filePath;
     QFile file;

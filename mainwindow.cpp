@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "createcompany.h"
 #include "createperson.h"
+#include "createmember.h"
 #include "createactivity.h"
 #include "createcommunication.h"
 #include "modifytables.h"
@@ -27,6 +28,10 @@ MainWindow::MainWindow(QWidget *parent)
     //QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/img/icon_arrow.png"), QLineEdit::TrailingPosition);
     QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/img/icon_arrow.png"), QLineEdit::TrailingPosition);
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::on_icon_clicked);
+
+    // tb_createMember
+    ui->tb_createMember->setIcon(QIcon(":img/img/icon_person.png"));
+    ui->tb_createMember->setIconSize(QSize(200,200));
 
     // tb_createPerson
     ui->tb_createPerson->setIcon(QIcon(":img/img/icon_person.png"));
@@ -221,6 +226,13 @@ void MainWindow::on_actionPasswort_entfernen_triggered()
     }
 }
 
+void MainWindow::on_tb_createMember_clicked()
+{
+    createMember member;
+    member.setModal(true);
+    member.exec();
+}
+
 void MainWindow::on_tb_createPerson_clicked()
 {
     createPerson person;
@@ -258,7 +270,7 @@ void MainWindow::on_tb_modifyTables_clicked()
 
 void MainWindow::on_tb_displayTables_clicked()
 {
-    displayTables tables;
-    tables.setModal(true);
-    tables.exec();
+    displayTables *tables;
+    tables = new displayTables;
+    tables->show();
 }

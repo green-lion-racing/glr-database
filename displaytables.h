@@ -35,6 +35,8 @@ private slots:
 
     void on_pb_save_clicked();
 
+    void on_pb_signature_clicked();
+
 private:
     Ui::displayTables *ui;
     QSqlQueryModel *modal;

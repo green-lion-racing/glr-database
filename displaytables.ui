@@ -30,13 +30,6 @@
       <widget class="QComboBox" name="cb_companyName"/>
      </item>
      <item>
-      <widget class="QPushButton" name="pb_download">
-       <property name="text">
-        <string>Alle herunterladen</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QCheckBox" name="cb_gold">
        <property name="text">
         <string>Gold</string>
@@ -67,60 +60,31 @@
      <item>
       <widget class="QTableView" name="tv_table"/>
      </item>
-     <item>
-      <widget class="QPushButton" name="pb_save">
-       <property name="text">
-        <string>Ausgewählte Kommunikation herunterladen</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+    <widget class="QPushButton" name="pb_download">
+     <property name="text">
+      <string>Alle herunterladen</string>
      </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pb_save">
+     <property name="text">
+      <string>Ausgewählte Kommunikation herunterladen</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pb_signature">
+     <property name="text">
+      <string>Signatur ausgewählter Person speichern</string>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>displayTables</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>displayTables</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
