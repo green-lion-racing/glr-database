@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     ui->sw_main->setCurrentIndex(1);
-    QWidget::setWindowTitle("GLR Sponsorendatenbank");
+    QWidget::setWindowTitle("GLR Datenbank");
 
     // display GLR logo at l_logo
     QPixmap logo(":/img/img/logo_glr_white.png");
@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
     */
 
     // Set l_title "GLR Sponsorentanbank" in different colors
-    ui->l_title->setText("<font color=\'#66D104\'>GLR</font> <font color=\'white\'>Sponsorendatenbank</font>");
+    ui->l_title->setText("<font color=\'#66D104\'>GLR</font> <font color=\'white\'>Datenbank</font>");
 
     // no text in l_wrongPassword at the beginning
     ui->l_wrongPassword->setText("");

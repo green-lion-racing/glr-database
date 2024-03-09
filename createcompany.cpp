@@ -10,7 +10,7 @@ createCompany::createCompany(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QWidget::setWindowTitle("GLR Sponsorendatenbank - Unternehmen hinzufügen");
+    QWidget::setWindowTitle("GLR Datenbank - Unternehmen hinzufügen");
 }
 
 createCompany::~createCompany()

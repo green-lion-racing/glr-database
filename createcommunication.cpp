@@ -15,7 +15,7 @@ createCommunication::createCommunication(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QWidget::setWindowTitle("GLR Sponsorendatenbank - Kommunikation hinzufügen");
+    QWidget::setWindowTitle("GLR Datenbank - Kommunikation hinzufügen");
 
     QSqlQuery selectName;
     selectName.prepare("SELECT name FROM firmen");

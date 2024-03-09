@@ -11,7 +11,7 @@ modifyTables::modifyTables(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QWidget::setWindowTitle("GLR Sponsorendatenbank - Einträge bearbeiten");
+    QWidget::setWindowTitle("GLR Datenbank - Einträge bearbeiten");
 
     QSqlQuery selectTable;
     selectTable.prepare("SELECT name FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type='table' ORDER BY name");

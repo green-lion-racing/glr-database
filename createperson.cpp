@@ -7,7 +7,7 @@ createPerson::createPerson(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QWidget::setWindowTitle("GLR Sponsorendatenbank - Person hinzufügen");
+    QWidget::setWindowTitle("GLR Datenbank - Person hinzufügen");
 
     ui->cb_you->addItem("Du");
     ui->cb_you->addItem("Sie");

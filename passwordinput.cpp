@@ -9,7 +9,7 @@ passwordInput::passwordInput(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QWidget::setWindowTitle("GLR Sponsorendatenbank - Passwort eingeben");
+    QWidget::setWindowTitle("GLR Datenbank - Passwort eingeben");
 
 }
 
