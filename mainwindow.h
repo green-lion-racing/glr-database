@@ -18,11 +18,21 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void setFilePath(const QString &newFilePath);
+
 private slots:
 
     void on_actionOpenDatabase_triggered();
 
+    void on_actionCloseDatabase_triggered();
+
+    void on_actionPasswordAdd_triggered();
+
     void on_actionPasswordRemove_triggered();
+
+    void on_actionPasswordChange_triggered();
+
+    void on_actionAbout_triggered();
 
     void on_tb_createPerson_clicked();
 
@@ -44,6 +54,8 @@ private:
     void keyPressEvent(QKeyEvent * event);
 
     void openDatabase();
+
+    QString currentFile;
 
     QSqlDatabase dbconn;
 };

@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     ui->sw_main->setCurrentIndex(1);
-    QWidget::setWindowTitle("GLR Datenbank");
+    QWidget::setWindowTitle("Green Lion Racing Datenbank");
 
     // login index 1
     // display GLR logo at l_logo
@@ -115,7 +115,6 @@ void MainWindow::openDatabase() {
     QFile file(":stylesheet/stylesheet_main.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
-
     qApp->setStyleSheet(stylesheet);
 
     if (!dbconn.open() || enteredPassword == "") {
@@ -128,67 +127,42 @@ void MainWindow::openDatabase() {
         QFile file(":stylesheet/stylesheet_main.qss");
         file.open(QFile::ReadOnly);
         QString stylesheet = QLatin1String(file.readAll());
-
         qApp->setStyleSheet(stylesheet);
     }
 }
 
-//void MainWindow::on_pb_saveFile_clicked()
-//{
-//    saveFile save;
-//    save.setModal(true);
-//    save.exec();
-//}
-
-// Ueberarbeiten!!!
 void MainWindow::on_actionOpenDatabase_triggered()
 {
-    // Funktion ueberarbeiten!!!
-    // Überschneidung mit openDatabase()!!!
-    QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen","","DB (*.db)");
-    //qDebug() << fileName;
-    //QFile file(fileName);
+    QString filePath = QFileDialog::getOpenFileName(this, "Datei öffnen","","DB (*.db)");
+    qDebug() << filePath;
+    //QFile file(filePath);
 
-    //passwordInput password;
-    //password.setModal(true);
-    //password.exec();
+    if (filePath.isEmpty())
+        return;
 
-    QSqlDatabase dbconn = QSqlDatabase::addDatabase("QSQLITE");
-    dbconn.setDatabaseName(fileName);
-    //dbconn.setPassword(enteredPassword);
+    if (dbconn.isOpen())
+        dbconn.close();
 
-    // to encrpyt existing database
-    //dbconn.setConnectOptions("QQSQLITE_CREATE_KEY");
+    currentFile = filePath;
 
-    // use different stylesheet for main menu
-    QFile file(":stylesheet/stylesheet_main.qss");
+    ui->sw_main->setCurrentIndex(1);
+
+    QFile file(":stylesheet/stylesheet.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
-
     qApp->setStyleSheet(stylesheet);
+}
 
-    if (!dbconn.open()) {
+void MainWindow::on_actionCloseDatabase_triggered() {
+    if (dbconn.isOpen())
+        dbconn.close();
 
-    }
-    else {
+    ui->sw_main->setCurrentIndex(1);
 
-    }
-
-    /*
-    QSqlDatabase db = QSqlDatabase::addDatabase("QQSQLITE");
-    db.setDatabaseName(fileName);
-    if (!db.open())
-        ui->l_db_status->setText("Öffnen fehlgeschalgen");
-    else {
-        ui->l_db_status->setText("Verbunden");
-        ui->pb_createCompany->setEnabled(true);
-        ui->pb_createPerson->setEnabled(true);
-        ui->pb_createActivity->setEnabled(true);
-        ui->pb_createCommunication->setEnabled(true);
-        ui->pb_modifyTables->setEnabled(true);
-        ui->pb_seeTables->setEnabled(true);
-    }
-    */
+    QFile file(":stylesheet/stylesheet.qss");
+    file.open(QFile::ReadOnly);
+    QString stylesheet = QLatin1String(file.readAll());
+    qApp->setStyleSheet(stylesheet);
 }
 
 void MainWindow::on_actionPasswordRemove_triggered()
