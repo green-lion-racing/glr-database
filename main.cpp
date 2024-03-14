@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
     QApplication application(argc, argv);
 
-    QFile file(":/stylesheets/stylesheet.qss");
+    QFile file(":stylesheet/stylesheet.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
 

@@ -22,40 +22,40 @@ MainWindow::MainWindow(QWidget *parent)
 
     // login index 1
     // display GLR logo at l_logo
-    QPixmap logo(":/img/img/logo_glr_white.png");
+    QPixmap logo(":img/logo_glr_white.png");
     ui->l_logo->setPixmap(logo);
 
     // login via click on arrow
-    QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/img/icon_arrow.png"), QLineEdit::TrailingPosition);
+    QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":img/icon_arrow.png"), QLineEdit::TrailingPosition);
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::openDatabase);
 
     // management index 0
     // tb_createMember
-    ui->tb_createMember->setIcon(QIcon(":img/img/icon_person.png"));
+    ui->tb_createMember->setIcon(QIcon(":img/icon_person.png"));
     ui->tb_createMember->setIconSize(QSize(200,200));
 
     // tb_createPerson
-    ui->tb_createPerson->setIcon(QIcon(":img/img/icon_person.png"));
+    ui->tb_createPerson->setIcon(QIcon(":img/icon_person.png"));
     ui->tb_createPerson->setIconSize(QSize(200,200));
 
     // tb_createCompany
-    ui->tb_createCompany->setIcon(QIcon(":img/img/icon_company.png"));
+    ui->tb_createCompany->setIcon(QIcon(":img/icon_company.png"));
     ui->tb_createCompany->setIconSize(QSize(200,200));
 
     // tb_createCommunication
-    ui->tb_createCommunication->setIcon(QIcon(":img/img/icon_communication.png"));
+    ui->tb_createCommunication->setIcon(QIcon(":img/icon_communication.png"));
     ui->tb_createCommunication->setIconSize(QSize(200,200));
 
     // tb_createActivity
-    ui->tb_createActivity->setIcon(QIcon(":img/img/icon_activity.png"));
+    ui->tb_createActivity->setIcon(QIcon(":img/icon_activity.png"));
     ui->tb_createActivity->setIconSize(QSize(200,200));
 
     // tb_modifyTables
-    ui->tb_modifyTables->setIcon(QIcon(":img/img/icon_edit.png"));
+    ui->tb_modifyTables->setIcon(QIcon(":img/icon_edit.png"));
     ui->tb_modifyTables->setIconSize(QSize(200,200));
 
     // tb_displayTables
-    ui->tb_displayTables->setIcon(QIcon(":img/img/icon_lens.png"));
+    ui->tb_displayTables->setIcon(QIcon(":img/icon_lens.png"));
     ui->tb_displayTables->setIconSize(QSize(200,200));
 
     // Set l_title "GLR Datenbank" in different colors
@@ -112,7 +112,7 @@ void MainWindow::openDatabase() {
     ui->sw_main->setCurrentIndex(0);
 
     // use different stylesheet for main menu
-    QFile file(":/stylesheets/stylesheet_main.qss");
+    QFile file(":stylesheet/stylesheet_main.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
 
@@ -125,7 +125,7 @@ void MainWindow::openDatabase() {
         ui->sw_main->setCurrentIndex(0);
 
         // use different stylesheet for main menu
-        QFile file(":/stylesheets/stylesheet_main.qss");
+        QFile file(":stylesheet/stylesheet_main.qss");
         file.open(QFile::ReadOnly);
         QString stylesheet = QLatin1String(file.readAll());
 
@@ -161,7 +161,7 @@ void MainWindow::on_actionOpenDatabase_triggered()
     //dbconn.setConnectOptions("QQSQLITE_CREATE_KEY");
 
     // use different stylesheet for main menu
-    QFile file(":/stylesheets/stylesheet_main.qss");
+    QFile file(":stylesheet/stylesheet_main.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
 

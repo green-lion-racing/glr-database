@@ -78,7 +78,7 @@ QCheckBox {
 
 #pb_close {
     background-color: transparent;
-    border-image:url(:/img/img/icon_close.png);
+    border-image:url(:/img/icon_close.png);
     max-width: 4px;
     min-width: 4px;
     min-height: 4px;
