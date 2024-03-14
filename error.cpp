@@ -5,6 +5,8 @@ error::error(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::error)
 {
+    QWidget::setWindowTitle("Fehler");
+
     ui->setupUi(this);
 }
 
