@@ -59,7 +59,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QTreeView" name="tv_table"/>
+       <widget class="QTableView" name="tv_table">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777211</height>
+         </size>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pb_download">

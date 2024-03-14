@@ -29,7 +29,6 @@ SOURCES += \
     error.cpp \
     main.cpp \
     mainwindow.cpp \
-    modifycompany.cpp \
     modifytables.cpp \
     pushbuttonicon.cpp
 
@@ -43,7 +42,6 @@ HEADERS += \
     displaytables.h \
     error.h \
     mainwindow.h \
-    modifycompany.h \
     modifytables.h \
     pushbuttonicon.h
 
@@ -57,7 +55,6 @@ FORMS += \
     displaytables.ui \
     error.ui \
     mainwindow.ui \
-    modifycompany.ui \
     modifytables.ui
 
 # Default rules for deployment.

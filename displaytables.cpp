@@ -34,7 +34,7 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
     ui->pb_save->setVisible(false);
     ui->pb_signature->setVisible(false);
     ui->cb_companyName->setVisible(false);
-   //Checkboxes
+    // Checkboxes
     ui->cb_gold->setVisible(false);
     ui->cb_silver->setVisible(false);
     ui->cb_bronze->setVisible(false);
