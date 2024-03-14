@@ -549,23 +549,33 @@ void displayTables::on_pb_signature_clicked()
     selectFileQuery.exec();
     selectFileQuery.next();
 
+    QString phone = "";
+    if (!selectFileQuery.value(3).toString().isEmpty()) {
+        phone = "<a href='tel:" + selectFileQuery.value(3).toString() + "'>" + selectFileQuery.value(3).toString() + "</a><br>";
+    }
+
+    QString mail = "";
+    if (!selectFileQuery.value(4).toString().isEmpty()) {
+        mail = "<a href='mailto:" + selectFileQuery.value(4).toString() + "'>" + selectFileQuery.value(4).toString() + "</a><br>";
+    }
+
+    qDebug() << phone;
+    qDebug() << mail;
+
     fileContent = "Mit freundlichen Grüßen<br><br><table><tr><th style='text-align: left;'><b>" + selectFileQuery.value(0).toString() + " " + selectFileQuery.value(1).toString() +
                   "<br>" + selectFileQuery.value(2).toString() +
-                  "<br><span style='color:#99cc00;'>Green</span> Lion Racing</b></th><th style='padding-left: 50px;'><img src='https://glracing.de/wp-content/uploads/2024/03/black_inline_transparent.png' alt='' style='height:53px;'></th></tr></table><br>Bergische Universität Wuppertal<br>Raum W.08.40<br>Gaußstraße 20, 42119 Wuppertal, Deutschland<br><br><a href='tel:" +
-                  selectFileQuery.value(3).toString() +
-                  "'>" +
-                  selectFileQuery.value(3).toString() +
-                  "</a><br><a href='mailto:" +
-                  selectFileQuery.value(4).toString() +
-                  "'>" +
-                  selectFileQuery.value(4).toString() +
-                  "</a><br><a href='https://glracing.de/'>glracing.de</a>";
+                  "<br><span style='color:#99cc00;'>Green</span> Lion Racing</b></th><th style='padding-left: 50px;'><img src='https://glracing.de/wp-content/uploads/2024/03/black_inline_transparent.png' alt='' style='height:53px;'></th></tr></table><br>Bergische Universität Wuppertal<br>Raum W.08.40<br>Gaußstraße 20, 42119 Wuppertal, Deutschland<br><br>" +
+                  phone +
+                  mail +
+                  "<a href='https://glracing.de/'>glracing.de</a>";
+
+    qDebug() << fileContent;
 
     QString filter = "HTML Files (*.html)";
     fileName = QFileDialog::getSaveFileName(this, tr("Signatur speichern"), "Signatur " + selectFileQuery.value(0).toByteArray() + " " + selectFileQuery.value(1).toByteArray() + ".html", filter, &filter);
 
     file.setFileName(fileName);
-    file.open(QIODevice::ReadWrite);
+    file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text);
     file.write(fileContent.toUtf8());
 }
 
