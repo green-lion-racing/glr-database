@@ -69,13 +69,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pb_download">
-        <property name="text">
-         <string>Alle herunterladen</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="pb_save">
         <property name="text">
          <string>Änderungen speichern</string>

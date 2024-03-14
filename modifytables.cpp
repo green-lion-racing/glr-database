@@ -35,7 +35,7 @@ void modifyTables::on_pb_save_clicked()
 
 void modifyTables::on_cb_table_currentTextChanged(const QString &arg1)
 {
-    ui->pb_download->setVisible(false);     //Button "pb_download" (alle herunterladen) nicht sichtbar
+    //ui->pb_download->setVisible(false);     //Button "pb_download" (alle herunterladen) nicht sichtbar
     ui->cb_companyName->setVisible(false);
     //Checkboxes
     ui->cb_gold->setVisible(false);
@@ -61,9 +61,9 @@ void modifyTables::on_cb_table_currentTextChanged(const QString &arg1)
     modalComboBox->setQuery(selectName);
     ui->cb_companyName->setModel(modalComboBox);
 
-    if (selectedTable == "kommunikation_dateien")   //Button "pb_download" (alle herunterladen) nur bei dieser Tabelle sichtbar
+    /*if (selectedTable == "kommunikation_dateien")   //Button "pb_download" (alle herunterladen) nur bei dieser Tabelle sichtbar
         ui->pb_download->setVisible(true);
-    else if (selectedTable == "firmen") {
+    else */if (selectedTable == "firmen") {
         //ui->cb_rank->setVisible(true);
         //rank = ui->cb_rank->currentText();
         //filter = "firma = '" + rank + "'";
@@ -190,7 +190,7 @@ void modifyTables::on_cb_supporter_stateChanged(int arg1)
 void modifyTables::checkBoxGold(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_gold->isChecked()) {
-        //QString filter;
+
         modal->setTable("firmen");
 
         if (otherCheckedCheckBoxes == "silver")
