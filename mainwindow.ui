@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="sw_main">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_main">
        <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -373,57 +373,57 @@
      <x>0</x>
      <y>0</y>
      <width>941</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
     <property name="title">
      <string>Datei</string>
     </property>
-    <widget class="QMenu" name="menuPasswort_entfernen">
+    <widget class="QMenu" name="menuPassword">
      <property name="title">
-      <string>Passwort entfernen</string>
+      <string>Passwort</string>
      </property>
-     <addaction name="actionhinzuf_gen"/>
-     <addaction name="action_ndern"/>
-     <addaction name="actionentfernen"/>
+     <addaction name="actionPasswordAdd"/>
+     <addaction name="actionPasswordChange"/>
+     <addaction name="actionPasswordRemove"/>
     </widget>
-    <addaction name="openDatabase"/>
-    <addaction name="actionDatenbank_schlie_en"/>
+    <addaction name="actionOpenDatabase"/>
+    <addaction name="actionCloseDatabase"/>
     <addaction name="separator"/>
-    <addaction name="menuPasswort_entfernen"/>
+    <addaction name="menuPassword"/>
     <addaction name="separator"/>
-    <addaction name="action_ber"/>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuDatei"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="openDatabase">
+  <action name="actionOpenDatabase">
    <property name="text">
     <string>Datenbank öffnen</string>
    </property>
   </action>
-  <action name="actionhinzuf_gen">
+  <action name="actionPasswordAdd">
    <property name="text">
     <string>hinzufügen</string>
    </property>
   </action>
-  <action name="action_ndern">
+  <action name="actionPasswordChange">
    <property name="text">
     <string>ändern</string>
    </property>
   </action>
-  <action name="actionentfernen">
+  <action name="actionPasswordRemove">
    <property name="text">
     <string>entfernen</string>
    </property>
   </action>
-  <action name="actionDatenbank_schlie_en">
+  <action name="actionCloseDatabase">
    <property name="text">
     <string>Datenbank schließen</string>
    </property>
   </action>
-  <action name="action_ber">
+  <action name="actionAbout">
    <property name="text">
     <string>Über</string>
    </property>

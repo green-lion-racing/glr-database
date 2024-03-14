@@ -19,13 +19,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_icon_clicked();
 
-//    void on_pb_saveFile_clicked();
+    void on_actionOpenDatabase_triggered();
 
-    void on_openDatabase_triggered();
-
-    void on_actionPasswort_entfernen_triggered();
+    void on_actionPasswordRemove_triggered();
 
     void on_tb_createPerson_clicked();
 

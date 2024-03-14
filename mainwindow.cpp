@@ -7,7 +7,6 @@
 #include "createcommunication.h"
 #include "modifytables.h"
 #include "displaytables.h"
-#include "passwordinput.h"
 #include <QFileDialog>
 #include <QPixmap>
 #include <QKeyEvent>
@@ -21,14 +20,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->sw_main->setCurrentIndex(1);
     QWidget::setWindowTitle("GLR Datenbank");
 
+    // login index 1
     // display GLR logo at l_logo
     QPixmap logo(":/img/img/logo_glr_white.png");
     ui->l_logo->setPixmap(logo);
 
-    //QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/img/icon_arrow.png"), QLineEdit::TrailingPosition);
+    // login via click on arrow
     QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":/img/img/icon_arrow.png"), QLineEdit::TrailingPosition);
-    connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::on_icon_clicked);
+    connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::openDatabase);
 
+    // management index 0
     // tb_createMember
     ui->tb_createMember->setIcon(QIcon(":img/img/icon_person.png"));
     ui->tb_createMember->setIconSize(QSize(200,200));
@@ -57,14 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tb_displayTables->setIcon(QIcon(":img/img/icon_lens.png"));
     ui->tb_displayTables->setIconSize(QSize(200,200));
 
-    /*
-    auto act = new QAction();
-    act->setIcon(QIcon(":/img/img/icon_person.png"));
-    act->setText("Person hinzufügen");
-    ui->tb_createPerson->setDefaultAction(act);
-    */
-
-    // Set l_title "GLR Sponsorentanbank" in different colors
+    // Set l_title "GLR Datenbank" in different colors
     ui->l_title->setText("<font color=\'#66D104\'>GLR</font> <font color=\'white\'>Datenbank</font>");
 
     // no text in l_wrongPassword at the beginning
@@ -85,11 +79,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::on_icon_clicked() {
-    openDatabase();
-}
-
 void MainWindow::keyPressEvent(QKeyEvent * event) {
     if (ui->sw_main->currentIndex() == 1 && (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)) {
         openDatabase();
@@ -106,7 +95,7 @@ void MainWindow::openDatabase() {
 //    password.setModal(true);
 //    password.exec();
 
-    //enteredPassword = ui->le_password->text();
+    QString enteredPassword = ui->le_password->text();
 
     //QSqlDatabase dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn = QSqlDatabase::addDatabase("QSQLITE");
@@ -152,7 +141,7 @@ void MainWindow::openDatabase() {
 //}
 
 // Ueberarbeiten!!!
-void MainWindow::on_openDatabase_triggered()
+void MainWindow::on_actionOpenDatabase_triggered()
 {
     // Funktion ueberarbeiten!!!
     // Überschneidung mit openDatabase()!!!
@@ -202,11 +191,11 @@ void MainWindow::on_openDatabase_triggered()
     */
 }
 
-void MainWindow::on_actionPasswort_entfernen_triggered()
+void MainWindow::on_actionPasswordRemove_triggered()
 {
     QString fileName = "sponsorendatenbank.db";
 
-    enteredPassword = ui->le_password->text();
+    QString enteredPassword = ui->le_password->text();
     dbconn.close();
     //QSqlDatabase dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn = QSqlDatabase::addDatabase("QSQLITE");

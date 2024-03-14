@@ -31,9 +31,7 @@ SOURCES += \
     mainwindow.cpp \
     modifycompany.cpp \
     modifytables.cpp \
-    passwordinput.cpp \
-    pushbuttonicon.cpp \
-    savefile.cpp
+    pushbuttonicon.cpp
 
 HEADERS += \
     addfile.h \
@@ -47,9 +45,7 @@ HEADERS += \
     mainwindow.h \
     modifycompany.h \
     modifytables.h \
-    passwordinput.h \
-    pushbuttonicon.h \
-    savefile.h
+    pushbuttonicon.h
 
 FORMS += \
     addfile.ui \
@@ -62,9 +58,7 @@ FORMS += \
     error.ui \
     mainwindow.ui \
     modifycompany.ui \
-    modifytables.ui \
-    passwordinput.ui \
-    savefile.ui
+    modifytables.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
