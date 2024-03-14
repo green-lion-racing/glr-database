@@ -5,6 +5,7 @@
 #include <QtSql>
 #include <QtDebug>
 #include <QFileInfo>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -56,6 +57,8 @@ private:
     void openDatabase();
 
     QString currentFile;
+
+    QLabel *status_label = new QLabel(this);
 
     QSqlDatabase dbconn;
 };

@@ -61,17 +61,12 @@ MainWindow::MainWindow(QWidget *parent)
     // Set l_title "GLR Datenbank" in different colors
     ui->l_title->setText("<font color=\'#66D104\'>GLR</font> <font color=\'white\'>Datenbank</font>");
 
-    // no text in l_wrongPassword at the beginning
-    ui->l_wrongPassword->setText("");
-    /*
-    QSqlDatabase db = QSqlDatabase::addDatabase("QQSQLITE");
-    db.setDatabaseName("sponsorendatenbank.db");
+    // no text in l_error at the beginning
+    ui->l_error->setText("");
 
-    if (!db.open())
-        ui->l_db_status->setText("Öffnen fehlgeschalgen");
-    else
-        ui->l_db_status->setText("Verbunden");
-    */
+    // no database selected on start
+    status_label->setText("Keine Datenbank gewählt.");
+    ui->statusbar->addPermanentWidget(status_label, 100);
 }
 
 MainWindow::~MainWindow()
@@ -86,56 +81,35 @@ void MainWindow::keyPressEvent(QKeyEvent * event) {
 }
 
 void MainWindow::openDatabase() {
-//    QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen","","DB (*.db)");
-    QString fileName = "sponsorendatenbank.db";
-    //qDebug() << fileName;
-    //QFile file(fileName);
 
-//    passwordInput password;
-//    password.setModal(true);
-//    password.exec();
+    if (currentFile.isEmpty()) {
+        ui->l_error->setText("Keine Datenbank ausgewählt!");
+        return;
+    }
 
-    QString enteredPassword = ui->le_password->text();
-
-    //QSqlDatabase dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn = QSqlDatabase::addDatabase("QSQLITE");
-    dbconn.setDatabaseName(fileName);
-    //dbconn.setPassword(enteredPassword);
+    dbconn.setDatabaseName(currentFile);
 
-    // to encrpyt existing database
-    //dbconn.setConnectOptions("QQSQLITE_CREATE_KEY");
-
-    // to remove password
-    //dbconn.setConnectOptions("QQSQLITE_REMOVE_KEY");
-
+    // TODO check if selected file is a sqlite db
+    if (!dbconn.open()) {
+        QString enteredPassword = ui->le_password->text();
+        dbconn.setPassword(enteredPassword);
+        if (!dbconn.open()) {
+            ui->l_error->setText("Falsches Passwort!");
+            return;
+        }
+    }
 
     ui->sw_main->setCurrentIndex(0);
-
-    // use different stylesheet for main menu
     QFile file(":stylesheet/stylesheet_main.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
     qApp->setStyleSheet(stylesheet);
-
-    if (!dbconn.open() || enteredPassword == "") {
-        ui->l_wrongPassword->setText("Falsches Passwort!");
-    }
-    else {
-        ui->sw_main->setCurrentIndex(0);
-
-        // use different stylesheet for main menu
-        QFile file(":stylesheet/stylesheet_main.qss");
-        file.open(QFile::ReadOnly);
-        QString stylesheet = QLatin1String(file.readAll());
-        qApp->setStyleSheet(stylesheet);
-    }
 }
 
 void MainWindow::on_actionOpenDatabase_triggered()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, "Datei öffnen","","DB (*.db)");
-    qDebug() << filePath;
-    //QFile file(filePath);
+    QString filePath = QFileDialog::getOpenFileName(this, "Datei öffnen","","SQLite DB (*.db)");
 
     if (filePath.isEmpty())
         return;
@@ -144,7 +118,9 @@ void MainWindow::on_actionOpenDatabase_triggered()
         dbconn.close();
 
     currentFile = filePath;
+    status_label->setText(currentFile);
 
+    ui->l_error->setText("");
     ui->sw_main->setCurrentIndex(1);
 
     QFile file(":stylesheet/stylesheet.qss");
@@ -157,6 +133,7 @@ void MainWindow::on_actionCloseDatabase_triggered() {
     if (dbconn.isOpen())
         dbconn.close();
 
+    ui->l_error->setText("");
     ui->sw_main->setCurrentIndex(1);
 
     QFile file(":stylesheet/stylesheet.qss");
@@ -165,8 +142,9 @@ void MainWindow::on_actionCloseDatabase_triggered() {
     qApp->setStyleSheet(stylesheet);
 }
 
-void MainWindow::on_actionPasswordRemove_triggered()
-{
+void MainWindow::on_actionPasswordRemove_triggered() {
+    // to remove password
+    //dbconn.setConnectOptions("QQSQLITE_REMOVE_KEY");
     QString fileName = "sponsorendatenbank.db";
 
     QString enteredPassword = ui->le_password->text();
@@ -182,11 +160,24 @@ void MainWindow::on_actionPasswordRemove_triggered()
     dbconn.setConnectOptions("QQSQLITE_REMOVE_KEY");
 
     if (!dbconn.open() || enteredPassword == "") {
-        ui->l_wrongPassword->setText("Passwort wurde entfernt!");
+        ui->l_error->setText("Passwort wurde entfernt!");
     }
     else {
-        ui->l_wrongPassword->setText("Passwort konnte nicht entfernt werden!");
+        ui->l_error->setText("Passwort konnte nicht entfernt werden!");
     }
+}
+
+void MainWindow::on_actionPasswordAdd_triggered() {
+    // to encrpyt existing database
+    //dbconn.setConnectOptions("QQSQLITE_CREATE_KEY");
+}
+
+void MainWindow::on_actionPasswordChange_triggered() {
+
+}
+
+void MainWindow::on_actionAbout_triggered() {
+
 }
 
 void MainWindow::on_tb_createMember_clicked()

@@ -31,13 +31,6 @@
        <widget class="QComboBox" name="cb_companyName"/>
       </item>
       <item>
-       <widget class="QPushButton" name="pb_download">
-        <property name="text">
-         <string>Alle herunterladen</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QCheckBox" name="cb_gold">
         <property name="text">
          <string>Gold</string>
@@ -67,6 +60,13 @@
       </item>
       <item>
        <widget class="QTreeView" name="tv_table"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pb_download">
+        <property name="text">
+         <string>Alle herunterladen</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pb_save">
