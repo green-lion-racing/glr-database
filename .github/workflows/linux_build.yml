@@ -56,6 +56,7 @@ jobs:
       - name: Deploy
         working-directory: ${{ env.SOURCE_DIR }}/build
         run:  |
+              sudo apt install libxcb-cursor0
               wget -O linuxdeployqt.AppImage https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
               chmod +x linuxdeployqt.AppImage
               export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${{ github.workspace }}/Qt/${{ env.QT_VERSION }}/gcc_64/lib/
