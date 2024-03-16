@@ -39,7 +39,7 @@ private slots:
 
 private:
     Ui::displayTables *ui;
-    QSqlQueryModel *modal;
+    QSqlTableModel *modal;
     int id;
     QString selectedTable;
 

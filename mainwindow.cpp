@@ -36,19 +36,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     // tb_createPerson
     ui->tb_createPerson->setIcon(QIcon(":img/icon_person.png"));
-    ui->tb_createPerson->setIconSize(QSize(200,200));
+    ui->tb_createPerson->setIconSize(QSize(75,75));
 
     // tb_createCompany
     ui->tb_createCompany->setIcon(QIcon(":img/icon_company.png"));
-    ui->tb_createCompany->setIconSize(QSize(200,200));
+    ui->tb_createCompany->setIconSize(QSize(75,75));
 
     // tb_createCommunication
     ui->tb_createCommunication->setIcon(QIcon(":img/icon_communication.png"));
-    ui->tb_createCommunication->setIconSize(QSize(200,200));
+    ui->tb_createCommunication->setIconSize(QSize(75,75));
 
     // tb_createActivity
     ui->tb_createActivity->setIcon(QIcon(":img/icon_activity.png"));
-    ui->tb_createActivity->setIconSize(QSize(200,200));
+    ui->tb_createActivity->setIconSize(QSize(75,75));
 
     // tb_modifyTables
     ui->tb_modifyTables->setIcon(QIcon(":img/icon_edit.png"));
@@ -220,6 +220,13 @@ void MainWindow::on_tb_modifyTables_clicked()
     modifyTables *modifyTablesWindow;
     modifyTablesWindow = new modifyTables();
     modifyTablesWindow->show();
+}
+
+void MainWindow::on_tb_modifyCompany_clicked()
+{
+    // modifyCompany *modifyCompanyWindow;
+    // modifyCompanyWindow = new modifyCompany();
+    // modifyCompanyWindow->show();
 }
 
 void MainWindow::on_tb_displayTables_clicked()

@@ -40,6 +40,7 @@ private slots:
     void on_tb_createMember_clicked();
 
     void on_tb_createCompany_clicked();
+    void on_tb_modifyCompany_clicked();
 
     void on_tb_createCommunication_clicked();
 

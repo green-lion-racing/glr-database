@@ -34,7 +34,7 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
     ui->pb_save->setVisible(false);
     ui->pb_signature->setVisible(false);
     ui->cb_companyName->setVisible(false);
-   //Checkboxes
+    // Checkboxes
     ui->cb_gold->setVisible(false);
     ui->cb_silver->setVisible(false);
     ui->cb_bronze->setVisible(false);
@@ -224,8 +224,8 @@ void displayTables::on_cb_supporter_stateChanged(int arg1)
 void displayTables::checkBoxGold(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_gold->isChecked()) {
-        //QString filter;
-        //modal->setTable("firmen");
+
+        modal->setTable("firmen");
 
         if (otherCheckedCheckBoxes == "silver")
             filter = "rang = 'Gold' OR rang = 'Silber'";
@@ -244,8 +244,8 @@ void displayTables::checkBoxGold(QString otherCheckedCheckBoxes) {
         else
             filter = "rang = 'Gold'";
 
-        //modal->setFilter(filter);
-        //modal->select();
+        modal->setFilter(filter);
+        modal->select();
         ui->tv_table->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "silver") {
@@ -281,16 +281,16 @@ void displayTables::checkBoxGold(QString otherCheckedCheckBoxes) {
         filter = "";
     }
     //modal->clear();
-    //modal->setTable("firmen");
-    //modal->setFilter(filter);
-    //modal->select();
+    modal->setTable("firmen");
+    modal->setFilter(filter);
+    modal->select();
     ui->tv_table->setModel(modal);
 }
 
 void displayTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_silver->isChecked()) {
-        //modal->setTable("firmen");
+        modal->setTable("firmen");
 
         if (otherCheckedCheckBoxes == "gold")
             filter = "rang = 'Silber' OR rang = 'Gold'";
@@ -309,8 +309,8 @@ void displayTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
         else
             filter = "rang = 'Silber'";
 
-        //modal->setFilter(filter);
-        //modal->select();
+        modal->setFilter(filter);
+        modal->select();
         ui->tv_table->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "gold") {
@@ -346,9 +346,9 @@ void displayTables::checkBoxSilver(QString otherCheckedCheckBoxes) {
         filter = "";
     }
    // modal->clear();
-    //modal->setTable("firmen");
-    //modal->select();
-    //modal->setFilter(filter);
+    modal->setTable("firmen");
+    modal->select();
+    modal->setFilter(filter);
     ui->tv_table->setModel(modal);
 }
 
@@ -356,7 +356,7 @@ void displayTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_bronze->isChecked()) {
 
-        //modal->setTable("firmen");
+        modal->setTable("firmen");
 
         if (otherCheckedCheckBoxes == "gold")
             filter = "rang = 'Bronze' OR rang = 'Gold'";
@@ -375,9 +375,9 @@ void displayTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
         else
             filter = "rang = 'Bronze'";
 
-        //modal->setFilter(filter);
-        //modal->select();
-        //ui->tv_table->setModel(modal);
+        modal->setFilter(filter);
+        modal->select();
+        ui->tv_table->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "gold") {
         modal->clear();
@@ -412,9 +412,9 @@ void displayTables::checkBoxBronze(QString otherCheckedCheckBoxes) {
         filter = "";
     }
     //modal->clear();
-    //modal->setTable("firmen");
-    //modal->setFilter(filter);
-    //modal->select();
+    modal->setTable("firmen");
+    modal->setFilter(filter);
+    modal->select();
     ui->tv_table->setModel(modal);
 }
 
@@ -422,7 +422,7 @@ void displayTables::checkBoxSupporter(QString otherCheckedCheckBoxes) {
     QString filter;
     if (ui->cb_supporter->isChecked()) {
 
-        //modal->setTable("firmen");
+        modal->setTable("firmen");
 
         if (otherCheckedCheckBoxes == "gold")
             filter = "rang = 'Supporter' OR rang = 'Gold'";
@@ -441,8 +441,8 @@ void displayTables::checkBoxSupporter(QString otherCheckedCheckBoxes) {
         else
             filter = "rang = 'Supporter'";
 
-        //modal->setFilter(filter);
-        //modal->select();
+        modal->setFilter(filter);
+        modal->select();
         ui->tv_table->setModel(modal);
     }
     else if (otherCheckedCheckBoxes == "gold") {
@@ -478,9 +478,9 @@ void displayTables::checkBoxSupporter(QString otherCheckedCheckBoxes) {
         filter = "";
     }
     //modal->clear();
-    //modal->setTable("firmen");
-    //modal->setFilter(filter);
-    //modal->select();
+    modal->setTable("firmen");
+    modal->setFilter(filter);
+    modal->select();
     ui->tv_table->setModel(modal);
 }
 
@@ -559,17 +559,12 @@ void displayTables::on_pb_signature_clicked()
         mail = "<a href='mailto:" + selectFileQuery.value(4).toString() + "'>" + selectFileQuery.value(4).toString() + "</a><br>";
     }
 
-    qDebug() << phone;
-    qDebug() << mail;
-
     fileContent = "Mit freundlichen Grüßen<br><br><table><tr><th style='text-align: left;'><b>" + selectFileQuery.value(0).toString() + " " + selectFileQuery.value(1).toString() +
                   "<br>" + selectFileQuery.value(2).toString() +
                   "<br><span style='color:#99cc00;'>Green</span> Lion Racing</b></th><th style='padding-left: 50px;'><img src='https://glracing.de/wp-content/uploads/2024/03/black_inline_transparent.png' alt='' style='height:53px;'></th></tr></table><br>Bergische Universität Wuppertal<br>Raum W.08.40<br>Gaußstraße 20, 42119 Wuppertal, Deutschland<br><br>" +
                   phone +
                   mail +
                   "<a href='https://glracing.de/'>glracing.de</a>";
-
-    qDebug() << fileContent;
 
     QString filter = "HTML Files (*.html)";
     fileName = QFileDialog::getSaveFileName(this, tr("Signatur speichern"), "Signatur " + selectFileQuery.value(0).toByteArray() + " " + selectFileQuery.value(1).toByteArray() + ".html", filter, &filter);
@@ -621,4 +616,3 @@ QString displayTables::getCompanyId () {
 
     return companyId;
 }
-
