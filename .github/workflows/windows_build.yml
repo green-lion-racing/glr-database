@@ -62,13 +62,17 @@ jobs:
         with:
           arch: x64
 
-      - name: Build
+      - name: Build Windows
         working-directory: ${{ env.SOURCE_DIR }}
         run:  |
               mkdir ${{ env.SOURCE_DIR }}\build
               cd build
               qmake -r ${{ env.SOURCE_DIR }}\glr-database.pro
-              make
+              nmake
+              
+      - name: Deploy Windows
+        working-directory: ${{ env.SOURCE_DIR\build }}
+        run:  |
               windeployqt --qmldir ${{ env.SOURCE_DIR }} glr-database.exe --pdb --release --compiler-runtime --no-translations
               copy C:\Windows\System32\concrt140.dll . 
               copy C:\Windows\System32\vccorlib140.dll .
@@ -79,4 +83,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT }}
-          path: ${{ env.SOURCE_DIR }}\build\release\*
+          path: ${{ env.SOURCE_DIR }}\build\*
