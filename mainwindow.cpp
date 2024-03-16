@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "aboutdatabase.h"
 #include "createcompany.h"
 #include "createperson.h"
 #include "createmember.h"
@@ -177,7 +178,9 @@ void MainWindow::on_actionPasswordChange_triggered() {
 }
 
 void MainWindow::on_actionAbout_triggered() {
-
+    aboutDatabase about;
+    about.setModal(true);
+    about.exec();
 }
 
 void MainWindow::on_tb_createMember_clicked()
