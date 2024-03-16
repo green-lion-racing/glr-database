@@ -45,7 +45,7 @@ jobs:
 #      - name: Create build directory
 #        run:  mkdir ${{ env.SOURCE_DIR }}/build
 
-      - name: Build Linux
+      - name: Build
         working-directory: ${{ env.SOURCE_DIR }}
         run:  |
               mkdir ${{ env.SOURCE_DIR }}/build
@@ -53,14 +53,15 @@ jobs:
               qmake -r ${{ env.SOURCE_DIR }}/glr-database.pro
               make
 
-      - name: Deploy Linux
+      - name: Deploy
         working-directory: ${{ env.SOURCE_DIR }}/build
         run:  |
               wget -O linuxdeployqt.AppImage https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
               chmod +x linuxdeployqt.AppImage
+              export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${{ github.workspace }}/Qt/${{ env.QT_VERSION }}/gcc_64/lib/
               ./linuxdeployqt.AppImage glr-database -qmldir=${{ env.SOURCE_DIR }} -no-translations
               
-      - name: Linux artefact
+      - name: Artefact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT }}
