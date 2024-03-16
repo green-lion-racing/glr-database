@@ -18,7 +18,8 @@ QLineEdit, QComboBox {
     padding-right: 5px;
 }
 
-QLabel {
+/* Not the nicest... */
+#l_dialogTitle, #l_fileName, #label_1, #label_2, #label_3, #label_4, #label_5, #label_6, #label_7, #label_8, #label_9, #label_10 {
     background-color: #E5E5E5;
     font: 18px;
 }
@@ -48,8 +49,8 @@ QCheckBox {
 }
 
 #sw_main {
-    margin-left: 200px;
-    margin-right: 200px;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 #pb_createPerson {
