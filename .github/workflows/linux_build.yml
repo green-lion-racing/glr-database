@@ -56,6 +56,10 @@ jobs:
       - name: Deploy
         working-directory: ${{ env.SOURCE_DIR }}/build
         run:  |
+              sudo apt install libodbc-dev
+              sudo apt install libpq-dev
+              sudo apt install libmysqlclient-dev
+              sudo apt install libqsqlmimer-dev
               sudo apt install libxcb-cursor0
               wget -O linuxdeployqt.AppImage https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
               chmod +x linuxdeployqt.AppImage
