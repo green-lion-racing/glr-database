@@ -52,8 +52,9 @@ jobs:
               cd build
               qmake -r ${{ env.SOURCE_DIR }}/glr-database.pro
               make
-              cd release
-              linuxdeployqt -qmldir=${{ env.SOURCE_DIR }} glr-database
+              wget -O linuxdeployqt.AppImage https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+              chmod +x linuxdeployqt.AppImage
+              ./linuxdeployqt.AppImage -qmldir=${{ env.SOURCE_DIR }} glr-database -no-translations
               
       - name: Linux artefact
         uses: actions/upload-artifact@v4
