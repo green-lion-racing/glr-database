@@ -17,7 +17,7 @@ defaults:
 
 env:
   SOURCE_DIR:   ${{ github.workspace }}
-  QT_VERSION:   5.15.2
+  QT_VERSION:   6.6.0
   ARTIFACT:     glr-database-windows
 
 jobs:
@@ -63,9 +63,9 @@ jobs:
 #          arch: x64
 
       - name: Build
-        working-directory: ${{ runner.temp }}
+        working-directory: ${{ env.SOURCE_DIR }}
         run:  |
-              mkdir ${{ runner.temp }}\build
+              mkdir ${{ env.SOURCE_DIR }}\build
               cd build
               qmake -r ${{ env.SOURCE_DIR }}\glr-database.pro
               make
@@ -80,4 +80,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT }}
-          path: ${{ runner.temp }}\build\release\*
+          path: ${{ SOURCE_DIR }}\build\release\*
