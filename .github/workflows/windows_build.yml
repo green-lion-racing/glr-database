@@ -51,6 +51,9 @@ jobs:
 #        run:  |
 #              7z x jom.zip -ojom
 #
+#               In build 
+#              ${{ runner.temp }}\jom\jom -j2
+#
 #      - name: Create build directory
 #        run:  mkdir ${{ runner.temp }}\build
 #
@@ -66,7 +69,6 @@ jobs:
               cd build
               qmake -r ${{ env.SOURCE_DIR }}\glr-database.pro
               make
-#              ${{ runner.temp }}\jom\jom -j2
               cd release
               windeployqt --qmldir ${{ env.SOURCE_DIR }} glr-database.exe --pdb --release --compiler-runtime
               copy C:\Windows\System32\concrt140.dll . 
