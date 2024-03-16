@@ -54,7 +54,7 @@ jobs:
               make
 
       - name: Deploy Linux
-        working-directory: ${{ env.SOURCE_DIR/build }}
+        working-directory: ${{ env.SOURCE_DIR }}/build
         run:  |
               wget -O linuxdeployqt.AppImage https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
               chmod +x linuxdeployqt.AppImage

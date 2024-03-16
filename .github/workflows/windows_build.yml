@@ -71,7 +71,7 @@ jobs:
               nmake
               
       - name: Deploy Windows
-        working-directory: ${{ env.SOURCE_DIR\build }}
+        working-directory: ${{ env.SOURCE_DIR }}\build
         run:  |
               windeployqt --qmldir ${{ env.SOURCE_DIR }} glr-database.exe --pdb --release --compiler-runtime --no-translations
               copy C:\Windows\System32\concrt140.dll . 
