@@ -61,7 +61,7 @@ jobs:
               wget -O linuxdeployqt.AppImage https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
               chmod +x linuxdeployqt.AppImage
               export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${{ github.workspace }}/Qt/${{ env.QT_VERSION }}/gcc_64/lib/
-              ./linuxdeployqt.AppImage glr-database -qmldir=${{ env.SOURCE_DIR }} -no-translations
+              ./linuxdeployqt.AppImage glr-database -no-translations
               
       - name: Artefact
         uses: actions/upload-artifact@v4
