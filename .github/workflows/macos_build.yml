@@ -73,7 +73,7 @@ jobs:
         run: |
           echo "#define RELEASE \"AppImage\"" > release.h
           ${{env.QMAKE}} ${{env.QMAKE_PROJECT}} CONFIG+=release PREFIX=/usr
-          lrelease QOwnNotes.pro
+          lrelease glr-database.pro
           make -j${{env.CORES}}
           
       - name: '⚙️ Install linuxdeploy'
@@ -120,58 +120,58 @@ jobs:
   #
   # Snap build
   #
-  build-snap:
-    runs-on: ubuntu-latest
-    env:
-      QT_VERSION: 6.5.0
-    continue-on-error: true
-    name: '🐧 Snap Ubuntu 18.04'
-    steps:
+  # build-snap:
+    # runs-on: ubuntu-latest
+    # env:
+      # QT_VERSION: 6.5.0
+    # continue-on-error: true
+    # name: '🐧 Snap Ubuntu 18.04'
+    # steps:
 
-      - name: '🧰 Checkout'
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
+      # - name: '🧰 Checkout'
+        # uses: actions/checkout@v4
+        # with:
+          # submodules: recursive
 
-      - name: '⚙️ Set Env'
-        shell: bash
-        run: |
-          export VERSION=$(cat version.h | sed 's/[^0-9,.]//g')
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+      # - name: '⚙️ Set Env'
+        # shell: bash
+        # run: |
+          # export VERSION=$(cat version.h | sed 's/[^0-9,.]//g')
+          # echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
-      - name: '⚙️ Cache Qt'
-        id: cache-qt
-        uses: actions/cache@v4
-        with:
-          path: Qt
-          key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
+      # - name: '⚙️ Cache Qt'
+        # id: cache-qt
+        # uses: actions/cache@v4
+        # with:
+          # path: Qt
+          # key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
 
-      - name: '⚙️ Install Qt'
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: ${{env.QT_VERSION}}
-          modules: ${{env.QT_MODULES}}
-          aqtversion: '==2.0.0'
-          cache: ${{steps.cache-qt.outputs.cache-hit}}
+      # - name: '⚙️ Install Qt'
+        # uses: jurplel/install-qt-action@v3
+        # with:
+          # version: ${{env.QT_VERSION}}
+          # modules: ${{env.QT_MODULES}}
+          # aqtversion: '==2.0.0'
+          # cache: ${{steps.cache-qt.outputs.cache-hit}}
 
-      - name: '⚙️ Printenv'
-        shell: bash
-        run: |
-          echo "VERSION=${VERSION}"
-          printenv
+      # - name: '⚙️ Printenv'
+        # shell: bash
+        # run: |
+          # echo "VERSION=${VERSION}"
+          # printenv
 
-      - name: '🚧 Compile application'
-        # https://github.com/snapcore/action-build
-        uses: snapcore/action-build@v1
-        id: snapcraft
-        with:
-          path: build-systems/github/snap.qt6
+      # - name: '🚧 Compile application'
+        # # https://github.com/snapcore/action-build
+        # uses: snapcore/action-build@v1
+        # id: snapcraft
+        # with:
+          # path: build-systems/github/snap.qt6
 
-      - name: '📤 Upload artifact: Snap'
-        uses: actions/upload-artifact@v4
-        with:
-          name: qownnotes_${{ env.VERSION }}_amd64.snap
-          path: /home/runner/work/QOwnNotes/QOwnNotes/qownnotes_${{ env.VERSION }}_amd64.snap
+      # - name: '📤 Upload artifact: Snap'
+        # uses: actions/upload-artifact@v4
+        # with:
+          # name: qownnotes_${{ env.VERSION }}_amd64.snap
+          # path: /home/runner/work/QOwnNotes/QOwnNotes/qownnotes_${{ env.VERSION }}_amd64.snap
 
   #
   # Windows build
@@ -292,4 +292,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: glr-database.dmg
-          path: src/glr-database.dmg
+          path: glr-database.dmg
