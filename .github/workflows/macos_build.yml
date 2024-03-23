@@ -12,10 +12,6 @@ on:
     branches:
     - 'master'
 
-defaults:
-  run:
-    working-directory: src
-
 #--------------------------------------------------------------------------------
 # Define application name & version
 #--------------------------------------------------------------------------------
@@ -56,7 +52,7 @@ jobs:
         id: cache-qt
         uses: actions/cache@v4
         with:
-          path: ../Qt
+          path: Qt
           key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
 
       - name: '⚙️ Install Qt'
@@ -91,7 +87,7 @@ jobs:
         run: |
           export QMAKE=${{env.REPO_DIR}}/Qt/${{env.QT_VERSION}}/gcc_64/bin/${{env.QMAKE}}
           export PATH=${{env.REPO_DIR}}/Qt/${{env.QT_VERSION}}/gcc_64/libexec:$PATH
-          cp ../icons/icon.png QOwnNotes.png
+          #cp ../icons/icon.png QOwnNotes.png
           ./linuxdeploy-x86_64.AppImage --appdir ${{env.BUILD_DIR}} -e ${{env.UNIXNAME}} -i ${{env.UNIXNAME}}.png -d PBE.QOwnNotes.desktop --plugin qt
           mkdir -p ${{env.BUILD_DIR}}/usr/plugins/iconengines && cp -r ${{env.REPO_DIR}}/Qt/${{env.QT_VERSION}}/gcc_64/plugins/iconengines/libqsvgicon.so ${{env.BUILD_DIR}}/usr/plugins/iconengines
           mkdir -p ${{env.BUILD_DIR}}/usr/languages && cp -r languages/*.qm ${{env.BUILD_DIR}}/usr/languages
@@ -147,7 +143,7 @@ jobs:
         id: cache-qt
         uses: actions/cache@v4
         with:
-          path: ../Qt
+          path: Qt
           key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
 
       - name: '⚙️ Install Qt'
@@ -180,65 +176,65 @@ jobs:
   #
   # Windows build
   #
-  build-windows:
-    name: '🧊 Windows Server 2019'
-    # https://github.com/pbek/QOwnNotes/issues/2558 error on windows-2022!
-    runs-on: windows-2019
-    env:
-      # Qt 6.5 windeployqt doesn't deploy DLLs!
-      QT_VERSION: 6.4.2
-    continue-on-error: true
-    steps:
+  # build-windows:
+    # name: '🧊 Windows Server 2019'
+    # # https://github.com/pbek/QOwnNotes/issues/2558 error on windows-2022!
+    # runs-on: windows-2019
+    # env:
+      # # Qt 6.5 windeployqt doesn't deploy DLLs!
+      # QT_VERSION: 6.4.2
+    # continue-on-error: true
+    # steps:
 
-      - name: '🧰 Checkout'
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
+      # - name: '🧰 Checkout'
+        # uses: actions/checkout@v4
+        # with:
+          # submodules: recursive
 
-      - name: '⚙️ Cache Qt'
-        id: cache-qt
-        uses: actions/cache@v4
-        with:
-          path: ../Qt
-          key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
+      # - name: '⚙️ Cache Qt'
+        # id: cache-qt
+        # uses: actions/cache@v4
+        # with:
+          # path: Qt
+          # key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
 
-      - name: '⚙️ Install Qt'
-        uses: jurplel/install-qt-action@v3
-        with:
-          aqtversion: '==2.0.0'
-          version: ${{env.QT_VERSION}}
-          # https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt6_650/qt.qt6.650.win64_mingw/
-          # https://aqtinstall.readthedocs.io/en/latest/getting_started.html
-          # https://ddalcino.github.io/aqt-list-server/
-          arch: win64_mingw
-          modules: ${{env.QT_MODULES}}
-          cache: ${{ steps.cache-qt.outputs.cache-hit }}
+      # - name: '⚙️ Install Qt'
+        # uses: jurplel/install-qt-action@v3
+        # with:
+          # aqtversion: '==2.0.0'
+          # version: ${{env.QT_VERSION}}
+          # # https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt6_650/qt.qt6.650.win64_mingw/
+          # # https://aqtinstall.readthedocs.io/en/latest/getting_started.html
+          # # https://ddalcino.github.io/aqt-list-server/
+          # arch: win64_mingw
+          # modules: ${{env.QT_MODULES}}
+          # cache: ${{ steps.cache-qt.outputs.cache-hit }}
 
-      - name: '⚙️ Set Env'
-        shell: bash
-        run: |
-          export VERSION=$(cat version.h | sed 's/[^0-9,.]//g')
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+      # - name: '⚙️ Set Env'
+        # shell: bash
+        # run: |
+          # export VERSION=$(cat version.h | sed 's/[^0-9,.]//g')
+          # echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
-      - name: '⚙️ Printenv'
-        shell: bash
-        run: |
-          echo "VERSION=${VERSION}"
-          printenv
+      # - name: '⚙️ Printenv'
+        # shell: bash
+        # run: |
+          # echo "VERSION=${VERSION}"
+          # printenv
 
-      - name: '🚧 Compile application'
-        run: '& ..\build-systems\github\windows\build-zip-qt6.ps1'
+      # - name: '🚧 Compile application'
+        # run: '& ..\build-systems\github\windows\build-zip-qt6.ps1'
 
-      - name: '📤 Upload artifact: Windows'
-        uses: actions/upload-artifact@v4
-        with:
-          name: QOwnNotes.zip
-          path: QOwnNotes.zip
-      - name: '📤 Upload artifact: Windows sha256sum'
-        uses: actions/upload-artifact@v4
-        with:
-          name: QOwnNotes.zip.sha256
-          path: QOwnNotes.zip.sha256
+      # - name: '📤 Upload artifact: Windows'
+        # uses: actions/upload-artifact@v4
+        # with:
+          # name: QOwnNotes.zip
+          # path: QOwnNotes.zip
+      # - name: '📤 Upload artifact: Windows sha256sum'
+        # uses: actions/upload-artifact@v4
+        # with:
+          # name: QOwnNotes.zip.sha256
+          # path: QOwnNotes.zip.sha256
 
 
   #
@@ -261,7 +257,7 @@ jobs:
         id: cache-qt
         uses: actions/cache@v4
         with:
-          path: ../Qt
+          path: Qt
           key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
 
       - name: '⚙️ Install Qt'
