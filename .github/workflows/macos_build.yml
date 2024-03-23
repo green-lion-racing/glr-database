@@ -292,7 +292,8 @@ jobs:
           lrelease glr-database.pro
           ${{env.QMAKE}}
           make -j ${{env.CORES}}
-          ${Qt6_DIR}/bin/macdeployqt ./glr-database.app
+          ${Qt6_DIR}/bin/macdeployqt ./glr-database.app -dmg
+          ls
 
       - name: '📤 Upload artifact: macOS'
         uses: actions/upload-artifact@v4
