@@ -88,7 +88,8 @@ jobs:
           export QMAKE=${{env.REPO_DIR}}/Qt/${{env.QT_VERSION}}/gcc_64/bin/${{env.QMAKE}}
           export PATH=${{env.REPO_DIR}}/Qt/${{env.QT_VERSION}}/gcc_64/libexec:$PATH
           #cp ../icons/icon.png QOwnNotes.png
-          ./linuxdeploy-x86_64.AppImage --appdir ${{env.BUILD_DIR}} -e ${{env.UNIXNAME}} -i ${{env.UNIXNAME}}.png -d PBE.QOwnNotes.desktop --plugin qt
+          #./linuxdeploy-x86_64.AppImage --appdir ${{env.BUILD_DIR}} -e ${{env.UNIXNAME}} -i ${{env.UNIXNAME}}.png -d PBE.QOwnNotes.desktop --plugin qt
+          ./linuxdeploy-x86_64.AppImage --appdir ${{env.BUILD_DIR}} -e ${{env.UNIXNAME}} -d PBE.QOwnNotes.desktop --plugin qt
           mkdir -p ${{env.BUILD_DIR}}/usr/plugins/iconengines && cp -r ${{env.REPO_DIR}}/Qt/${{env.QT_VERSION}}/gcc_64/plugins/iconengines/libqsvgicon.so ${{env.BUILD_DIR}}/usr/plugins/iconengines
           mkdir -p ${{env.BUILD_DIR}}/usr/languages && cp -r languages/*.qm ${{env.BUILD_DIR}}/usr/languages
           cp -rL ${{env.REPO_DIR}}/Qt/${{env.QT_VERSION}}/gcc_64/lib/libQt6QmlWorkerScript.so.6 ${{env.BUILD_DIR}}/usr/lib
@@ -284,6 +285,10 @@ jobs:
         run: |
           brew install libpq
           brew install libiodbc
+          ls /usr/local/opt/postgresql@14/lib/postgresql@14/
+          ls /Applications/Postgres.app/Contents/Versions/14/lib/
+          sudo mkdir -p /Applications/Postgres.app/Contents/Versions/14/lib/
+          sudo ln -s /usr/local/opt/postgresql@14/lib/postgresql@14/libpq.5.dylib /Applications/Postgres.app/Contents/Versions/14/lib/libpq.5.dylib
           echo "#define RELEASE \"GitHub Actions\"" > release.h
           lrelease glr-database.pro
           ${{env.QMAKE}}
