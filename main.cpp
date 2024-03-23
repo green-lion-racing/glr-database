@@ -24,3 +24,4 @@ int main(int argc, char *argv[])
 // how to get nice scrollbar and nice dropdown while using custom qss
 // combine/create creating and modifying of objects
 // add nice way to log changes in sponsors/members/persons
+// add column shirt size, vdi number to member
