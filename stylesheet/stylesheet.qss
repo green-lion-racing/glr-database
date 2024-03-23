@@ -1,5 +1,4 @@
 QWidget #centralwidget_main_menu {
-    color: black;
     background-color: #043F53;
 }
 

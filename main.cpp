@@ -18,10 +18,10 @@ int main(int argc, char *argv[])
 }
 
 // TODOs
-// menubar disable currently not usable buttons
 // add password/cypher mode, changing, adding, removing
 // adjust filtering in table view and table edit
-// how to get nice scrollbar and nice dropdown while using custom qss
 // combine/create creating and modifying of objects
 // add nice way to log changes in sponsors/members/persons
-// add column shirt size, vdi number to member
+// dont load files in full size in table kommunikation_dateien, programm hangs
+// Use QStyle instead of Qt Style Sheets https://www.kdab.com/say-no-to-qt-style-sheets/
+// how to nice dropdown while using custom qss Qt Style Sheet problem?

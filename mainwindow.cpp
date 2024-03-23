@@ -26,6 +26,13 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap logo(":img/logo_glr_white.png");
     ui->l_logo->setPixmap(logo);
 
+    ui->actionCloseDatabase->setEnabled(false);
+
+    // temporarily disable password buttons
+    ui->actionPasswordAdd->setEnabled(false);
+    ui->actionPasswordRemove->setEnabled(false);
+    ui->actionPasswordChange->setEnabled(false);
+
     // login via click on arrow
     QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":img/icon_arrow.png"), QLineEdit::TrailingPosition);
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::openDatabase);
@@ -91,6 +98,8 @@ void MainWindow::openDatabase() {
     dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn.setDatabaseName(currentFile);
 
+    ui->actionCloseDatabase->setEnabled(true);
+
     // TODO check if selected file is a sqlite db
     if (!dbconn.open()) {
         QString enteredPassword = ui->le_password->text();
@@ -136,6 +145,8 @@ void MainWindow::on_actionCloseDatabase_triggered() {
 
     ui->l_error->setText("");
     ui->sw_main->setCurrentIndex(1);
+
+    ui->actionCloseDatabase->setEnabled(false);
 
     QFile file(":stylesheet/stylesheet.qss");
     file.open(QFile::ReadOnly);

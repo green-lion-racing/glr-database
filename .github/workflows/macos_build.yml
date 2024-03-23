@@ -283,20 +283,17 @@ jobs:
 
       - name: '🚧 Compile application'
         run: |
-          brew install libpq
           brew install libiodbc
           sudo mkdir -p /Applications/Postgres.app/Contents/Versions/14/lib/
           sudo ln -s /usr/local/opt/postgresql@14/lib/postgresql@14/libpq.5.dylib /Applications/Postgres.app/Contents/Versions/14/lib/libpq.5.dylib
-          ls /Applications/Postgres.app/Contents/Versions/14/lib/
           echo "#define RELEASE \"GitHub Actions\"" > release.h
           lrelease glr-database.pro
           ${{env.QMAKE}}
           make -j ${{env.CORES}}
           ${Qt6_DIR}/bin/macdeployqt ./glr-database.app -dmg
-          ls
 
       - name: '📤 Upload artifact: macOS'
         uses: actions/upload-artifact@v4
         with:
-          name: glr-database.dmg
+          name: glr-database-macos
           path: glr-database.dmg
