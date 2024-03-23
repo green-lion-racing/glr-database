@@ -282,6 +282,8 @@ jobs:
 
       - name: '🚧 Compile application'
         run: |
+          brew install libpq
+          brew install libiodbc
           echo "#define RELEASE \"GitHub Actions\"" > release.h
           lrelease glr-database.pro
           ${{env.QMAKE}}
