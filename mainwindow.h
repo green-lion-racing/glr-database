@@ -6,6 +6,8 @@
 #include <QtDebug>
 #include <QFileInfo>
 #include <QLabel>
+#include "modifytables.h"
+#include "displaytables.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -53,6 +55,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    modifyTables *modifyTablesWindow = NULL;
+
+    displayTables *displayTablesWindow = NULL;
 
     void keyPressEvent(QKeyEvent * event);
 

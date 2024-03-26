@@ -16,12 +16,8 @@ QMenuBar::item:pressed {
     background: #66d104;
 }
 
-QWidget #centralwidget_modify_tables{
+QDialog, QWidget #centralwidget_modify_tables, QWidget #centralwidget_display_tables {
     background: #E5E5E5;
-}
-
-QDialog {
-    background-color: #E5E5E5;
 }
 
 /* todo exclude table entrys */

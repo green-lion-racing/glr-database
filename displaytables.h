@@ -1,14 +1,14 @@
 #ifndef SEETABLES_H
 #define SEETABLES_H
 
-#include <QDialog>
+#include <QMainWindow>
 #include <QtSql>
 
 namespace Ui {
 class displayTables;
 }
 
-class displayTables : public QDialog
+class displayTables : public QMainWindow
 {
     Q_OBJECT
 

@@ -6,8 +6,6 @@
 #include "createmember.h"
 #include "createactivity.h"
 #include "createcommunication.h"
-#include "modifytables.h"
-#include "displaytables.h"
 #include <QFileDialog>
 #include <QPixmap>
 #include <QKeyEvent>
@@ -131,6 +129,7 @@ void MainWindow::openDatabase() {
 
     // TODO check if selected file is a sqlite db and or cyphered
     // Magic Header String - Every valid SQLite database file begins with the following 16 bytes (in hex): 53 51 4c 69 74 65 20 66 6f 72 6d 61 74 20 33 00
+    // https://github.com/sqlcipher/android-database-sqlcipher/issues/381
     if (!dbconn.open()) {
         QString enteredPassword = ui->le_password->text();
         dbconn.setPassword(enteredPassword);
@@ -259,13 +258,6 @@ void MainWindow::on_tb_createActivity_clicked()
     activity.exec();
 }
 
-void MainWindow::on_tb_modifyTables_clicked()
-{
-    modifyTables *modifyTablesWindow;
-    modifyTablesWindow = new modifyTables();
-    modifyTablesWindow->show();
-}
-
 void MainWindow::on_tb_modifyCompany_clicked()
 {
     // modifyCompany *modifyCompanyWindow;
@@ -275,7 +267,22 @@ void MainWindow::on_tb_modifyCompany_clicked()
 
 void MainWindow::on_tb_displayTables_clicked()
 {
-    displayTables *tables;
-    tables = new displayTables;
-    tables->show();
+    if (displayTablesWindow == NULL)
+        displayTablesWindow = new displayTables();
+    displayTablesWindow->show();
+    if (!displayTablesWindow->hasFocus()) {
+        displayTablesWindow->activateWindow();
+        displayTablesWindow->raise();
+    }
+}
+
+void MainWindow::on_tb_modifyTables_clicked()
+{
+    if (modifyTablesWindow == NULL)
+        modifyTablesWindow = new modifyTables();
+    modifyTablesWindow->show();
+    if (!modifyTablesWindow->hasFocus()) {
+        modifyTablesWindow->activateWindow();
+        modifyTablesWindow->raise();
+    }
 }

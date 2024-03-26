@@ -6,7 +6,7 @@ static int showCompanyName = 0;
 static bool tableCompanyActiv = 0;
 
 displayTables::displayTables(QWidget *parent) :
-    QDialog(parent),
+    QMainWindow(parent),
     ui(new Ui::displayTables)
 {
     ui->setupUi(this);

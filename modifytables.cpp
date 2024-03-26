@@ -450,40 +450,40 @@ void modifyTables::checkBoxSupporter(QString otherCheckedCheckBoxes) {
     ui->tv_table->setModel(modal);
 }
 
-void modifyTables::on_pb_download_clicked()
-{
-    QString name;
-    QByteArray fileContent;
-    QVector<int> ids;
-    QString fileName;
-    QString filePath;
-    QFile file;
+// void modifyTables::on_pb_download_clicked()
+// {
+//     QString name;
+//     QByteArray fileContent;
+//     QVector<int> ids;
+//     QString fileName;
+//     QString filePath;
+//     QFile file;
 
-    // Alle IDs der Einträge
-    QSqlQuery selectIdsQuery("SELECT id FROM kommunikation_dateien");
-    while(selectIdsQuery.next()) {
-        ids.push_back(selectIdsQuery.value(0).toInt());
-    }
+//     // Alle IDs der Einträge
+//     QSqlQuery selectIdsQuery("SELECT id FROM kommunikation_dateien");
+//     while(selectIdsQuery.next()) {
+//         ids.push_back(selectIdsQuery.value(0).toInt());
+//     }
 
-    //fileName = QFileDialog::getSaveFileName(this, tr("Save Document"), name);
-    filePath = QFileDialog::getExistingDirectory(this, tr("Open Directory"));
+//     //fileName = QFileDialog::getSaveFileName(this, tr("Save Document"), name);
+//     filePath = QFileDialog::getExistingDirectory(this, tr("Open Directory"));
 
-    QSqlQuery selectFileQuery;
-    for (int i = 0; i < ids.length(); i++) {
-        selectFileQuery.prepare("SELECT datei, dateiname FROM kommunikation_dateien WHERE id = :id");
-        selectFileQuery.bindValue(":id", ids[i]);
-        selectFileQuery.exec();
-        while(selectFileQuery.next()) {
-            fileContent = selectFileQuery.value(0).toByteArray();
-            name = selectFileQuery.value(1).toString();
-        }
-        fileName = filePath + "\\" + name;
-        file.setFileName(fileName);
-        file.open(QIODevice::ReadWrite);
+//     QSqlQuery selectFileQuery;
+//     for (int i = 0; i < ids.length(); i++) {
+//         selectFileQuery.prepare("SELECT datei, dateiname FROM kommunikation_dateien WHERE id = :id");
+//         selectFileQuery.bindValue(":id", ids[i]);
+//         selectFileQuery.exec();
+//         while(selectFileQuery.next()) {
+//             fileContent = selectFileQuery.value(0).toByteArray();
+//             name = selectFileQuery.value(1).toString();
+//         }
+//         fileName = filePath + "\\" + name;
+//         file.setFileName(fileName);
+//         file.open(QIODevice::ReadWrite);
 
-        file.write(fileContent);
-    }
-}
+//         file.write(fileContent);
+//     }
+// }
 
 void modifyTables::on_cb_companyName_currentTextChanged(const QString &arg1)
 {
