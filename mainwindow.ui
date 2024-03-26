@@ -110,7 +110,7 @@
             <item>
              <widget class="QToolButton" name="tb_createCompany">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -125,8 +125,17 @@
             </item>
             <item>
              <widget class="QToolButton" name="tb_modifyCompany">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Unternehmen bearbeiten</string>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>
@@ -545,7 +554,6 @@
  <tabstops>
   <tabstop>le_password</tabstop>
   <tabstop>tb_createMember</tabstop>
-  <tabstop>tb_createCompany</tabstop>
   <tabstop>tb_displayTables</tabstop>
   <tabstop>tb_modifyTables</tabstop>
  </tabstops>

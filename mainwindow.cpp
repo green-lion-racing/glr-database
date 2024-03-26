@@ -18,13 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->sw_main->setCurrentIndex(1);
     QWidget::setWindowTitle("Green Lion Racing Datenbank");
-
-    // login index 1
-    // display GLR logo at l_logo
-    QPixmap logo(":img/logo_glr_white.png");
-    ui->l_logo->setPixmap(logo);
 
     ui->actionCloseDatabase->setEnabled(false);
 
@@ -33,44 +27,79 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionPasswordRemove->setEnabled(false);
     ui->actionPasswordChange->setEnabled(false);
 
+
+
+    // index 1 login
+    ui->sw_main->setCurrentIndex(1);
+
+    // display GLR logo at l_logo
+    QPixmap logo(":img/logo_glr_white.png");
+    ui->l_logo->setPixmap(logo);
+
+    // Set title "GLR Datenbank" in different colors
+    ui->l_title->setText("<font color=\'#66D104\'>GLR</font> <font color=\'white\'>Datenbank</font>");
+
+    // no text in error at the beginning
+    ui->l_error->setText("");
+
     // login via click on arrow
     QAction *actionClickLogIn = ui->le_password->addAction(QIcon(":img/icon_arrow.png"), QLineEdit::TrailingPosition);
     connect(actionClickLogIn, &QAction::triggered, this, &MainWindow::openDatabase);
 
-    // management index 0
+
+
+    // index 0 management
+    QIcon icon_person = QIcon(":img/icon_person.png");
+    QIcon icon_company = QIcon(":img/icon_company.png");
+    QIcon icon_communication = QIcon(":img/icon_communication.png");
+    QIcon icon_activity = QIcon(":img/icon_activity.png");
+    QSize size_big = QSize(200, 200);
+    QSize size_small = QSize(75, 75);
+
     // tb_createMember
-    ui->tb_createMember->setIcon(QIcon(":img/icon_person.png"));
-    ui->tb_createMember->setIconSize(QSize(200,200));
+    ui->tb_createMember->setIcon(icon_person);
+    ui->tb_createMember->setIconSize(size_big);
+    // tb_modifyMember
+    ui->tb_modifyMember->setIcon(icon_person);
+    ui->tb_modifyMember->setIconSize(size_big);
 
     // tb_createPerson
-    ui->tb_createPerson->setIcon(QIcon(":img/icon_person.png"));
-    ui->tb_createPerson->setIconSize(QSize(75,75));
+    ui->tb_createPerson->setIcon(icon_person);
+    ui->tb_createPerson->setIconSize(size_small);
+    // tb_modifyPerson
+    ui->tb_modifyPerson->setIcon(icon_person);
+    ui->tb_modifyPerson->setIconSize(size_small);
 
     // tb_createCompany
-    ui->tb_createCompany->setIcon(QIcon(":img/icon_company.png"));
-    ui->tb_createCompany->setIconSize(QSize(75,75));
+    ui->tb_createCompany->setIcon(icon_company);
+    ui->tb_createCompany->setIconSize(size_small);
+    // tb_modifyCompany
+    ui->tb_modifyCompany->setIcon(icon_company);
+    ui->tb_modifyCompany->setIconSize(size_small);
 
     // tb_createCommunication
-    ui->tb_createCommunication->setIcon(QIcon(":img/icon_communication.png"));
-    ui->tb_createCommunication->setIconSize(QSize(75,75));
+    ui->tb_createCommunication->setIcon(icon_communication);
+    ui->tb_createCommunication->setIconSize(size_small);
+    // tb_modifyCommunication
+    ui->tb_modifyCommunication->setIcon(icon_communication);
+    ui->tb_modifyCommunication->setIconSize(size_small);
 
     // tb_createActivity
-    ui->tb_createActivity->setIcon(QIcon(":img/icon_activity.png"));
-    ui->tb_createActivity->setIconSize(QSize(75,75));
+    ui->tb_createActivity->setIcon(icon_activity);
+    ui->tb_createActivity->setIconSize(size_small);
+    // tb_modifyActivity
+    ui->tb_modifyActivity->setIcon(icon_activity);
+    ui->tb_modifyActivity->setIconSize(size_small);
 
     // tb_modifyTables
     ui->tb_modifyTables->setIcon(QIcon(":img/icon_edit.png"));
-    ui->tb_modifyTables->setIconSize(QSize(200,200));
+    ui->tb_modifyTables->setIconSize(size_big);
 
     // tb_displayTables
     ui->tb_displayTables->setIcon(QIcon(":img/icon_lens.png"));
-    ui->tb_displayTables->setIconSize(QSize(200,200));
+    ui->tb_displayTables->setIconSize(size_big);
 
-    // Set l_title "GLR Datenbank" in different colors
-    ui->l_title->setText("<font color=\'#66D104\'>GLR</font> <font color=\'white\'>Datenbank</font>");
 
-    // no text in l_error at the beginning
-    ui->l_error->setText("");
 
     // no database selected on start
     status_label->setText("Keine Datenbank gewählt.");
