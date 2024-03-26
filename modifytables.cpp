@@ -21,6 +21,7 @@ modifyTables::modifyTables(QWidget *parent) :
     modalComboBox->setQuery(selectTable);
 
     ui->cb_table->setModel(modalComboBox);
+    ui->tv_table->verticalHeader()->setVisible(false);
 }
 
 modifyTables::~modifyTables()
@@ -104,7 +105,6 @@ void modifyTables::on_cb_table_currentTextChanged(const QString &arg1)
     ui->tv_table->setSortingEnabled(true);
     modal->setEditStrategy(QSqlTableModel::OnManualSubmit);
     ui->tv_table->setModel(modal);
-    ui->tv_table->setColumnHidden(0, true);
 }
 
 void modifyTables::on_cb_gold_stateChanged(int arg1)

@@ -18,10 +18,10 @@ int main(int argc, char *argv[])
 }
 
 // TODOs
-// add password/cypher mode, changing, adding, removing
-// adjust filtering in table view and table edit
-// combine/create creating and modifying of objects
-// add nice way to log changes in sponsors/members/persons
 // dont load files in full size in table kommunikation_dateien, programm hangs
+// combine/create creating and modifying of objects
+// adjust filtering in table view and table edit
+// add password/cypher mode, changing, adding, removing
+// add nice way to log changes in sponsors/members/persons
 // Use QStyle instead of Qt Style Sheets https://www.kdab.com/say-no-to-qt-style-sheets/
-// how to nice dropdown while using custom qss Qt Style Sheet problem?
+// how to have nice dropdown while using custom qss Qt Style Sheet problem?

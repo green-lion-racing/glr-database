@@ -129,12 +129,13 @@ void MainWindow::openDatabase() {
 
     ui->actionCloseDatabase->setEnabled(true);
 
-    // TODO check if selected file is a sqlite db
+    // TODO check if selected file is a sqlite db and or cyphered
+    // Magic Header String - Every valid SQLite database file begins with the following 16 bytes (in hex): 53 51 4c 69 74 65 20 66 6f 72 6d 61 74 20 33 00
     if (!dbconn.open()) {
         QString enteredPassword = ui->le_password->text();
         dbconn.setPassword(enteredPassword);
         if (!dbconn.open()) {
-            ui->l_error->setText("Falsches Passwort!");
+            ui->l_error->setText("Falsches Passwort oder keine Datenbank.");
             return;
         }
     }

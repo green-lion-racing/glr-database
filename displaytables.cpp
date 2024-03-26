@@ -21,6 +21,9 @@ displayTables::displayTables(QWidget *parent) :
     modalComboBox->setQuery(selectTable);
 
     ui->cb_table->setModel(modalComboBox);
+
+    ui->tv_table->verticalHeader()->setVisible(false);
+    ui->tv_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 displayTables::~displayTables()
@@ -102,8 +105,6 @@ void displayTables::on_cb_table_currentTextChanged(const QString &arg1)
     ui->tv_table->setSortingEnabled(true);
     //modal->setEditStrategy(QSqlTableModel::OnManualSubmit);
     ui->tv_table->setModel(modal);
-    // Hide ID-coulmn
-    ui->tv_table->setColumnHidden(0, true);
 }
 
 void displayTables::on_pb_download_clicked()

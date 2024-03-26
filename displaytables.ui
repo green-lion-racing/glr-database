@@ -79,7 +79,7 @@
    <item>
     <widget class="QPushButton" name="pb_signature">
      <property name="text">
-      <string>Signatur ausgewählter Person speichern</string>
+      <string>Signatur ausgewählter Person herunterladen</string>
      </property>
     </widget>
    </item>
