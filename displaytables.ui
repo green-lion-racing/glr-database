@@ -25,38 +25,60 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="cb_table"/>
-      </item>
-      <item>
-       <widget class="QComboBox" name="cb_companyName"/>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="cb_gold">
-        <property name="text">
-         <string>Gold</string>
+       <widget class="QComboBox" name="cb_table">
+        <property name="placeholderText">
+         <string>Tabellen...</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="cb_silver">
-        <property name="text">
-         <string>Silber</string>
+       <widget class="QComboBox" name="cb_filter">
+        <property name="placeholderText">
+         <string>Filtern nach...</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="cb_bronze">
-        <property name="text">
-         <string>Bronze</string>
+       <widget class="QLineEdit" name="le_search">
+        <property name="placeholderText">
+         <string>Suche...</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="cb_supporter">
-        <property name="text">
-         <string>Supporter</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="filterHorizontalLayout">
+        <item>
+         <widget class="QCheckBox" name="cb_filter_gold">
+          <property name="text">
+           <string>Gold</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="cb_filter_silver">
+          <property name="text">
+           <string>Silber</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="cb_filter_bronze">
+          <property name="text">
+           <string>Bronze</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="cb_filter_supporter">
+          <property name="text">
+           <string>Supporter</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QTableView" name="tv_table"/>
@@ -66,23 +88,43 @@
     <item>
      <widget class="QPushButton" name="pb_download">
       <property name="text">
+       <string>Ausgewähltes herunterladen</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pb_download_all">
+      <property name="text">
        <string>Alle herunterladen</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pb_save">
-      <property name="text">
-       <string>Ausgewählte Kommunikation herunterladen</string>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>0</number>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pb_signature">
-      <property name="text">
-       <string>Signatur ausgewählter Person herunterladen</string>
-      </property>
-     </widget>
+      <item>
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string>Bearbeitung aktivieren</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pb_save">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Änderungen speichern</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
