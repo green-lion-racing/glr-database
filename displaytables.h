@@ -37,12 +37,18 @@ private slots:
 
     void on_pb_download_all_clicked();
 
+    void on_cb_editMode_stateChanged();
+
     void on_pb_save_clicked();
+
+    void unsaved_changes();
+
+    // void closeEvent();
 
 private:
     Ui::displayTables *ui;
 
-    QSqlTableModel *modal;
+    QSqlTableModel *tableModel;
 
     int id;
 

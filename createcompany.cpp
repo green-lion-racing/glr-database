@@ -67,6 +67,7 @@ void createCompany::on_pb_okay_clicked()
         insertCompanyQuery.exec();
     else {
         error errorWindow;
+        errorWindow.setText("Firmenname bereits existent.");
         errorWindow.setModal(true);
         errorWindow.exec();
     }

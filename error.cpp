@@ -15,6 +15,10 @@ error::~error()
     delete ui;
 }
 
+void error::setText(QString error) {
+    ui->l_error->setText(error);
+}
+
 void error::on_pb_okay_clicked()
 {
     close();

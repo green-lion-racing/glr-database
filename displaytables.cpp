@@ -1,6 +1,7 @@
 #include "displaytables.h"
 #include "ui_displaytables.h"
 #include <QFileDialog>
+#include "error.h"
 
 displayTables::displayTables(QWidget *parent) :
     QMainWindow(parent),
@@ -21,12 +22,17 @@ displayTables::displayTables(QWidget *parent) :
 
     ui->tv_table->verticalHeader()->setVisible(false);
     ui->tv_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tv_table->setSortingEnabled(true);
 }
 
 displayTables::~displayTables()
 {
     delete ui;
 }
+
+//void displayTables::closeEvent(QCloseEvent *event) {
+
+//}
 
 QString displayTables::getCompanyId () {
     QSqlQuery queryCompanyId;
@@ -48,6 +54,7 @@ void displayTables::on_cb_table_currentTextChanged()
     ui->pb_download->setVisible(false);
     ui->pb_download_all->setVisible(false);
     ui->pb_save->setVisible(false);
+    ui->le_search->setVisible(false); // TODO https://www.google.com/search?client=firefox-b-d&q=sql+search+value+in+all+tables
 
     // Checkboxes
     ui->cb_filter_gold->setVisible(false);
@@ -56,8 +63,9 @@ void displayTables::on_cb_table_currentTextChanged()
     ui->cb_filter_supporter->setVisible(false);
 
     selectedTable = ui->cb_table->currentText();
-    modal = new QSqlTableModel();
-    modal->setQuery("SELECT * FROM " + selectedTable);
+    tableModel = new QSqlTableModel();
+    tableModel->setQuery("SELECT * FROM " + selectedTable);
+    tableModel->setTable(selectedTable);
 
     if (selectedTable == "kommunikation_dateien") {
         download_mode = 0;
@@ -66,12 +74,6 @@ void displayTables::on_cb_table_currentTextChanged()
         ui->pb_download_all->setText("Alle Kommunikationen speichern");
         ui->pb_download_all->setVisible(true);
     } else if (selectedTable == "firmen") {
-        //ui->cb_rank->setVisible(true);
-        //rank = ui->cb_rank->currentText();
-        //filter = "firma = '" + rank + "'";
-
-        //modal->setFilter(filter);
-        modal->setQuery("SELECT * FROM " + selectedTable);
         ui->cb_filter_gold->setVisible(true);
         ui->cb_filter_silver->setVisible(true);
         ui->cb_filter_bronze->setVisible(true);
@@ -87,20 +89,12 @@ void displayTables::on_cb_table_currentTextChanged()
         ui->cb_filter->setModel(modalComboBox);
 
         ui->cb_filter->setVisible(true);
-        companyName = ui->cb_filter->currentText();
 
-        QString companyId = getCompanyId();
-        if (selectedTable == "kommunikationen") {
-            ui->pb_save->setVisible(true);
+        // companyName = ui->cb_filter->currentText();
+        // QString companyId = getCompanyId();
+        // tableModel->setQuery("SELECT * FROM " + selectedTable + " WHERE FirmenId = '" + companyId + "'");
+        // tableModel->setQuery("SELECT k.id, k.firma, k.ansprechpartner, k.wann, k.was, count(*) FROM kommunikationen k, kommunikation_dateien d  WHERE k.FirmenID = '" + companyId + "' AND k.id = d.kommunikation_id GROUP BY kommunikation_id");
 
-            modal->setQuery("SELECT k.id, k.firma, k.ansprechpartner, k.wann, k.was, count(*) FROM kommunikationen k, kommunikation_dateien d  WHERE k.FirmenID = '" + companyId + "' AND k.id = d.kommunikation_id GROUP BY kommunikation_id");
-        } else if (selectedTable == "personen") {
-            // display filter company name
-            //ui->cb_companyName->setVisible(true);
-            //companyName = ui->cb_companyName->currentText();
-            //filter = "firma = '" + companyName + "'";
-            modal->setQuery("SELECT * FROM " + selectedTable + " WHERE FirmenId = '" + companyId + "'");
-        }
     } else if (selectedTable == "mitglieder") {
         download_mode = 1;
         ui->pb_download->setText("Ausgewählte Signaturen speichern");
@@ -109,10 +103,9 @@ void displayTables::on_cb_table_currentTextChanged()
         ui->pb_download_all->setVisible(true);
     }
 
-    //modal->select();
-    ui->tv_table->setSortingEnabled(true);
-    //modal->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    ui->tv_table->setModel(modal);
+    tableModel->select();
+    tableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    ui->tv_table->setModel(tableModel);
 }
 
 void displayTables::on_cb_filter_currentTextChanged()
@@ -120,11 +113,14 @@ void displayTables::on_cb_filter_currentTextChanged()
     ui->cb_filter->setVisible(true);
     QString companyName = ui->cb_filter->currentText();
     QString companyId = getCompanyId();
-    if (selectedTable == "kommunikationen")
-        modal->setQuery("SELECT k.id, k.firma, k.ansprechpartner, k.wann, k.was, count(*) FROM kommunikationen k, kommunikation_dateien d  WHERE k.FirmenID = '" + companyId + "' AND k.id = d.kommunikation_id GROUP BY kommunikation_id");
-    else
-        modal->setQuery("SELECT * FROM " + selectedTable + " WHERE firma = '" + companyName  + "'");
+    // if (selectedTable == "kommunikationen")
+    //     tableModel->setQuery("SELECT k.id, k.firma, k.ansprechpartner, k.wann, k.was, count(*) FROM kommunikationen k, kommunikation_dateien d  WHERE k.FirmenID = '" + companyId + "' AND k.id = d.kommunikation_id GROUP BY kommunikation_id");
+    // else
+    //     tableModel->setQuery("SELECT * FROM " + selectedTable + " WHERE firma = '" + companyName  + "'");
+
+    //tableModel->filter()
     /*QString filter = "firma = '" + companyName + "'";
+
     //modal->select();
     ui->tv_table->setModel(modal);
     //modal->setFilter(filter);
@@ -176,16 +172,16 @@ void displayTables::update_cb_filter() {
     if (!checks.isEmpty())
         filter += checks.constLast();
 
-    modal->setTable("firmen");
-    modal->setFilter(filter);
-    modal->select();
-    ui->tv_table->setModel(modal);
+    tableModel->setTable("firmen");
+    tableModel->setFilter(filter);
+    tableModel->select();
+    ui->tv_table->setModel(tableModel);
 }
 
 void displayTables::on_tv_table_clicked(const QModelIndex &index)
 {
     int row = index.row();
-    QSqlRecord record = modal->record(row);
+    QSqlRecord record = tableModel->record(row);
     id = record.value(0).toInt();
 }
 
@@ -304,7 +300,51 @@ void displayTables::on_pb_download_all_clicked() {
     }
 }
 
-void displayTables::on_pb_save_clicked()
-{
+void displayTables::on_cb_editMode_stateChanged() {
+    if (ui->cb_editMode->isChecked()) {
+        QWidget::setWindowTitle("GLR Datenbank - Einträge bearbeiten");
+        ui->l_dialogTitle->setText("Tabellen bearbeiten");
+        ui->tv_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
+        ui->pb_save->setVisible(true);
+        ui->cb_table->setEnabled(false);
+        ui->le_search->setEnabled(false);
+        ui->cb_filter->setEnabled(false);
+        ui->cb_filter_gold->setEnabled(false);
+        ui->cb_filter_silver->setEnabled(false);
+        ui->cb_filter_bronze->setEnabled(false);
+        ui->cb_filter_supporter->setEnabled(false);
+        ui->pb_save->setEnabled(false);
+        connect(ui->tv_table->model(), SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(unsaved_changes()));
+    } else {
+        QWidget::setWindowTitle("GLR Datenbank - Einträge ansehen");
+        ui->l_dialogTitle->setText("Tabellen ansehen");
+        ui->tv_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->pb_save->setVisible(false);
+        ui->cb_table->setEnabled(true);
+        ui->le_search->setEnabled(true);
+        ui->cb_filter->setEnabled(true);
+        ui->cb_filter_gold->setEnabled(true);
+        ui->cb_filter_silver->setEnabled(true);
+        ui->cb_filter_bronze->setEnabled(true);
+        ui->cb_filter_supporter->setEnabled(true);
+    }
+}
 
+void displayTables::unsaved_changes() {
+    ui->cb_editMode->setEnabled(false);
+    ui->pb_save->setEnabled(true);
+}
+
+void displayTables::on_pb_save_clicked() {
+    bool status = tableModel->submitAll();
+    if (!status) {
+        QString lastError = tableModel->lastError().text();
+
+        error errorWindow;
+        errorWindow.setText(lastError);
+        errorWindow.setModal(true);
+        errorWindow.exec();
+    }
+    ui->cb_editMode->setEnabled(true);
+    ui->pb_save->setEnabled(false);
 }

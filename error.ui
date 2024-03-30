@@ -25,7 +25,17 @@
         <enum>Qt::LeftToRight</enum>
        </property>
        <property name="text">
-        <string>Der Eintrag konnte nicht hinzugefügt werden!</string>
+        <string>Änderungen konnten nicht übernommen werden!</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="l_error">
+       <property name="text">
+        <string>Fehler</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

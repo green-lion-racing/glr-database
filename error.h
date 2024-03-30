@@ -13,6 +13,7 @@ class error : public QDialog
 
 public:
     explicit error(QWidget *parent = nullptr);
+    void setText(QString error);
     ~error();
 
 private slots:
