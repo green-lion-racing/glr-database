@@ -10,10 +10,12 @@ int main(int argc, char *argv[])
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
 
-    qApp->setStyleSheet(stylesheet);
+    application.setStyleSheet(stylesheet);
+    application.setQuitOnLastWindowClosed(false);
 
     MainWindow window;
     window.show();
+    window.setAttribute(Qt::WA_QuitOnClose, false);
     return application.exec();
 }
 

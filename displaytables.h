@@ -48,6 +48,8 @@ private slots:
 private:
     Ui::displayTables *ui;
 
+    void closeEvent(QCloseEvent *event);
+
     QSqlTableModel *tableModel;
 
     int id;

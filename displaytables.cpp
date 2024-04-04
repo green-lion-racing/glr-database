@@ -1,6 +1,8 @@
 #include "displaytables.h"
 #include "ui_displaytables.h"
 #include <QFileDialog>
+#include <QCloseEvent>
+#include <QMessageBox>
 #include "error.h"
 
 displayTables::displayTables(QWidget *parent) :
@@ -23,16 +25,32 @@ displayTables::displayTables(QWidget *parent) :
     ui->tv_table->verticalHeader()->setVisible(false);
     ui->tv_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tv_table->setSortingEnabled(true);
+
+    on_cb_table_currentTextChanged();
 }
 
 displayTables::~displayTables()
 {
     delete ui;
+    this->destroy();
 }
 
-//void displayTables::closeEvent(QCloseEvent *event) {
+void displayTables::closeEvent(QCloseEvent *event) {
+    QMessageBox::StandardButton box = QMessageBox::Yes;
+    if (tableModel->isDirty()) {
+        box = QMessageBox::warning(this, "Ungespeicherte Änderungen",
+                                       tr("Noch ungespeicherte Änderungen.\n Sollen diese verworfen werden?"),
+                                       QMessageBox::No | QMessageBox::Yes,
+                                       QMessageBox::Yes);
+    } else {
+        event->accept();
+    }
 
-//}
+    if (box != QMessageBox::Yes) {
+        event->ignore();
+    } else
+        event->accept();
+}
 
 QString displayTables::getCompanyId () {
     QSqlQuery queryCompanyId;

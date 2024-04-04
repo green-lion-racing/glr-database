@@ -9,6 +9,7 @@
 #include <QFileDialog>
 #include <QPixmap>
 #include <QKeyEvent>
+#include <QCloseEvent>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -109,10 +110,19 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::keyPressEvent(QKeyEvent * event) {
+void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (ui->sw_main->currentIndex() == 1 && (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)) {
         openDatabase();
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    qApp->quit();
+    // MainWindow quitted even when displayTablesWindow ignored closeEvent
+    if (displayTablesWindow->isEnabled())
+        event->ignore();
+    else
+        event->accept();
 }
 
 void MainWindow::openDatabase() {
@@ -125,7 +135,6 @@ void MainWindow::openDatabase() {
     dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn.setDatabaseName(currentFile);
 
-    ui->actionCloseDatabase->setEnabled(true);
 
     // TODO check if selected file is a sqlite db and or cyphered
     // Magic Header String - Every valid SQLite database file begins with the following 16 bytes (in hex): 53 51 4c 69 74 65 20 66 6f 72 6d 61 74 20 33 00
@@ -138,6 +147,8 @@ void MainWindow::openDatabase() {
             return;
         }
     }
+
+    ui->actionCloseDatabase->setEnabled(true);
 
     ui->sw_main->setCurrentIndex(0);
     QFile file(":stylesheet/stylesheet_main.qss");
@@ -159,8 +170,10 @@ void MainWindow::on_actionOpenDatabase_triggered()
     currentFile = filePath;
     status_label->setText(currentFile);
 
+    ui->le_password->setText("");
     ui->l_error->setText("");
     ui->sw_main->setCurrentIndex(1);
+    ui->actionCloseDatabase->setEnabled(false);
 
     QFile file(":stylesheet/stylesheet.qss");
     file.open(QFile::ReadOnly);
@@ -267,8 +280,14 @@ void MainWindow::on_tb_modifyCompany_clicked()
 
 void MainWindow::on_tb_displayTables_clicked()
 {
-    if (displayTablesWindow == NULL)
+    if (displayTablesWindow == NULL or displayTablesWindow->isHidden()) {
+        if (displayTablesWindow != NULL and displayTablesWindow->isHidden()) {
+            // it should give back memory, not sure if it works...
+            displayTablesWindow->deleteLater();
+            displayTablesWindow = NULL;
+        }
         displayTablesWindow = new displayTables();
+    }
     displayTablesWindow->show();
     if (!displayTablesWindow->hasFocus()) {
         displayTablesWindow->activateWindow();

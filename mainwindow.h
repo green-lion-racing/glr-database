@@ -62,6 +62,8 @@ private:
 
     void keyPressEvent(QKeyEvent * event);
 
+    void closeEvent(QCloseEvent * event);
+
     void openDatabase();
 
     QString currentFile;
