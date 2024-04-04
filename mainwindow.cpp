@@ -125,7 +125,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->accept();
 }
 
-void MainWindow::openDatabase() {
+void MainWindow::openDatabase(bool first_try) {
 
     if (currentFile.isEmpty()) {
         ui->l_error->setText("Keine Datenbank ausgewählt!");
@@ -135,17 +135,40 @@ void MainWindow::openDatabase() {
     dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn.setDatabaseName(currentFile);
 
+    QFile db_file(currentFile);
+    db_file.open(QFile::ReadOnly);
+    QByteArray bytes = db_file.read(16);
+    if (bytes == QByteArray::fromHex("53 51 4c 69 74 65 20 66 6f 72 6d 61 74 20 33 00") or bytes == QByteArray::fromHex("")) {
+        // Uncyphered valid Sqlite database
 
-    // TODO check if selected file is a sqlite db and or cyphered
-    // Magic Header String - Every valid SQLite database file begins with the following 16 bytes (in hex): 53 51 4c 69 74 65 20 66 6f 72 6d 61 74 20 33 00
-    // https://github.com/sqlcipher/android-database-sqlcipher/issues/381
-    if (!dbconn.open()) {
+        ui->le_password->setText("Datenbank öffnen");
+        ui->le_password->setReadOnly(true);
+        ui->le_password->setMinimumWidth(240);
+        ui->le_password->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
+        ui->le_password->setEchoMode(QLineEdit::Normal);
+
+        dbconn.open();
+    } else {
+        // uhhh for sql cypher you need to build the plugin first
+        // https://github.com/devbean/QtCipherSqlitePlugin
+        // either cyphered db file or invalid db file
         QString enteredPassword = ui->le_password->text();
         dbconn.setPassword(enteredPassword);
-        if (!dbconn.open()) {
+
+        ui->le_password->setText("");
+        ui->le_password->setReadOnly(false);
+        ui->le_password->setMinimumWidth(480);
+        ui->le_password->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
+        ui->le_password->setEchoMode(QLineEdit::Password);
+
+        dbconn.open();
+        QSqlQuery q("SELECT * FROM nonexistent");
+        q.next();
+        if (q.lastError().text() == "file is not a database Unable to execute statement" and first_try == false) {
+            // either cyphered db file or invalid db file
             ui->l_error->setText("Falsches Passwort oder keine Datenbank.");
-            return;
         }
+        return;
     }
 
     ui->actionCloseDatabase->setEnabled(true);
@@ -179,6 +202,8 @@ void MainWindow::on_actionOpenDatabase_triggered()
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
     qApp->setStyleSheet(stylesheet);
+
+    openDatabase(true);
 }
 
 void MainWindow::on_actionCloseDatabase_triggered() {

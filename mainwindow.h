@@ -64,7 +64,7 @@ private:
 
     void closeEvent(QCloseEvent * event);
 
-    void openDatabase();
+    void openDatabase(bool first_try = false);
 
     QString currentFile;
 
