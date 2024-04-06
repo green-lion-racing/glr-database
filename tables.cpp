@@ -93,8 +93,8 @@ void tables::on_cb_table_currentTextChanged()
 
     selectedTable = ui->cb_table->currentText();
     tableModel = new QSqlTableModel();
-    tableModel->setQuery("SELECT * FROM " + selectedTable);
     tableModel->setTable(selectedTable);
+
 
     if (selectedTable == "kommunikation_dateien") {
         download_mode = 0;
@@ -102,6 +102,9 @@ void tables::on_cb_table_currentTextChanged()
         ui->pb_download->setVisible(true);
         ui->pb_download_all->setText("Alle Kommunikationen speichern");
         ui->pb_download_all->setVisible(true);
+        // hiding files because it creates massive lags
+        // there is probably a better solution, but I dont know it
+        ui->tv_table->setColumnHidden(2, true);
     } else if (selectedTable == "firmen") {
         ui->cb_filter_gold->setVisible(true);
         ui->cb_filter_silver->setVisible(true);
@@ -342,7 +345,7 @@ void tables::on_cb_editMode_stateChanged() {
         ui->cb_filter_bronze->setEnabled(false);
         ui->cb_filter_supporter->setEnabled(false);
         ui->pb_save->setEnabled(false);
-        connect(ui->tv_table->model(), SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(on_unsaved_changes()));
+        connect(ui->tv_table->model(), SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(unsaved_changes()));
     } else {
         QWidget::setWindowTitle("GLR Datenbank - Einträge ansehen");
         ui->l_dialogTitle->setText("Tabellen ansehen");
@@ -357,7 +360,7 @@ void tables::on_cb_editMode_stateChanged() {
     }
 }
 
-void tables::on_unsaved_changes() {
+void tables::unsaved_changes() {
     ui->cb_editMode->setEnabled(false);
     ui->pb_save->setEnabled(true);
 }
@@ -380,6 +383,7 @@ void tables::on_pb_save_clicked() {
         errorWindow.setText(lastError);
         errorWindow.setModal(true);
         errorWindow.exec();
+        return;
     }
     ui->cb_editMode->setEnabled(true);
     ui->pb_save->setEnabled(false);

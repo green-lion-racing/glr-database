@@ -44,7 +44,7 @@ private slots:
 
     void on_pb_save_clicked();
 
-    void on_unsaved_changes();
+    void unsaved_changes();
 
 private:
     Ui::tables *ui;

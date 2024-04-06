@@ -205,6 +205,9 @@ void MainWindow::on_actionOpenDatabase_triggered()
 {
     QString filePath = QFileDialog::getOpenFileName(this, "Datei öffnen","","SQLite Datenbank (*.db *.sqlite *.sqlite3 *.db3)");
 
+    if (tablesWindow != NULL && !tablesWindow->close())
+        return;
+
     if (filePath.isEmpty())
         return;
 
@@ -228,6 +231,9 @@ void MainWindow::on_actionOpenDatabase_triggered()
 }
 
 void MainWindow::on_actionCloseDatabase_triggered() {
+    if (tablesWindow != NULL && !tablesWindow->close())
+        return;
+
     if (dbconn.isOpen())
         dbconn.close();
 
