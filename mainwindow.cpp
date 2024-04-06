@@ -134,8 +134,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     qApp->quit();
-    // MainWindow quitted even when displayTablesWindow ignored closeEvent
-    if (displayTablesWindow->isEnabled())
+    // MainWindow quitted even when tablesWindow ignored closeEvent
+    if (tablesWindow->isEnabled())
         event->ignore();
     else
         event->accept();
@@ -212,7 +212,6 @@ void MainWindow::on_actionOpenDatabase_triggered()
         dbconn.close();
 
     currentFile = filePath;
-
     status_label->setText(QDir::toNativeSeparators(currentFile));
 
     ui->le_password->setText("");
@@ -327,28 +326,34 @@ void MainWindow::on_tb_modifyCompany_clicked()
 
 void MainWindow::on_tb_displayTables_clicked()
 {
-    if (displayTablesWindow == NULL or displayTablesWindow->isHidden()) {
-        if (displayTablesWindow != NULL and displayTablesWindow->isHidden()) {
+    if (tablesWindow == NULL or tablesWindow->isHidden()) {
+        if (tablesWindow != NULL and tablesWindow->isHidden()) {
             // it should give back memory, not sure if it works...
-            displayTablesWindow->deleteLater();
-            displayTablesWindow = NULL;
+            tablesWindow->deleteLater();
+            tablesWindow = NULL;
         }
-        displayTablesWindow = new displayTables();
+        tablesWindow = new tables();
     }
-    displayTablesWindow->show();
-    if (!displayTablesWindow->hasFocus()) {
-        displayTablesWindow->activateWindow();
-        displayTablesWindow->raise();
+    tablesWindow->show();
+    if (!tablesWindow->hasFocus()) {
+        tablesWindow->activateWindow();
+        tablesWindow->raise();
     }
 }
 
 void MainWindow::on_tb_modifyTables_clicked()
 {
-    if (modifyTablesWindow == NULL)
-        modifyTablesWindow = new modifyTables();
-    modifyTablesWindow->show();
-    if (!modifyTablesWindow->hasFocus()) {
-        modifyTablesWindow->activateWindow();
-        modifyTablesWindow->raise();
+    if (tablesWindow == NULL or tablesWindow->isHidden()) {
+        if (tablesWindow != NULL and tablesWindow->isHidden()) {
+            // it should give back memory, not sure if it works...
+            tablesWindow->deleteLater();
+            tablesWindow = NULL;
+        }
+        tablesWindow = new tables(this, true);
+    }
+    tablesWindow->show();
+    if (!tablesWindow->hasFocus()) {
+        tablesWindow->activateWindow();
+        tablesWindow->raise();
     }
 }

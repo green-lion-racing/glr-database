@@ -26,12 +26,11 @@ SOURCES += \
     createcompany.cpp \
     createmember.cpp \
     createperson.cpp \
-    displaytables.cpp \
     error.cpp \
     main.cpp \
     mainwindow.cpp \
-    modifytables.cpp \
-    pushbuttonicon.cpp
+    pushbuttonicon.cpp \
+    tables.cpp
 
 HEADERS += \
     aboutdatabase.h \
@@ -41,11 +40,11 @@ HEADERS += \
     createcompany.h \
     createmember.h \
     createperson.h \
-    displaytables.h \
     error.h \
     mainwindow.h \
     modifytables.h \
-    pushbuttonicon.h
+    pushbuttonicon.h \
+    tables.h
 
 FORMS += \
     aboutdatabase.ui \
@@ -55,10 +54,9 @@ FORMS += \
     createcompany.ui \
     createmember.ui \
     createperson.ui \
-    displaytables.ui \
     error.ui \
     mainwindow.ui \
-    modifytables.ui
+    tables.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

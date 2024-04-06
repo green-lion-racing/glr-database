@@ -1,13 +1,13 @@
-#include "displaytables.h"
-#include "ui_displaytables.h"
+#include "tables.h"
+#include "ui_tables.h"
 #include <QFileDialog>
 #include <QCloseEvent>
 #include <QMessageBox>
 #include "error.h"
 
-displayTables::displayTables(QWidget *parent) :
+tables::tables(QWidget *parent, bool editMode) :
     QMainWindow(parent),
-    ui(new Ui::displayTables)
+    ui(new Ui::tables)
 {
     ui->setupUi(this);
 
@@ -26,33 +26,36 @@ displayTables::displayTables(QWidget *parent) :
     ui->tv_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tv_table->setSortingEnabled(true);
 
+    ui->pb_save->setVisible(false);
+
     on_cb_table_currentTextChanged();
+
+    if (editMode) {
+        ui->cb_editMode->setCheckState(Qt::CheckState(2));
+        on_cb_editMode_stateChanged();
+    }
 }
 
-displayTables::~displayTables()
+tables::~tables()
 {
     delete ui;
     this->destroy();
 }
 
-void displayTables::closeEvent(QCloseEvent *event) {
-    QMessageBox::StandardButton box = QMessageBox::Yes;
+void tables::closeEvent(QCloseEvent *event) {
     if (tableModel->isDirty()) {
-        box = QMessageBox::warning(this, "Ungespeicherte Änderungen",
-                                       tr("Noch ungespeicherte Änderungen.\n Sollen diese verworfen werden?"),
-                                       QMessageBox::No | QMessageBox::Yes,
-                                       QMessageBox::Yes);
+        QMessageBox::StandardButton box = unsaved_changes_notify();
+
+        if (box != QMessageBox::Yes) {
+            event->ignore();
+        } else
+            event->accept();
     } else {
         event->accept();
     }
-
-    if (box != QMessageBox::Yes) {
-        event->ignore();
-    } else
-        event->accept();
 }
 
-QString displayTables::getCompanyId () {
+QString tables::getCompanyId () {
     QSqlQuery queryCompanyId;
     QString companyName = ui->cb_filter->currentText();
     queryCompanyId.prepare("SELECT id FROM firmen WHERE name = :companyName");
@@ -66,12 +69,20 @@ QString displayTables::getCompanyId () {
     return companyId;
 }
 
-void displayTables::on_cb_table_currentTextChanged()
+void tables::on_cb_table_currentTextChanged()
 {
+    if (tableModel != NULL && tableModel->isDirty()) {
+        if (ui->cb_table->currentText() == tableModel->tableName())
+            return;
+        QMessageBox::StandardButton box = unsaved_changes_notify();
+        if (box != QMessageBox::Yes) {
+            ui->cb_table->setCurrentText(tableModel->tableName());
+            return;
+        }
+    }
     ui->cb_filter->setVisible(false);
     ui->pb_download->setVisible(false);
     ui->pb_download_all->setVisible(false);
-    ui->pb_save->setVisible(false);
     ui->le_search->setVisible(false); // TODO https://www.google.com/search?client=firefox-b-d&q=sql+search+value+in+all+tables
 
     // Checkboxes
@@ -126,7 +137,7 @@ void displayTables::on_cb_table_currentTextChanged()
     ui->tv_table->setModel(tableModel);
 }
 
-void displayTables::on_cb_filter_currentTextChanged()
+void tables::on_cb_filter_currentTextChanged()
 {
     ui->cb_filter->setVisible(true);
     QString companyName = ui->cb_filter->currentText();
@@ -148,23 +159,23 @@ void displayTables::on_cb_filter_currentTextChanged()
     */
 }
 
-void displayTables::on_cb_filter_gold_stateChanged() {
+void tables::on_cb_filter_gold_stateChanged() {
     update_cb_filter();
 }
 
-void displayTables::on_cb_filter_silver_stateChanged() {
+void tables::on_cb_filter_silver_stateChanged() {
     update_cb_filter();
 }
 
-void displayTables::on_cb_filter_bronze_stateChanged() {
+void tables::on_cb_filter_bronze_stateChanged() {
     update_cb_filter();
 }
 
-void displayTables::on_cb_filter_supporter_stateChanged() {
+void tables::on_cb_filter_supporter_stateChanged() {
     update_cb_filter();
 }
 
-void displayTables::update_cb_filter() {
+void tables::update_cb_filter() {
     QVector<QString> checks;
     QString filter = "";
 
@@ -196,14 +207,14 @@ void displayTables::update_cb_filter() {
     ui->tv_table->setModel(tableModel);
 }
 
-void displayTables::on_tv_table_clicked(const QModelIndex &index)
+void tables::on_tv_table_clicked(const QModelIndex &index)
 {
     int row = index.row();
     QSqlRecord record = tableModel->record(row);
     id = record.value(0).toInt();
 }
 
-void displayTables::on_pb_download_clicked() {
+void tables::on_pb_download_clicked() {
     QString fileName;
     QString fileContent;
     QFile file;
@@ -261,7 +272,7 @@ void displayTables::on_pb_download_clicked() {
     }
 }
 
-void displayTables::on_pb_download_all_clicked() {
+void tables::on_pb_download_all_clicked() {
     QVector<QString> fileName;
     QVector<QString> fileContent;
     QString filePath;
@@ -318,13 +329,12 @@ void displayTables::on_pb_download_all_clicked() {
     }
 }
 
-void displayTables::on_cb_editMode_stateChanged() {
+void tables::on_cb_editMode_stateChanged() {
     if (ui->cb_editMode->isChecked()) {
         QWidget::setWindowTitle("GLR Datenbank - Einträge bearbeiten");
         ui->l_dialogTitle->setText("Tabellen bearbeiten");
         ui->tv_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
         ui->pb_save->setVisible(true);
-        ui->cb_table->setEnabled(false);
         ui->le_search->setEnabled(false);
         ui->cb_filter->setEnabled(false);
         ui->cb_filter_gold->setEnabled(false);
@@ -332,13 +342,12 @@ void displayTables::on_cb_editMode_stateChanged() {
         ui->cb_filter_bronze->setEnabled(false);
         ui->cb_filter_supporter->setEnabled(false);
         ui->pb_save->setEnabled(false);
-        connect(ui->tv_table->model(), SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(unsaved_changes()));
+        connect(ui->tv_table->model(), SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(on_unsaved_changes()));
     } else {
         QWidget::setWindowTitle("GLR Datenbank - Einträge ansehen");
         ui->l_dialogTitle->setText("Tabellen ansehen");
         ui->tv_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ui->pb_save->setVisible(false);
-        ui->cb_table->setEnabled(true);
         ui->le_search->setEnabled(true);
         ui->cb_filter->setEnabled(true);
         ui->cb_filter_gold->setEnabled(true);
@@ -348,12 +357,21 @@ void displayTables::on_cb_editMode_stateChanged() {
     }
 }
 
-void displayTables::unsaved_changes() {
+void tables::on_unsaved_changes() {
     ui->cb_editMode->setEnabled(false);
     ui->pb_save->setEnabled(true);
 }
 
-void displayTables::on_pb_save_clicked() {
+QMessageBox::StandardButton tables::unsaved_changes_notify() {
+    QMessageBox::StandardButton box = QMessageBox::Yes;
+    box = QMessageBox::warning(this, "Ungespeicherte Änderungen",
+                         tr("Noch ungespeicherte Änderungen.\n Sollen diese verworfen werden?"),
+                         QMessageBox::No | QMessageBox::Yes,
+                         QMessageBox::Yes);
+    return box;
+}
+
+void tables::on_pb_save_clicked() {
     bool status = tableModel->submitAll();
     if (!status) {
         QString lastError = tableModel->lastError().text();

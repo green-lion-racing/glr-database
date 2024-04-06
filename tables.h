@@ -3,18 +3,21 @@
 
 #include <QMainWindow>
 #include <QtSql>
+#include <QMessageBox>
 
 namespace Ui {
-class displayTables;
+class tables;
 }
 
-class displayTables : public QMainWindow
+class tables : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit displayTables(QWidget *parent = nullptr);
-    ~displayTables();
+
+    explicit tables(QWidget *parent = nullptr, bool editMode = false);
+
+    ~tables();
 
 private slots:
     void on_tv_table_clicked(const QModelIndex &index);
@@ -41,12 +44,10 @@ private slots:
 
     void on_pb_save_clicked();
 
-    void unsaved_changes();
-
-    // void closeEvent();
+    void on_unsaved_changes();
 
 private:
-    Ui::displayTables *ui;
+    Ui::tables *ui;
 
     void closeEvent(QCloseEvent *event);
 
@@ -59,6 +60,8 @@ private:
     int download_mode;
 
     QString getCompanyId();
+
+    QMessageBox::StandardButton unsaved_changes_notify();
 };
 
 #endif // SEETABLES_H
