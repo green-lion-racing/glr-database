@@ -98,11 +98,27 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tb_displayTables->setIcon(QIcon(":img/icon_lens.png"));
     ui->tb_displayTables->setIconSize(size_big);
 
-
-
     // no database selected on start
     status_label->setText("Keine Datenbank gewählt.");
     ui->statusbar->addPermanentWidget(status_label, 100);
+
+    // try auto open database
+    QDir path = QDir(QDir::currentPath());
+    // file is in running dir
+    if (QFile::exists(path.absolutePath() + "/glr-database.db")) {
+        currentFile = path.absolutePath() + "/glr-database.db";
+        status_label->setText(QDir::toNativeSeparators(currentFile));
+        openDatabase(true);
+    }
+    // file is above running dir
+    path.cdUp();
+    if (QFile::exists(path.absolutePath() + "/glr-database.db")) {
+        currentFile = path.absolutePath() + "/glr-database.db";
+        status_label->setText(QDir::toNativeSeparators(currentFile));
+        openDatabase(true);
+    }
+    // reset after possible failed attempt
+    ui->l_error->setText("");
 }
 
 MainWindow::~MainWindow()
@@ -129,6 +145,11 @@ void MainWindow::openDatabase(bool first_try) {
 
     if (currentFile.isEmpty()) {
         ui->l_error->setText("Keine Datenbank ausgewählt!");
+        return;
+    }
+
+    if (!QFile::exists(currentFile)) {
+        ui->l_error->setText("Datei nicht existent.");
         return;
     }
 
@@ -182,7 +203,7 @@ void MainWindow::openDatabase(bool first_try) {
 
 void MainWindow::on_actionOpenDatabase_triggered()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, "Datei öffnen","","SQLite DB (*.db)");
+    QString filePath = QFileDialog::getOpenFileName(this, "Datei öffnen","","SQLite Datenbank (*.db *.sqlite *.sqlite3 *.db3)");
 
     if (filePath.isEmpty())
         return;
@@ -191,7 +212,8 @@ void MainWindow::on_actionOpenDatabase_triggered()
         dbconn.close();
 
     currentFile = filePath;
-    status_label->setText(currentFile);
+
+    status_label->setText(QDir::toNativeSeparators(currentFile));
 
     ui->le_password->setText("");
     ui->l_error->setText("");
