@@ -100,4 +100,3 @@ QCheckBox {
     font: 18px;
     min-width: 70px;
 }
-
