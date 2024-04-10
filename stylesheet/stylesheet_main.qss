@@ -58,11 +58,13 @@ QPushButton {
 }
 
 QTextEdit {
-    border: 0px;
+    font: 18px;
     border-radius: 8px;
+    border: 0px;
+    background-color: palette(base);
 }
 
-QToolButton {
+.QToolButton {
     border: 0px;
     background-color: #E5E5E5;
     border-radius: 10px;
