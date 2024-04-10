@@ -156,7 +156,6 @@ void MainWindow::openDatabase(bool first_try) {
     if (dbconn.isOpen())
         dbconn.close();
 
-    dbconn = QSqlDatabase::addDatabase("QSQLITE");
     dbconn.setDatabaseName(currentFile);
 
     QFile db_file(currentFile);

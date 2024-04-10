@@ -67,6 +67,6 @@ private:
 
     QLabel *status_label = new QLabel(this);
 
-    QSqlDatabase dbconn;
+    QSqlDatabase dbconn = QSqlDatabase::addDatabase("QSQLITE");
 };
 #endif // MAINWINDOW_H
