@@ -22,7 +22,8 @@ env:
 #  ARTIFACT_APPIMAGE:   glr-database-linux.AppImage
 
 jobs:
-  build:
+  build-linux:
+    name: '🐧 Ubuntu'
     runs-on:  ubuntu-20.04
 
     steps:

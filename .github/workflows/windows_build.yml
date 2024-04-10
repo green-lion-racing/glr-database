@@ -21,7 +21,8 @@ env:
   ARTIFACT:     glr-database-windows
 
 jobs:
-  build:
+  build-windows:
+    name: '🧊 Windows'
     runs-on:  windows-latest
 
     steps:

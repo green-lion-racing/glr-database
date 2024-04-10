@@ -1,5 +1,5 @@
 # Stolen from https://github.com/pbek/QOwnNotes/blob/main/.github/workflows/build-release-qt6.yml
-name: MacOS Build
+name: macOS Build
 
 on:
   workflow_dispatch:
@@ -242,26 +242,26 @@ jobs:
   # macOS build
   #
   build-macos:
-    name: '🍎 macOS Monterey'
+    name: '🍎 macOS'
     runs-on: macos-latest
     env:
       QT_VERSION: 6.5.0
     steps:
 
-      - name: '🧰 Checkout'
+      - name: 'Checkout'
         uses: actions/checkout@v4
         with:
           submodules: recursive
 
       # https://download.qt.io/online/qtsdkrepository/mac_x64/desktop/
-      - name: '⚙️ Cache Qt'
+      - name: 'Cache Qt'
         id: cache-qt
         uses: actions/cache@v4
         with:
           path: Qt
           key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
 
-      - name: '⚙️ Install Qt'
+      - name: 'Install Qt'
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{env.QT_VERSION}}
@@ -269,19 +269,19 @@ jobs:
           aqtversion: '==2.0.0'
           cache: ${{steps.cache-qt.outputs.cache-hit}}
 
-      # - name: '⚙️ Set Env'
+      # - name: 'Set Env'
         # shell: bash
         # run: |
           # export VERSION=$(cat version.h | sed 's/[^0-9,.]//g')
           # echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
-      # - name: '⚙️ Printenv'
+      # - name: 'Printenv'
         # shell: bash
         # run: |
           # echo "VERSION=${VERSION}"
           # printenv
 
-      - name: '🚧 Compile application'
+      - name: 'Compile application'
         run: |
           brew install libiodbc
           sudo mkdir -p /Applications/Postgres.app/Contents/Versions/14/lib/
@@ -292,7 +292,7 @@ jobs:
           make -j ${{env.CORES}}
           ${Qt6_DIR}/bin/macdeployqt ./glr-database.app -dmg
 
-      - name: '📤 Upload artifact: macOS'
+      - name: 'Upload artifact: macOS'
         uses: actions/upload-artifact@v4
         with:
           name: glr-database-macos
