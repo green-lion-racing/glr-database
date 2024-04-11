@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>495</width>
-    <height>465</height>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -135,7 +135,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="comboBox">
+        <widget class="QComboBox" name="cb_activity">
          <property name="placeholderText">
           <string>Leistungen...</string>
          </property>
@@ -147,6 +147,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cb_activity</tabstop>
+  <tabstop>cb_company</tabstop>
+  <tabstop>cb_person</tabstop>
+  <tabstop>le_when</tabstop>
+  <tabstop>cw_calender</tabstop>
+  <tabstop>le_value</tabstop>
+  <tabstop>le_what</tabstop>
+  <tabstop>te_info</tabstop>
+  <tabstop>pb_okay</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

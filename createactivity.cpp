@@ -2,31 +2,54 @@
 #include "ui_createactivity.h"
 #include <QVector>
 
-createActivity::createActivity(QWidget *parent) :
+createActivity::createActivity(QWidget *parent, bool editMode) :
     QDialog(parent/*,Qt::FramelessWindowHint*/),        // Frameless window no more
     ui(new Ui::createActivity)
 {
-    QVector<QString> companyNames;
-    QVector<int> companyIds;
-    QVector<QVector<QString>> companies;
+    QVector<QString> activityNames;
+
     ui->setupUi(this);
 
-    QWidget::setWindowTitle("GLR Datenbank - Leistung hinzufügen");
+    if (editMode) {
+        QWidget::setWindowTitle("GLR Datenbank - Leistung bearbeiten");
+        ui->l_dialogTitle->setText("GLR Datenbank - Leistung bearbeiten");
 
-    QSqlQuery selectName;
-    selectName.prepare("SELECT id, name FROM firmen");
-    selectName.exec();
-    while(selectName.next()) {
-        companyIds.push_back(selectName.value(0).toInt());
-        companyNames.push_back(selectName.value(1).toString());
-    }
-    companies.push_back(companyNames);
-    for (int i = 0; i < companyNames.size(); i++) {
-        ui->cb_company->addItem(companyNames[i]);
-    }
+        QSqlQuery selectActivity;
+        selectActivity.prepare("SELECT id, firma, ansprechpartner, wann FROM leistungen");
+        selectActivity.exec();
 
-    QVector<QString> persons;
-    QSqlQuery selectPersons;
+        while(selectActivity.next()) {
+            activityNames.push_back(selectActivity.value(0).toString() + " - " +
+                                    selectActivity.value(1).toString() + " - " +
+                                    selectActivity.value(2).toString() + " - " +
+                                    selectActivity.value(3).toString());
+        }
+
+        for (int i = 0; i < activityNames.size(); i++) {
+            ui->cb_activity->addItem(activityNames[i]);
+        }
+
+        if (activityNames.size() < 1) {
+            ui->cb_activity->setDisabled(true);
+        }
+
+        ui->cb_company->setDisabled(true);
+        ui->cb_person->setDisabled(true);
+        ui->cw_calender->setDisabled(true);
+        ui->le_when->setDisabled(true);
+        ui->le_value->setDisabled(true);
+        ui->le_what->setDisabled(true);
+        ui->te_info->setDisabled(true);
+        ui->pb_okay->setDisabled(true);
+
+    } else {
+        QWidget::setWindowTitle("GLR Datenbank - Leistung hinzufügen");
+        ui->l_dialogTitle->setText("GLR Datenbank - Leistung hinzufügen");
+        ui->cb_activity->setVisible(false);
+        ui->label_7->setVisible(false);
+
+        set_cb_company();
+    }
 
     // Do not display week numbers
     ui->cw_calender->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
@@ -40,7 +63,37 @@ createActivity::~createActivity()
     delete ui;
 }
 
-void createActivity::on_cb_company_currentTextChanged(const QString &arg1)
+void createActivity::on_cb_activity_currentTextChanged()
+{
+    QSqlQuery selectActivity;
+
+    static QRegularExpression regex(" - ");
+    int activityID = ui->cb_activity->currentText().split(regex)[0].toInt();
+
+    selectActivity.prepare("SELECT * FROM leistungen WHERE id = :activityID");
+    selectActivity.bindValue(":activityID", activityID);
+    selectActivity.exec();
+    selectActivity.next();
+
+    ui->cb_company->setDisabled(false);
+    ui->cb_person->setDisabled(false);
+    ui->cw_calender->setDisabled(false);
+    ui->le_when->setDisabled(false);
+    ui->le_value->setDisabled(false);
+    ui->le_what->setDisabled(false);
+    ui->te_info->setDisabled(false);
+    ui->pb_okay->setDisabled(false);
+
+    set_cb_company(selectActivity.value(1).toString());
+    set_cb_person(selectActivity.value(2).toString());
+    ui->le_when->setText(selectActivity.value(3).toString());
+    ui->cw_calender->setSelectedDate(selectActivity.value(3).toDate());
+    ui->le_value->setText(selectActivity.value(4).toString());
+    ui->le_what->setText(selectActivity.value(5).toString());
+    ui->te_info->setText(selectActivity.value(6).toString());
+}
+
+void createActivity::on_cb_company_currentTextChanged()
 {
 
     ui->cb_person->clear();
@@ -60,6 +113,11 @@ void createActivity::on_cb_company_currentTextChanged(const QString &arg1)
     for (int i = 0; i < persons.size(); i++) {
         ui->cb_person->addItem(persons[i]);
     }
+
+    if (persons.size() > 0)
+        ui->cb_person->setDisabled(false);
+    else
+        ui->cb_person->setDisabled(true);
 }
 
 void createActivity::on_cw_calender_selectionChanged()
@@ -109,4 +167,47 @@ QString createActivity::getCompanyId () {
         companyId = queryCompanyId.value(0).toString();
 
     return companyId;
+}
+
+void createActivity::set_cb_company(QString company) {
+    QSqlQuery selectName;
+    QVector<QString> companyNames;
+    selectName.prepare("SELECT id, name FROM firmen");
+    selectName.exec();
+    while(selectName.next()) {
+        companyNames.push_back(selectName.value(1).toString());
+    }
+
+    int index;
+    for (int i = 0; i < companyNames.size(); i++) {
+        ui->cb_company->addItem(companyNames[i]);
+        if (!QString::compare(company, companyNames[i], Qt::CaseInsensitive))
+            index = i;
+    }
+    ui->cb_company->setCurrentIndex(index);
+
+    ui->cb_person->clear();
+    if (company == "")
+        ui->cb_person->setDisabled(true);
+    else {
+        ui->cb_person->setEnabled(true);
+        set_cb_person();
+    }
+}
+
+void createActivity::set_cb_person(QString person) {
+    QSqlQuery selectName;
+    QVector<QString> personNames;
+
+    selectName.prepare("SELECT id, vorname, nachname FROM personen WHERE FirmenID = :companyID");
+    selectName.bindValue(":companyID", getCompanyId());
+    selectName.exec();
+    while(selectName.next()) {
+        personNames.push_back(selectName.value(1).toString() + " " + selectName.value(2).toString());
+    }
+    for (int i = 0; i < personNames.size(); i++) {
+        ui->cb_company->addItem(personNames[i]);
+        if (!QString::compare(person, personNames[i], Qt::CaseInsensitive))
+            ui->cb_company->setCurrentIndex(i);
+    }
 }

@@ -48,6 +48,8 @@ private slots:
 
     void on_tb_createActivity_clicked();
 
+    void on_tb_modifyActivity_clicked();
+
     void on_tb_modifyTables_clicked();
 
     void on_tb_displayTables_clicked();

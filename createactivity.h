@@ -13,12 +13,14 @@ class createActivity : public QDialog
     Q_OBJECT
 
 public:
-    explicit createActivity(QWidget *parent = nullptr);
+    explicit createActivity(QWidget *parent = nullptr, bool editMode = false);
     ~createActivity();
 
 private slots:
 
-    void on_cb_company_currentTextChanged(const QString &arg1);
+    void on_cb_activity_currentTextChanged();
+
+    void on_cb_company_currentTextChanged();
 
     void on_cw_calender_selectionChanged();
 
@@ -26,8 +28,14 @@ private slots:
 
 private:
     Ui::createActivity *ui;
+
     QString when;
+
     QString getCompanyId();
+
+    void set_cb_company(QString company = "");
+
+    void set_cb_person(QString person = "");
 };
 
 #endif // CREATEACTIVITY_H

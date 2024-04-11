@@ -311,6 +311,13 @@ void MainWindow::on_tb_createCompany_clicked()
     company.exec();
 }
 
+void MainWindow::on_tb_modifyCompany_clicked()
+{
+    // createCompany *company = new createCompany(this, true);
+    // company->setModal(true);
+    // company->exec();
+}
+
 void MainWindow::on_tb_createCommunication_clicked()
 {
     createCommunication communicaion;
@@ -325,11 +332,11 @@ void MainWindow::on_tb_createActivity_clicked()
     activity.exec();
 }
 
-void MainWindow::on_tb_modifyCompany_clicked()
+void MainWindow::on_tb_modifyActivity_clicked()
 {
-    // modifyCompany *modifyCompanyWindow;
-    // modifyCompanyWindow = new modifyCompany();
-    // modifyCompanyWindow->show();
+    createActivity *activity = new createActivity(this, true);
+    activity->setModal(true);
+    activity->exec();
 }
 
 void MainWindow::on_tb_displayTables_clicked()
