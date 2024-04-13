@@ -325,6 +325,13 @@ void MainWindow::on_tb_createCommunication_clicked()
     communicaion.exec();
 }
 
+void MainWindow::on_tb_modifyCommunication_clicked()
+{
+    createCommunication *communication = new createCommunication(this, true);
+    communication->setModal(true);
+    communication->exec();
+}
+
 void MainWindow::on_tb_createActivity_clicked()
 {
     createActivity activity;

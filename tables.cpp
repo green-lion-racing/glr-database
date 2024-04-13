@@ -80,10 +80,12 @@ void tables::on_cb_table_currentTextChanged()
             return;
         }
     }
-    ui->cb_filter->setVisible(false);
     ui->pb_download->setVisible(false);
     ui->pb_download_all->setVisible(false);
-    ui->le_search->setVisible(false); // TODO https://www.google.com/search?client=firefox-b-d&q=sql+search+value+in+all+tables
+
+    // Are filters even needed? But they look nice... and make everthing complex
+    ui->cb_filter->setVisible(false); // TODO
+    ui->le_search->setVisible(false); // TODO https://www.google.com/search?client=firefox-b-d&q=sql+search+value+in+all+table
 
     // Checkboxes
     ui->cb_filter_gold->setVisible(false);
@@ -95,6 +97,8 @@ void tables::on_cb_table_currentTextChanged()
     tableModel = new QSqlTableModel();
     tableModel->setTable(selectedTable);
 
+    // undo potenial hidden
+    ui->tv_table->setColumnHidden(2, false);
 
     if (selectedTable == "kommunikation_dateien") {
         download_mode = 0;
@@ -120,7 +124,7 @@ void tables::on_cb_table_currentTextChanged()
         modalComboBox->setQuery(selectName);
         ui->cb_filter->setModel(modalComboBox);
 
-        ui->cb_filter->setVisible(true);
+        //ui->cb_filter->setVisible(true);
 
         // companyName = ui->cb_filter->currentText();
         // QString companyId = getCompanyId();

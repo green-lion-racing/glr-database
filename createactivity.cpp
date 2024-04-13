@@ -117,6 +117,7 @@ void createActivity::on_pb_okay_clicked()
     QString value = ui->le_value->text();
     QString what = ui->le_what->text();
     QString info = ui->te_info->toPlainText();
+
     QSqlQuery insertActivityQuery;
     if (editMode) {
         insertActivityQuery.prepare("UPDATE leistungen SET firma = :company, ansprechpartner = :person, wann = :when, wert = :value, was = :what, infos = :info WHERE id = :activityID");
@@ -136,7 +137,7 @@ void createActivity::on_pb_okay_clicked()
 
     if (insertActivityQuery.next()) {
         error errorWindow;
-        errorWindow.setText("QSQLITE error:" + insertActivityQuery.lastError().text() + ",\nQSQLITE error code:" + insertActivityQuery.lastError().nativeErrorCode());
+        errorWindow.setText("QSQLITE error: " + insertActivityQuery.lastError().text() + ",\nQSQLITE error code: " + insertActivityQuery.lastError().nativeErrorCode());
         errorWindow.setModal(true);
         errorWindow.exec();
     } else {

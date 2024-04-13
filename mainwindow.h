@@ -46,6 +46,8 @@ private slots:
 
     void on_tb_createCommunication_clicked();
 
+    void on_tb_modifyCommunication_clicked();
+
     void on_tb_createActivity_clicked();
 
     void on_tb_modifyActivity_clicked();

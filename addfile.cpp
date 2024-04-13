@@ -10,6 +10,8 @@ addFile::addFile(QWidget *parent) :
     ui(new Ui::addFile)
 {
     ui->setupUi(this);
+
+    QWidget::setWindowTitle("Dateien hinzufügen");
 }
 
 addFile::~addFile()

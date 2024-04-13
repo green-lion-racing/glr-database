@@ -5,30 +5,66 @@
 #include <QFile>
 #include <QDir>
 #include "addfile.h"
-#include <ctime>
+#include "error.h"
 
 static QFile file;
 
-createCommunication::createCommunication(QWidget *parent) :
-    QDialog(parent/*,Qt::FramelessWindowHint*/),
+createCommunication::createCommunication(QWidget *parent, bool editMode) :
+    QDialog(parent),
     ui(new Ui::createCommunication)
 {
+    QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, PersonenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id), FOREIGN KEY(PersonenID) REFERENCES personen(id))");
+
     ui->setupUi(this);
 
-    QWidget::setWindowTitle("GLR Datenbank - Kommunikation hinzufügen");
+    createCommunication::editMode = editMode;
 
-    QSqlQuery selectName;
-    selectName.prepare("SELECT name FROM firmen");
-    selectName.exec();
-    QSqlQueryModel * modal = new QSqlQueryModel();
-    modal->setQuery(selectName);
-    ui->cb_company->setModel(modal);
+    QVector<QString> communicationNames;
+
+    if (editMode) {
+        QWidget::setWindowTitle("GLR Datenbank - Leistung bearbeiten");
+        ui->l_dialogTitle->setText("GLR Datenbank - Leistung bearbeiten");
+
+        QSqlQuery selectActivity;
+        selectActivity.prepare("SELECT id, firma, ansprechpartner, wann FROM kommunikationen");
+        selectActivity.exec();
+
+        while(selectActivity.next()) {
+            communicationNames.push_back(selectActivity.value(0).toString() + " - " +
+                                    selectActivity.value(1).toString() + " - " +
+                                    selectActivity.value(2).toString() + " - " +
+                                    selectActivity.value(3).toString());
+        }
+
+        for (int i = 0; i < communicationNames.size(); i++) {
+            ui->cb_communication->addItem(communicationNames[i]);
+        }
+
+        if (communicationNames.size() < 1) {
+            ui->cb_communication->setDisabled(true);
+        }
+
+        ui->cb_company->setDisabled(true);
+        ui->cb_person->setDisabled(true);
+        ui->cw_calender->setDisabled(true);
+        ui->le_when->setDisabled(true);
+        ui->le_what->setDisabled(true);
+        ui->pb_okay->setDisabled(true);
+
+    } else {
+        QWidget::setWindowTitle("GLR Datenbank - Leistung hinzufügen");
+        ui->l_dialogTitle->setText("GLR Datenbank - Leistung hinzufügen");
+        ui->cb_communication->setVisible(false);
+        ui->label_5->setVisible(false);
+
+        set_cb_company();
+    }
 
     // Do not display week numbers
     ui->cw_calender->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+
     // print initially selected date (today)
-    when = ui->cw_calender->selectedDate().toString("yyyy-MM-dd");      //Auswahl über Kalender Widget
-    ui->le_when->setText(when);
+    ui->le_when->setText(ui->cw_calender->selectedDate().toString("yyyy-MM-dd"));
 }
 
 createCommunication::~createCommunication()
@@ -36,96 +72,83 @@ createCommunication::~createCommunication()
     delete ui;
 }
 
-void createCommunication::on_cb_company_currentTextChanged(const QString &arg1)
+void createCommunication::on_cb_communication_currentTextChanged()
 {
-    ui->cb_person->clear();
+    QSqlQuery selectActivity;
 
-    QVector<QString> persons;
-    //QVector<int> personIds;
-    QSqlQuery selectPersons;
+    static QRegularExpression regex(" - ");
+    int activityID = ui->cb_communication->currentText().split(regex)[0].toInt();
 
-    //QString currentCompanyName = ui->cb_company->currentText();
+    selectActivity.prepare("SELECT * FROM kommunikationen WHERE id = :activityID");
+    selectActivity.bindValue(":activityID", activityID);
+    selectActivity.exec();
+    selectActivity.next();
 
-    persons.clear();
+    ui->cb_company->setDisabled(false);
+    ui->cb_person->setDisabled(false);
+    ui->cw_calender->setDisabled(false);
+    ui->le_when->setDisabled(false);
+    ui->le_what->setDisabled(false);
+    ui->pb_okay->setDisabled(false);
 
-    QString currentCompanyId = getCompanyId();
-    selectPersons.prepare("SELECT id, vorname, nachname FROM personen WHERE FirmenID = :currentCompanyId");
-    selectPersons.bindValue(":currentCompanyId", currentCompanyId);
-    selectPersons.exec();
-    while(selectPersons.next()) {
-        personIds.push_back(selectPersons.value(0).toInt());
-        persons.push_back(selectPersons.value(1).toString() + " " + selectPersons.value(2).toString());
-    }
 
-    for (int i = 0; i < persons.size(); i++) {
-        ui->cb_person->addItem(persons[i]);
-    }
+    set_cb_company(selectActivity.value(1).toString());
+    set_cb_person(selectActivity.value(2).toString());
+    ui->le_when->setText(selectActivity.value(3).toString());
+    ui->cw_calender->setSelectedDate(selectActivity.value(3).toDate());
+    ui->le_what->setText(selectActivity.value(4).toString());
+}
 
+void createCommunication::on_cb_company_currentTextChanged()
+{
+    set_cb_person();
 }
 
 void createCommunication::on_cw_calender_selectionChanged()
 {
-    when = ui->cw_calender->selectedDate().toString("yyyy-MM-dd");      //Auswahl über Kalender Widget
-    ui->le_when->setText(when);
+    ui->le_when->setText(ui->cw_calender->selectedDate().toString("yyyy-MM-dd"));
 }
 
 void createCommunication::on_pb_okay_clicked()
 {
-    //QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
-    QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, PersonenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id), FOREIGN KEY(PersonenID) REFERENCES personen(id))");
-    QString companyName = ui->cb_company->currentText();
-    //QString when = ui->le_when->text();
-    QString what = ui->le_what->text();
+    int communicationID = ui->cb_communication->currentIndex();
+    int personID = ui->cb_person->currentIndex();
+    int companyID = ui->cb_company->currentIndex();
+    QString company = ui->cb_company->currentText();
     QString person = ui->cb_person->currentText();
-    //when = ui->cw_calender->selectedDate().toString("yyyy-MM-dd");      //Auswahl über Kalender Widget
-
-    QSqlQuery selectId;
-    selectId.prepare("SELECT id FROM firmen WHERE name = :companyName");
-    selectId.bindValue(":companyName", companyName);
-    selectId.exec();
-    int companyId = 0;
-    while(selectId.next())
-        companyId = (selectId.value(0).toString()).toInt();
-
-    // get firstName and surname via personId
-    int personIdIndex = std::distance(persons.begin(), std::find(persons.begin(), persons.end(), person));
-    //QString firstName;
-    //QString surname;
-    int personId = personIds[personIdIndex];
-
-    /*
-    QSqlQuery selectPersonId;
-    selectId.prepare("SELECT id FROM personen WHERE firma = :companyName AND vorname = :firstName AND nachname = :surname");
-    selectId.bindValue(":companyName", companyName);
-    selectId.bindValue(":firstName", firstName);
-    selectId.bindValue(":surname", surname);
-    selectId.exec();
-    int personId = 0;
-    while(selectId.next())
-        personId = (selectId.value(0).toString()).toInt();
-    */
+    QString when = ui->le_when->text();
+    QString what = ui->le_what->text();
 
     QSqlQuery insertCommunicationQuery;
-    insertCommunicationQuery.prepare("INSERT INTO kommunikationen(firma, ansprechpartner, wann, was, FirmenID, PersonenID) VALUES (:companyName, :person, :when, :what, :companyId, :personId)");
+    if (editMode) {
+        insertCommunicationQuery.prepare("UPDATE kommunikationen SET firma = :company, ansprechpartner = :person, wann = :when, was = :what, FirmenID = :companyID, PersonenID = :personID WHERE id = :communicationID");
+        insertCommunicationQuery.bindValue(":communicationID", communicationID + 1);
+    } else {
+        insertCommunicationQuery.prepare("INSERT INTO kommunikationen(firma, ansprechpartner, wann, was, FirmenID, PersonenID) VALUES (:company, :person, :when, :what, :companyID, :personID)");
+    }
+
     insertCommunicationQuery.bindValue(":person", person);
-    insertCommunicationQuery.bindValue(":companyName", companyName);
+    insertCommunicationQuery.bindValue(":company", company);
     insertCommunicationQuery.bindValue(":when", when);
     insertCommunicationQuery.bindValue(":what", what);
-    insertCommunicationQuery.bindValue(":companyId", companyId);
-    insertCommunicationQuery.bindValue(":personId", personId);
+    insertCommunicationQuery.bindValue(":companyID", companyID);
+    insertCommunicationQuery.bindValue(":personID", personID);
 
     insertCommunicationQuery.exec();
 
-    if (insertCommunicationQuery.next())
-    {
+    if (insertCommunicationQuery.next()) {
+        error errorWindow;
+        errorWindow.setText("QSQLITE error: " + insertCommunicationQuery.lastError().text() + ",\nQSQLITE error code: " + insertCommunicationQuery.lastError().nativeErrorCode());
+        errorWindow.setModal(true);
+        errorWindow.exec();
     } else {
-        qDebug() << "QSQLITE error:" << insertCommunicationQuery.lastError().text() << ", QSQLITE error code:" << insertCommunicationQuery.lastError().nativeErrorCode();
-    }
+        // TODO
+        addFile file;
+        file.setModal(true);
+        file.exec();
 
-    close();    //Fenster schließen, um zu dem Nächsten zukommen (Dateien anhängen)
-    addFile file;
-    file.setModal(true);
-    file.exec();
+        this->accept();
+    }
 }
 
 QString createCommunication::getCompanyId () {
@@ -140,4 +163,55 @@ QString createCommunication::getCompanyId () {
         companyId = queryCompanyId.value(0).toString();
 
     return companyId;
+}
+
+void createCommunication::set_cb_company(QString company) {
+    QSqlQuery selectName;
+    QVector<QString> companyNames;
+
+    ui->cb_company->clear();
+
+    selectName.prepare("SELECT id, name FROM firmen");
+    selectName.exec();
+    while(selectName.next()) {
+        companyNames.push_back(selectName.value(1).toString());
+    }
+
+    for (int i = 0; i < companyNames.size(); i++) {
+        ui->cb_company->addItem(companyNames[i]);
+        if (!QString::compare(company, companyNames[i], Qt::CaseInsensitive)) {
+            ui->cb_company->setCurrentIndex(i);
+        }
+    }
+
+    if (companyNames.size() > 0) {
+        ui->cb_company->setEnabled(true);
+    } else {
+        ui->cb_company->setDisabled(true);
+    }
+}
+
+void createCommunication::set_cb_person(QString person) {
+    QSqlQuery selectName;
+    QVector<QString> personNames;
+
+    ui->cb_person->clear();
+
+    selectName.prepare("SELECT id, vorname, nachname FROM personen WHERE FirmenID = :companyID");
+    selectName.bindValue(":companyID", getCompanyId());
+    selectName.exec();
+    while(selectName.next()) {
+        personNames.push_back(selectName.value(1).toString() + " " + selectName.value(2).toString());
+    }
+    for (int i = 0; i < personNames.size(); i++) {
+        ui->cb_person->addItem(personNames[i]);
+        if (!QString::compare(person, personNames[i], Qt::CaseInsensitive))
+            ui->cb_person->setCurrentIndex(i);
+    }
+
+    if (personNames.size() > 0) {
+        ui->cb_person->setEnabled(true);
+    } else {
+        ui->cb_person->setDisabled(true);
+    }
 }

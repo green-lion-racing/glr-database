@@ -13,11 +13,13 @@ class createCommunication : public QDialog
     Q_OBJECT
 
 public:
-    explicit createCommunication(QWidget *parent = nullptr);
+    explicit createCommunication(QWidget *parent = nullptr, bool editMode = false);
     ~createCommunication();
 
 private slots:
-    void on_cb_company_currentTextChanged(const QString &arg1);
+    void on_cb_communication_currentTextChanged();
+
+    void on_cb_company_currentTextChanged();
 
     void on_cw_calender_selectionChanged();
 
@@ -25,10 +27,14 @@ private slots:
 
 private:
     Ui::createCommunication *ui;
-    QVector<QString> persons;
-    QVector<int> personIds;
-    QString when;
+
+    bool editMode;
+
     QString getCompanyId();
+
+    void set_cb_company(QString company = "");
+
+    void set_cb_person(QString person = "");
 };
 
 #endif // CREATECOMMUNICATION_H
