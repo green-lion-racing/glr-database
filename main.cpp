@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
 }
 
 // TODOs
+// use ids not names to reference between tables
 // combine/create creating and modifying of objects
 // add password/cypher mode, changing, adding, removing
 // adjust filtering in table view

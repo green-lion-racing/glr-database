@@ -29,7 +29,7 @@ private slots:
 private:
     Ui::createActivity *ui;
 
-    QString when;
+    bool editMode;
 
     QString getCompanyId();
 
