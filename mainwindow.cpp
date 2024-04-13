@@ -313,9 +313,9 @@ void MainWindow::on_tb_createCompany_clicked()
 
 void MainWindow::on_tb_modifyCompany_clicked()
 {
-    // createCompany *company = new createCompany(this, true);
-    // company->setModal(true);
-    // company->exec();
+    createCompany *company = new createCompany(this, true);
+    company->setModal(true);
+    company->exec();
 }
 
 void MainWindow::on_tb_createCommunication_clicked()

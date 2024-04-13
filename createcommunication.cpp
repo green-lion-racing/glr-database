@@ -7,8 +7,6 @@
 #include "addfile.h"
 #include "error.h"
 
-static QFile file;
-
 createCommunication::createCommunication(QWidget *parent, bool editMode) :
     QDialog(parent),
     ui(new Ui::createCommunication)
@@ -22,18 +20,18 @@ createCommunication::createCommunication(QWidget *parent, bool editMode) :
     QVector<QString> communicationNames;
 
     if (editMode) {
-        QWidget::setWindowTitle("GLR Datenbank - Leistung bearbeiten");
-        ui->l_dialogTitle->setText("GLR Datenbank - Leistung bearbeiten");
+        QWidget::setWindowTitle("GLR Datenbank - Kommunikation bearbeiten");
+        ui->l_dialogTitle->setText("GLR Datenbank - Kommunikation bearbeiten");
 
-        QSqlQuery selectActivity;
-        selectActivity.prepare("SELECT id, firma, ansprechpartner, wann FROM kommunikationen");
-        selectActivity.exec();
+        QSqlQuery selectCommunication;
+        selectCommunication.prepare("SELECT id, firma, ansprechpartner, wann FROM kommunikationen");
+        selectCommunication.exec();
 
-        while(selectActivity.next()) {
-            communicationNames.push_back(selectActivity.value(0).toString() + " - " +
-                                    selectActivity.value(1).toString() + " - " +
-                                    selectActivity.value(2).toString() + " - " +
-                                    selectActivity.value(3).toString());
+        while(selectCommunication.next()) {
+            communicationNames.push_back(selectCommunication.value(0).toString() + " - " +
+                                    selectCommunication.value(1).toString() + " - " +
+                                    selectCommunication.value(2).toString() + " - " +
+                                    selectCommunication.value(3).toString());
         }
 
         for (int i = 0; i < communicationNames.size(); i++) {
@@ -52,8 +50,8 @@ createCommunication::createCommunication(QWidget *parent, bool editMode) :
         ui->pb_okay->setDisabled(true);
 
     } else {
-        QWidget::setWindowTitle("GLR Datenbank - Leistung hinzufügen");
-        ui->l_dialogTitle->setText("GLR Datenbank - Leistung hinzufügen");
+        QWidget::setWindowTitle("GLR Datenbank - Kommunikation hinzufügen");
+        ui->l_dialogTitle->setText("GLR Datenbank - Kommunikation hinzufügen");
         ui->cb_communication->setVisible(false);
         ui->label_5->setVisible(false);
 
@@ -74,15 +72,15 @@ createCommunication::~createCommunication()
 
 void createCommunication::on_cb_communication_currentTextChanged()
 {
-    QSqlQuery selectActivity;
+    QSqlQuery selectCommunication;
 
     static QRegularExpression regex(" - ");
-    int activityID = ui->cb_communication->currentText().split(regex)[0].toInt();
+    int communicationID = ui->cb_communication->currentText().split(regex)[0].toInt();
 
-    selectActivity.prepare("SELECT * FROM kommunikationen WHERE id = :activityID");
-    selectActivity.bindValue(":activityID", activityID);
-    selectActivity.exec();
-    selectActivity.next();
+    selectCommunication.prepare("SELECT * FROM kommunikationen WHERE id = :communicationID");
+    selectCommunication.bindValue(":communicationID", communicationID);
+    selectCommunication.exec();
+    selectCommunication.next();
 
     ui->cb_company->setDisabled(false);
     ui->cb_person->setDisabled(false);
@@ -92,11 +90,11 @@ void createCommunication::on_cb_communication_currentTextChanged()
     ui->pb_okay->setDisabled(false);
 
 
-    set_cb_company(selectActivity.value(1).toString());
-    set_cb_person(selectActivity.value(2).toString());
-    ui->le_when->setText(selectActivity.value(3).toString());
-    ui->cw_calender->setSelectedDate(selectActivity.value(3).toDate());
-    ui->le_what->setText(selectActivity.value(4).toString());
+    set_cb_company(selectCommunication.value(1).toString());
+    set_cb_person(selectCommunication.value(2).toString());
+    ui->le_when->setText(selectCommunication.value(3).toString());
+    ui->cw_calender->setSelectedDate(selectCommunication.value(3).toDate());
+    ui->le_what->setText(selectCommunication.value(4).toString());
 }
 
 void createCommunication::on_cb_company_currentTextChanged()

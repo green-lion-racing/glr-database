@@ -13,14 +13,18 @@ class createCompany : public QDialog
     Q_OBJECT
 
 public:
-    explicit createCompany(QWidget *parent = nullptr);
+    explicit createCompany(QWidget *parent = nullptr, bool editMode = false);
     ~createCompany();
 
 private slots:
     void on_pb_okay_clicked();
 
+    void on_cb_company_currentTextChanged();
+
 private:
     Ui::createCompany *ui;
+
+    bool editMode;
 };
 
 #endif // CREATECOMPANY_H

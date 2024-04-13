@@ -128,6 +128,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cb_communication</tabstop>
+  <tabstop>cb_company</tabstop>
+  <tabstop>cb_person</tabstop>
+  <tabstop>le_when</tabstop>
+  <tabstop>cw_calender</tabstop>
+  <tabstop>le_what</tabstop>
+  <tabstop>pb_okay</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
