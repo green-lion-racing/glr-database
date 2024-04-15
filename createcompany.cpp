@@ -20,12 +20,12 @@ createCompany::createCompany(QWidget *parent, bool editMode) :
         QWidget::setWindowTitle("GLR Datenbank - Unternehmen bearbeiten");
         ui->l_dialogTitle->setText("GLR Datenbank - Unternehmen bearbeiten");
 
-        QSqlQuery selectActivity;
-        selectActivity.prepare("SELECT id, name FROM firmen");
-        selectActivity.exec();
+        QSqlQuery selectCompany;
+        selectCompany.prepare("SELECT id, name FROM firmen");
+        selectCompany.exec();
 
-        while(selectActivity.next()) {
-            companyNames.push_back(selectActivity.value(0).toString() + " - " + selectActivity.value(1).toString());
+        while(selectCompany.next()) {
+            companyNames.push_back(selectCompany.value(0).toString() + " - " + selectCompany.value(1).toString());
         }
 
         for (int i = 0; i < companyNames.size(); i++) {
@@ -51,7 +51,7 @@ createCompany::createCompany(QWidget *parent, bool editMode) :
         ui->le_city->setDisabled(true);
         ui->le_country->setDisabled(true);
         ui->le_info->setDisabled(true);
-        ui->cb_activ->setDisabled(true);
+        ui->cb_active->setDisabled(true);
 
         ui->pb_okay->setDisabled(true);
 
@@ -62,7 +62,7 @@ createCompany::createCompany(QWidget *parent, bool editMode) :
         ui->label_11->setVisible(false);
         ui->label_12->setVisible(false);
         ui->cb_company->setVisible(false);
-        ui->cb_activ->setVisible(false);
+        ui->cb_active->setVisible(false);
     }
 }
 
@@ -98,7 +98,7 @@ void createCompany::on_cb_company_currentTextChanged()
     ui->le_city->setDisabled(false);
     ui->le_country->setDisabled(false);
     ui->le_info->setDisabled(false);
-    ui->cb_activ->setDisabled(false);
+    ui->cb_active->setDisabled(false);
 
     ui->pb_okay->setDisabled(false);
 
@@ -133,7 +133,7 @@ void createCompany::on_cb_company_currentTextChanged()
     ui->le_city->setText(selectCompany.value(9).toString());
     ui->le_country->setText(selectCompany.value(11).toString());
     ui->le_info->setText(selectCompany.value(12).toString());
-    ui->cb_activ->setChecked(selectCompany.value(2).toBool());
+    ui->cb_active->setChecked(selectCompany.value(2).toBool());
 }
 
 void createCompany::on_pb_okay_clicked()
@@ -184,7 +184,7 @@ void createCompany::on_pb_okay_clicked()
     if (ui->le_zip->text() != "") {
         insertCompanyQuery.bindValue(":zip", ui->le_zip->text().toInt());
     } else {
-        insertCompanyQuery.bindValue(":zip", QVariant(QVariant::Int));
+        insertCompanyQuery.bindValue(":zip", QVariant(QMetaType::fromType<int>()));
     }
 
     insertCompanyQuery.bindValue(":country", country);
@@ -200,5 +200,4 @@ void createCompany::on_pb_okay_clicked()
     } else {
         this->accept();
     }
-
 }

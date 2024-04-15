@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>477</width>
-    <height>400</height>
+    <height>452</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,7 +42,7 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="le_firstName"/>
+        <widget class="QLineEdit" name="le_first_name"/>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_2">
@@ -186,7 +186,7 @@
         </widget>
        </item>
        <item row="12" column="1">
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QCheckBox" name="cb_active">
          <property name="text">
           <string/>
          </property>
@@ -206,7 +206,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>le_firstName</tabstop>
+  <tabstop>le_first_name</tabstop>
   <tabstop>le_surname</tabstop>
   <tabstop>le_position</tabstop>
   <tabstop>le_student_number</tabstop>

@@ -297,6 +297,13 @@ void MainWindow::on_tb_createMember_clicked()
     member.exec();
 }
 
+void MainWindow::on_tb_modifyMember_clicked()
+{
+    createMember *member = new createMember(this, true);
+    member->setModal(true);
+    member->exec();
+}
+
 void MainWindow::on_tb_createPerson_clicked()
 {
     createPerson person;

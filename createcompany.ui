@@ -157,7 +157,7 @@
         </widget>
        </item>
        <item row="12" column="1">
-        <widget class="QCheckBox" name="cb_activ">
+        <widget class="QCheckBox" name="cb_active">
          <property name="text">
           <string/>
          </property>
@@ -253,7 +253,7 @@
   <tabstop>le_city</tabstop>
   <tabstop>le_country</tabstop>
   <tabstop>le_info</tabstop>
-  <tabstop>cb_activ</tabstop>
+  <tabstop>cb_active</tabstop>
   <tabstop>pb_okay</tabstop>
  </tabstops>
  <resources/>
