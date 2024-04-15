@@ -174,7 +174,6 @@ void createPerson::on_pb_okay_clicked()
         insertPersonQuery.prepare("INSERT INTO personen(titel, vorname, nachname, telefon, fax, email, Position, du_sie, sprache, aktiv, FirmenID) VALUES (:title, :first_name, :surname, :phone, :fax, :email, :position, :you, :language, :active, :companyID)");
     }
 
-    insertPersonQuery.prepare("INSERT INTO personen(titel, vorname, nachname, telefon, fax, email, Position, du_sie, sprache, aktiv, FirmenID) VALUES (:title, :first_name, :surname, :phone, :fax, :email, :position, :you, :language, :active, :companyID)");
     insertPersonQuery.bindValue(":title", title);
     insertPersonQuery.bindValue(":first_name", first_name);
     insertPersonQuery.bindValue(":surname", surname);
