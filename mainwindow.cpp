@@ -311,6 +311,13 @@ void MainWindow::on_tb_createPerson_clicked()
     person.exec();
 }
 
+void MainWindow::on_tb_modifyPerson_clicked()
+{
+    createPerson *person = new createPerson(this, true);
+    person->setModal(true);
+    person->exec();
+}
+
 void MainWindow::on_tb_createCompany_clicked()
 {
     createCompany company;

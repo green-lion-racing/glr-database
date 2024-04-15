@@ -36,11 +36,13 @@ private slots:
 
     void on_actionAbout_triggered();
 
-    void on_tb_createPerson_clicked();
-
     void on_tb_createMember_clicked();
 
     void on_tb_modifyMember_clicked();
+
+    void on_tb_createPerson_clicked();
+
+    void on_tb_modifyPerson_clicked();
 
     void on_tb_createCompany_clicked();
 

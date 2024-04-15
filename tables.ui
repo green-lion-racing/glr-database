@@ -134,16 +134,17 @@
  </widget>
  <tabstops>
   <tabstop>cb_table</tabstop>
-  <tabstop>cb_filter</tabstop>
-  <tabstop>le_search</tabstop>
   <tabstop>cb_filter_gold</tabstop>
   <tabstop>cb_filter_silver</tabstop>
   <tabstop>cb_filter_bronze</tabstop>
   <tabstop>cb_filter_supporter</tabstop>
+  <tabstop>cb_filter</tabstop>
+  <tabstop>le_search</tabstop>
   <tabstop>tv_table</tabstop>
-  <tabstop>pb_download_all</tabstop>
   <tabstop>pb_download</tabstop>
+  <tabstop>pb_download_all</tabstop>
   <tabstop>pb_save</tabstop>
+  <tabstop>cb_editMode</tabstop>
  </tabstops>
  <resources/>
  <connections/>

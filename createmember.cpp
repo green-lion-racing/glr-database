@@ -128,7 +128,7 @@ void createMember::on_pb_okay_clicked()
         insertMemberQuery.bindValue(":memberID", memberID + 1);
     } else {
         insertMemberQuery.prepare("INSERT INTO mitglieder (vorname, nachname, position, matrikelnummer, email_glr, email_privat, telefon, anschrift, hemdgroesse, vdi_nummer, sprache, aktiv) VALUES (:first_name, :surname, :position, :student_number, :email_glr, :email_private, :phone, :address, :shirt_size, :vdi_number, :language, :active)");
-        }
+    }
     insertMemberQuery.bindValue(":first_name", first_name);
     insertMemberQuery.bindValue(":surname", surname);
     insertMemberQuery.bindValue(":position", position);

@@ -206,6 +206,7 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>cb_member</tabstop>
   <tabstop>le_first_name</tabstop>
   <tabstop>le_surname</tabstop>
   <tabstop>le_position</tabstop>
@@ -217,6 +218,7 @@
   <tabstop>le_language</tabstop>
   <tabstop>le_shirt_size</tabstop>
   <tabstop>le_vdi_number</tabstop>
+  <tabstop>cb_active</tabstop>
   <tabstop>pb_okay</tabstop>
  </tabstops>
  <resources/>

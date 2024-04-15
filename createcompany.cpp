@@ -138,8 +138,6 @@ void createCompany::on_cb_company_currentTextChanged()
 
 void createCompany::on_pb_okay_clicked()
 {
-    bool nameIsNotDistinct = 0;
-
     int companyID = ui->cb_company->currentIndex();
     QString name = ui->le_name->text();
     bool active = 1;     //neu angelegte Sponosoren sind immer aktiv
