@@ -1,11 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "aboutdatabase.h"
-#include "createcompany.h"
-#include "createperson.h"
-#include "createmember.h"
-#include "createactivity.h"
-#include "createcommunication.h"
+#include "about.h"
+#include "company.h"
+#include "person.h"
+#include "member.h"
+#include "activity.h"
+#include "communication.h"
 #include <QFileDialog>
 #include <QPixmap>
 #include <QKeyEvent>
@@ -285,77 +285,77 @@ void MainWindow::on_actionPasswordChange_triggered() {
 }
 
 void MainWindow::on_actionAbout_triggered() {
-    aboutDatabase about;
+    About about;
     about.setModal(true);
     about.exec();
 }
 
 void MainWindow::on_tb_createMember_clicked()
 {
-    createMember member;
+    Member member;
     member.setModal(true);
     member.exec();
 }
 
 void MainWindow::on_tb_modifyMember_clicked()
 {
-    createMember *member = new createMember(this, true);
+    Member *member = new Member(this, true);
     member->setModal(true);
     member->exec();
 }
 
 void MainWindow::on_tb_createPerson_clicked()
 {
-    createPerson person;
+    Person person;
     person.setModal(true);
     person.exec();
 }
 
 void MainWindow::on_tb_modifyPerson_clicked()
 {
-    createPerson *person = new createPerson(this, true);
+    Person *person = new Person(this, true);
     person->setModal(true);
     person->exec();
 }
 
 void MainWindow::on_tb_createCompany_clicked()
 {
-    createCompany company;
+    Company company;
     company.setModal(true);
     company.exec();
 }
 
 void MainWindow::on_tb_modifyCompany_clicked()
 {
-    createCompany *company = new createCompany(this, true);
+    Company *company = new Company(this, true);
     company->setModal(true);
     company->exec();
 }
 
 void MainWindow::on_tb_createCommunication_clicked()
 {
-    createCommunication communicaion;
+    Communication communicaion;
     communicaion.setModal(true);
     communicaion.exec();
 }
 
 void MainWindow::on_tb_modifyCommunication_clicked()
 {
-    createCommunication *communication = new createCommunication(this, true);
+    Communication *communication = new Communication(this, true);
     communication->setModal(true);
     communication->exec();
 }
 
 void MainWindow::on_tb_createActivity_clicked()
 {
-    createActivity activity;
+    Activity activity;
     activity.setModal(true);
     activity.exec();
 }
 
 void MainWindow::on_tb_modifyActivity_clicked()
 {
-    createActivity *activity = new createActivity(this, true);
+    Activity *activity = new Activity(this, true);
     activity->setModal(true);
     activity->exec();
 }
@@ -368,7 +368,7 @@ void MainWindow::on_tb_displayTables_clicked()
             tablesWindow->deleteLater();
             tablesWindow = NULL;
         }
-        tablesWindow = new tables();
+        tablesWindow = new Tables();
     }
     tablesWindow->show();
     if (!tablesWindow->hasFocus()) {
@@ -385,7 +385,7 @@ void MainWindow::on_tb_modifyTables_clicked()
             tablesWindow->deleteLater();
             tablesWindow = NULL;
         }
-        tablesWindow = new tables(this, true);
+        tablesWindow = new Tables(this, true);
     }
     tablesWindow->show();
     if (!tablesWindow->hasFocus()) {

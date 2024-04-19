@@ -1,20 +1,20 @@
-#ifndef CREATEACTIVITY_H
-#define CREATEACTIVITY_H
+#ifndef ACTIVITY_H
+#define ACTIVITY_H
 
 #include <QDialog>
 #include <QtSql>
 
 namespace Ui {
-class createActivity;
+class Activity;
 }
 
-class createActivity : public QDialog
+class Activity : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit createActivity(QWidget *parent = nullptr, bool editMode = false);
-    ~createActivity();
+    explicit Activity(QWidget *parent = nullptr, bool editMode = false);
+    ~Activity();
 
 private slots:
 
@@ -27,7 +27,7 @@ private slots:
     void on_pb_okay_clicked();
 
 private:
-    Ui::createActivity *ui;
+    Ui::Activity *ui;
 
     bool editMode;
 
@@ -38,4 +38,4 @@ private:
     void set_cb_person(QString person = "");
 };
 
-#endif // CREATEACTIVITY_H
+#endif // ACTIVITY_H

@@ -1,20 +1,20 @@
-#ifndef CREATECOMMUNICATION_H
-#define CREATECOMMUNICATION_H
+#ifndef COMMUNICATION_H
+#define COMMUNICATION_H
 
 #include <QDialog>
 #include <QtSql>
 
 namespace Ui {
-class createCommunication;
+class Communication;
 }
 
-class createCommunication : public QDialog
+class Communication : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit createCommunication(QWidget *parent = nullptr, bool editMode = false);
-    ~createCommunication();
+    explicit Communication(QWidget *parent = nullptr, bool editMode = false);
+    ~Communication();
 
 private slots:
     void on_cb_communication_currentTextChanged();
@@ -26,7 +26,7 @@ private slots:
     void on_pb_okay_clicked();
 
 private:
-    Ui::createCommunication *ui;
+    Ui::Communication *ui;
 
     bool editMode;
 
@@ -37,4 +37,4 @@ private:
     void set_cb_person(QString person = "");
 };
 
-#endif // CREATECOMMUNICATION_H
+#endif // COMMUNICATION_H

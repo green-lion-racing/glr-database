@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>createPerson</class>
- <widget class="QDialog" name="createPerson">
+ <class>Member</class>
+ <widget class="QDialog" name="Member">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>477</width>
-    <height>428</height>
+    <height>452</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
      <item>
       <widget class="QLabel" name="l_dialogTitle">
        <property name="text">
-        <string>Person hinzufügen</string>
+        <string>Mitglied hinzufügen</string>
        </property>
       </widget>
      </item>
@@ -35,104 +35,110 @@
         <number>100</number>
        </property>
        <item row="1" column="0">
-        <widget class="QLabel" name="label_1">
-         <property name="text">
-          <string>Unternehmen</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="cb_company">
-         <property name="placeholderText">
-          <string>Unternehmen...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
         <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Titel</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="le_title"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Vorname</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="1" column="1">
         <widget class="QLineEdit" name="le_first_name"/>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_3">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Nachname</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="2" column="1">
         <widget class="QLineEdit" name="le_surname"/>
        </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Telefon</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="le_phone"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Fax</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="le_fax"/>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>E-Mail</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="le_email"/>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_10">
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_3">
          <property name="text">
           <string>Position</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="1">
+       <item row="3" column="1">
         <widget class="QLineEdit" name="le_position"/>
        </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="label_7">
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>Du/Sie</string>
+          <string>Matrikelnummer</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="0">
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="le_student_number"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>E-Mail GLR</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="le_email_glr"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>E-Mail Privat</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="le_email_private"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Telefon</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="le_phone"/>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Anschrift</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLineEdit" name="le_address"/>
+       </item>
+       <item row="9" column="0">
         <widget class="QLabel" name="label_9">
          <property name="text">
           <string>Sprache</string>
          </property>
         </widget>
        </item>
-       <item row="15" column="1">
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="le_language"/>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Hemdgröße</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>VDI-Nummer</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <spacer name="horizontalSpacer">
@@ -159,56 +165,37 @@
          </item>
         </layout>
        </item>
+       <item row="10" column="1">
+        <widget class="QLineEdit" name="le_shirt_size"/>
+       </item>
+       <item row="11" column="1">
+        <widget class="QLineEdit" name="le_vdi_number"/>
+       </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="cb_person">
+        <widget class="QComboBox" name="cb_member">
          <property name="placeholderText">
-          <string>Person...</string>
+          <string>Mitglied...</string>
          </property>
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QLabel" name="label_11">
+        <widget class="QLabel" name="label_13">
          <property name="text">
-          <string>Person</string>
+          <string>Mitglied</string>
          </property>
         </widget>
        </item>
-       <item row="14" column="1">
+       <item row="12" column="1">
         <widget class="QCheckBox" name="cb_active">
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
-       <item row="14" column="0">
-        <widget class="QLabel" name="label_12">
+       <item row="12" column="0">
+        <widget class="QLabel" name="label_14">
          <property name="text">
           <string>Aktiv</string>
-         </property>
-        </widget>
-       </item>
-       <item row="13" column="1">
-        <widget class="QLineEdit" name="le_language"/>
-       </item>
-       <item row="10" column="1">
-        <widget class="QComboBox" name="cb_you">
-         <property name="editable">
-          <bool>false</bool>
-         </property>
-         <property name="currentText">
-          <string/>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>16</width>
-           <height>16</height>
-          </size>
-         </property>
-         <property name="placeholderText">
-          <string>Anrede...</string>
-         </property>
-         <property name="frame">
-          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -219,17 +206,18 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>cb_person</tabstop>
-  <tabstop>cb_company</tabstop>
-  <tabstop>le_title</tabstop>
+  <tabstop>cb_member</tabstop>
   <tabstop>le_first_name</tabstop>
   <tabstop>le_surname</tabstop>
-  <tabstop>le_phone</tabstop>
-  <tabstop>le_fax</tabstop>
-  <tabstop>le_email</tabstop>
   <tabstop>le_position</tabstop>
-  <tabstop>cb_you</tabstop>
+  <tabstop>le_student_number</tabstop>
+  <tabstop>le_email_glr</tabstop>
+  <tabstop>le_email_private</tabstop>
+  <tabstop>le_phone</tabstop>
+  <tabstop>le_address</tabstop>
   <tabstop>le_language</tabstop>
+  <tabstop>le_shirt_size</tabstop>
+  <tabstop>le_vdi_number</tabstop>
   <tabstop>cb_active</tabstop>
   <tabstop>pb_okay</tabstop>
  </tabstops>

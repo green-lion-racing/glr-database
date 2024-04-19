@@ -63,7 +63,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    tables *tablesWindow = NULL;
+    Tables *tablesWindow = NULL;
 
     void keyPressEvent(QKeyEvent * event);
 

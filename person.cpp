@@ -1,16 +1,16 @@
-#include "createperson.h"
-#include "ui_createperson.h"
+#include "person.h"
+#include "ui_person.h"
 #include "error.h"
 
-createPerson::createPerson(QWidget *parent, bool editMode) :
+Person::Person(QWidget *parent, bool editMode) :
     QDialog(parent),
-    ui(new Ui::createPerson)
+    ui(new Ui::Person)
 {
     ui->setupUi(this);
 
-    QSqlQuery createPersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FirmenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id))");
+    QSqlQuery  PersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FirmenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id))");
 
-    createPerson::editMode = editMode;
+    Person::editMode = editMode;
 
     ui->cb_you->addItem("Du");
     ui->cb_you->addItem("Sie");
@@ -79,12 +79,12 @@ createPerson::createPerson(QWidget *parent, bool editMode) :
     }
 }
 
-createPerson::~createPerson()
+Person::~Person()
 {
     delete ui;
 }
 
-void createPerson::on_cb_person_currentTextChanged()
+void Person::on_cb_person_currentTextChanged()
 {
     QSqlQuery selectPerson;
 
@@ -149,7 +149,7 @@ void createPerson::on_cb_person_currentTextChanged()
     ui->cb_active->setChecked(selectPerson.value(11).toBool());
 }
 
-void createPerson::on_pb_okay_clicked()
+void Person::on_pb_okay_clicked()
 {
     int personID = ui->cb_person->currentIndex();
     QString title = ui->le_title->text();
@@ -189,7 +189,7 @@ void createPerson::on_pb_okay_clicked()
     insertPersonQuery.exec();
 
     if (insertPersonQuery.next()) {
-        error errorWindow;
+        Error errorWindow;
         errorWindow.setText("QSQLITE error: " + insertPersonQuery.lastError().text() + ",\nQSQLITE error code: " + insertPersonQuery.lastError().nativeErrorCode());
         errorWindow.setModal(true);
         errorWindow.exec();

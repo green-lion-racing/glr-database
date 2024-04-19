@@ -1,16 +1,16 @@
-#include "createactivity.h"
-#include "ui_createactivity.h"
+#include "activity.h"
+#include "ui_activity.h"
 #include <QVector>
 #include "error.h"
 
-createActivity::createActivity(QWidget *parent, bool editMode):
+Activity::Activity(QWidget *parent, bool editMode):
     QDialog(parent),
-    ui(new Ui::createActivity)
+    ui(new Ui::Activity)
 {
-    QSqlQuery createActivityQquery("CREATE TABLE IF NOT EXISTS leistungen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, wert TEXT, was TEXT, infos TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
+    QSqlQuery ActivityQquery("CREATE TABLE IF NOT EXISTS leistungen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, wert TEXT, was TEXT, infos TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
     QVector<QString> activityNames;
 
-    createActivity::editMode = editMode;
+    Activity::editMode = editMode;
 
     ui->setupUi(this);
 
@@ -62,12 +62,12 @@ createActivity::createActivity(QWidget *parent, bool editMode):
     ui->le_when->setText(ui->cw_calender->selectedDate().toString("yyyy-MM-dd"));
 }
 
-createActivity::~createActivity()
+Activity::~Activity()
 {
     delete ui;
 }
 
-void createActivity::on_cb_activity_currentTextChanged()
+void Activity::on_cb_activity_currentTextChanged()
 {
     QSqlQuery selectActivity;
 
@@ -98,17 +98,17 @@ void createActivity::on_cb_activity_currentTextChanged()
     ui->te_info->setText(selectActivity.value(6).toString());
 }
 
-void createActivity::on_cb_company_currentTextChanged()
+void Activity::on_cb_company_currentTextChanged()
 {
     set_cb_person();
 }
 
-void createActivity::on_cw_calender_selectionChanged()
+void Activity::on_cw_calender_selectionChanged()
 {
     ui->le_when->setText(ui->cw_calender->selectedDate().toString("yyyy-MM-dd"));
 }
 
-void createActivity::on_pb_okay_clicked()
+void Activity::on_pb_okay_clicked()
 {
     int activityIndex = ui->cb_activity->currentIndex();
     QString company = ui->cb_company->currentText();
@@ -136,7 +136,7 @@ void createActivity::on_pb_okay_clicked()
     insertActivityQuery.exec();
 
     if (insertActivityQuery.next()) {
-        error errorWindow;
+        Error errorWindow;
         errorWindow.setText("QSQLITE error: " + insertActivityQuery.lastError().text() + ",\nQSQLITE error code: " + insertActivityQuery.lastError().nativeErrorCode());
         errorWindow.setModal(true);
         errorWindow.exec();
@@ -145,7 +145,7 @@ void createActivity::on_pb_okay_clicked()
     }
 }
 
-QString createActivity::getCompanyId () {
+QString Activity::getCompanyId () {
     QSqlQuery queryCompanyId;
     QString companyName = ui->cb_company->currentText();
     queryCompanyId.prepare("SELECT id FROM firmen WHERE name = :companyName");
@@ -159,7 +159,7 @@ QString createActivity::getCompanyId () {
     return companyId;
 }
 
-void createActivity::set_cb_company(QString company) {
+void Activity::set_cb_company(QString company) {
     QSqlQuery selectName;
     QVector<QString> companyNames;
 
@@ -185,7 +185,7 @@ void createActivity::set_cb_company(QString company) {
     }
 }
 
-void createActivity::set_cb_person(QString person) {
+void Activity::set_cb_person(QString person) {
     QSqlQuery selectName;
     QVector<QString> personNames;
 

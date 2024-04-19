@@ -5,16 +5,16 @@
 #include <QtSql>
 
 namespace Ui {
-class addFile;
+class AddFile;
 }
 
-class addFile : public QDialog
+class AddFile : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit addFile(QWidget *parent = nullptr);
-    ~addFile();
+    explicit AddFile(QWidget *parent = nullptr);
+    ~AddFile();
 
 private slots:
     void on_pb_selectFile_clicked();
@@ -24,7 +24,7 @@ private slots:
     void on_pb_next_clicked();
 
 private:
-    Ui::addFile *ui;
+    Ui::AddFile *ui;
 
     void saveFileToDatabase();
 };

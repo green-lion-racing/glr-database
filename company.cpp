@@ -1,18 +1,18 @@
-#include "createcompany.h"
-#include "ui_createcompany.h"
+#include "company.h"
+#include "ui_company.h"
 #include <QString>
 #include <QVector>
 #include "error.h"
 
-createCompany::createCompany(QWidget *parent, bool editMode) :
+Company::Company(QWidget *parent, bool editMode) :
     QDialog(parent),
-    ui(new Ui::createCompany)
+    ui(new Ui::Company)
 {
     ui->setupUi(this);
 
-    QSqlQuery createCompanyQquery("CREATE TABLE IF NOT EXISTS firmen (id INTEGER PRIMARY KEY, name TEXT, aktiv BOOL, seit TEXT, bis TEXT, Rang TEXT, Leistungstyp TEXT, Str TEXT, Hausnummer TEXT, Ort TEXT, PLZ INTEGER, Land TEXT, Infos TEXT)");
+    QSqlQuery  CompanyQquery("CREATE TABLE IF NOT EXISTS firmen (id INTEGER PRIMARY KEY, name TEXT, aktiv BOOL, seit TEXT, bis TEXT, Rang TEXT, Leistungstyp TEXT, Str TEXT, Hausnummer TEXT, Ort TEXT, PLZ INTEGER, Land TEXT, Infos TEXT)");
 
-    createCompany::editMode = editMode;
+    Company::editMode = editMode;
 
     QVector<QString> companyNames;
 
@@ -66,12 +66,12 @@ createCompany::createCompany(QWidget *parent, bool editMode) :
     }
 }
 
-createCompany::~createCompany()
+Company::~Company()
 {
     delete ui;
 }
 
-void createCompany::on_cb_company_currentTextChanged()
+void Company::on_cb_company_currentTextChanged()
 {
     QSqlQuery selectCompany;
 
@@ -136,7 +136,7 @@ void createCompany::on_cb_company_currentTextChanged()
     ui->cb_active->setChecked(selectCompany.value(2).toBool());
 }
 
-void createCompany::on_pb_okay_clicked()
+void Company::on_pb_okay_clicked()
 {
     int companyID = ui->cb_company->currentIndex();
     QString name = ui->le_name->text();
@@ -191,7 +191,7 @@ void createCompany::on_pb_okay_clicked()
     insertCompanyQuery.exec();
 
     if (insertCompanyQuery.next()) {
-        error errorWindow;
+        Error errorWindow;
         errorWindow.setText("QSQLITE error: " + insertCompanyQuery.lastError().text() + ",\nQSQLITE error code: " + insertCompanyQuery.lastError().nativeErrorCode());
         errorWindow.setModal(true);
         errorWindow.exec();

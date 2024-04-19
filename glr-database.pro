@@ -19,43 +19,42 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    aboutdatabase.cpp \
+    about.cpp \
+    activity.cpp \
     addfile.cpp \
-    createactivity.cpp \
-    createcommunication.cpp \
-    createcompany.cpp \
-    createmember.cpp \
-    createperson.cpp \
+    communication.cpp \
+    company.cpp \
     error.cpp \
     main.cpp \
     mainwindow.cpp \
+    member.cpp \
+    person.cpp \
     pushbuttonicon.cpp \
     tables.cpp
 
 HEADERS += \
-    aboutdatabase.h \
+    about.h \
+    activity.h \
     addfile.h \
-    createactivity.h \
-    createcommunication.h \
-    createcompany.h \
-    createmember.h \
-    createperson.h \
+    communication.h \
+    company.h \
     error.h \
     mainwindow.h \
-    modifytables.h \
+    member.h \
+    person.h \
     pushbuttonicon.h \
     tables.h
 
 FORMS += \
-    aboutdatabase.ui \
+    about.ui \
+    activity.ui \
     addfile.ui \
-    createactivity.ui \
-    createcommunication.ui \
-    createcompany.ui \
-    createmember.ui \
-    createperson.ui \
+    communication.ui \
+    company.ui \
     error.ui \
     mainwindow.ui \
+    member.ui \
+    person.ui \
     tables.ui
 
 # Default rules for deployment.

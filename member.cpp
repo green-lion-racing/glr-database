@@ -1,16 +1,16 @@
-#include "createmember.h"
-#include "ui_createmember.h"
+#include "member.h"
+#include "ui_member.h"
 #include "error.h"
 
-createMember::createMember(QWidget *parent, bool editMode) :
+Member::Member(QWidget *parent, bool editMode) :
     QDialog(parent),
-    ui(new Ui::createMember)
+    ui(new Ui::Member)
 {
     ui->setupUi(this);
 
-    QSqlQuery createMemberQuery("CREATE TABLE IF NOT EXISTS mitglieder (id INTEGER PRIMARY KEY, vorname TEXT, nachname TEXT, position TEXT, matrikelnummer TEXT, email_glr TEXT, email_privat TEXT, telefon TEXT, anschrift TEXT, hemdgroesse TEXT, vdi_nummer TEXT, sprache TEXT, aktiv BOOL)");
+    QSqlQuery  MemberQuery("CREATE TABLE IF NOT EXISTS mitglieder (id INTEGER PRIMARY KEY, vorname TEXT, nachname TEXT, position TEXT, matrikelnummer TEXT, email_glr TEXT, email_privat TEXT, telefon TEXT, anschrift TEXT, hemdgroesse TEXT, vdi_nummer TEXT, sprache TEXT, aktiv BOOL)");
 
-    createMember::editMode = editMode;
+    Member::editMode = editMode;
 
     QVector<QString> memberNames;
 
@@ -60,12 +60,12 @@ createMember::createMember(QWidget *parent, bool editMode) :
     }
 }
 
-createMember::~createMember()
+Member::~Member()
 {
     delete ui;
 }
 
-void createMember::on_cb_member_currentTextChanged()
+void Member::on_cb_member_currentTextChanged()
 {
     QSqlQuery selectMember;
 
@@ -106,7 +106,7 @@ void createMember::on_cb_member_currentTextChanged()
     ui->cb_active->setChecked(selectMember.value(12).toBool());
 }
 
-void createMember::on_pb_okay_clicked()
+void Member::on_pb_okay_clicked()
 {
     int memberID =  ui->cb_member->currentIndex();
     QString first_name = ui->le_first_name->text();
@@ -144,7 +144,7 @@ void createMember::on_pb_okay_clicked()
     insertMemberQuery.exec();
 
     if (insertMemberQuery.next()) {
-        error errorWindow;
+        Error errorWindow;
         errorWindow.setText("QSQLITE error: " + insertMemberQuery.lastError().text() + ",\nQSQLITE error code: " + insertMemberQuery.lastError().nativeErrorCode());
         errorWindow.setModal(true);
         errorWindow.exec();

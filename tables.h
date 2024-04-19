@@ -6,18 +6,18 @@
 #include <QMessageBox>
 
 namespace Ui {
-class tables;
+class Tables;
 }
 
-class tables : public QMainWindow
+class Tables : public QMainWindow
 {
     Q_OBJECT
 
 public:
 
-    explicit tables(QWidget *parent = nullptr, bool editMode = false);
+    explicit Tables(QWidget *parent = nullptr, bool editMode = false);
 
-    ~tables();
+    ~Tables();
 
 private slots:
     void on_tv_table_clicked(const QModelIndex &index);
@@ -47,7 +47,7 @@ private slots:
     void unsaved_changes();
 
 private:
-    Ui::tables *ui;
+    Ui::Tables *ui;
 
     void closeEvent(QCloseEvent *event);
 

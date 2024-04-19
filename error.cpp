@@ -1,25 +1,25 @@
 #include "error.h"
 #include "ui_error.h"
 
-error::error(QWidget *parent) :
+Error::Error(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::error)
+    ui(new Ui::Error)
 {    
     ui->setupUi(this);
 
     QDialog::setWindowTitle("Fehler");
 }
 
-error::~error()
+Error::~Error()
 {
     delete ui;
 }
 
-void error::setText(QString error) {
+void Error::setText(QString error) {
     ui->l_error->setText(error);
 }
 
-void error::on_pb_okay_clicked()
+void Error::on_pb_okay_clicked()
 {
     close();
 }

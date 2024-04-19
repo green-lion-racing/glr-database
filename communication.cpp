@@ -1,5 +1,5 @@
-#include "createcommunication.h"
-#include "ui_createcommunication.h"
+#include "communication.h"
+#include "ui_communication.h"
 #include <QString>
 #include <QFileDialog>
 #include <QFile>
@@ -7,15 +7,15 @@
 #include "addfile.h"
 #include "error.h"
 
-createCommunication::createCommunication(QWidget *parent, bool editMode) :
+Communication::Communication(QWidget *parent, bool editMode) :
     QDialog(parent),
-    ui(new Ui::createCommunication)
+    ui(new Ui::Communication)
 {
-    QSqlQuery createCommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, PersonenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id), FOREIGN KEY(PersonenID) REFERENCES personen(id))");
+    QSqlQuery  CommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, PersonenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id), FOREIGN KEY(PersonenID) REFERENCES personen(id))");
 
     ui->setupUi(this);
 
-    createCommunication::editMode = editMode;
+    Communication::editMode = editMode;
 
     QVector<QString> communicationNames;
 
@@ -65,12 +65,12 @@ createCommunication::createCommunication(QWidget *parent, bool editMode) :
     ui->le_when->setText(ui->cw_calender->selectedDate().toString("yyyy-MM-dd"));
 }
 
-createCommunication::~createCommunication()
+Communication::~Communication()
 {
     delete ui;
 }
 
-void createCommunication::on_cb_communication_currentTextChanged()
+void Communication::on_cb_communication_currentTextChanged()
 {
     QSqlQuery selectCommunication;
 
@@ -97,17 +97,17 @@ void createCommunication::on_cb_communication_currentTextChanged()
     ui->le_what->setText(selectCommunication.value(4).toString());
 }
 
-void createCommunication::on_cb_company_currentTextChanged()
+void Communication::on_cb_company_currentTextChanged()
 {
     set_cb_person();
 }
 
-void createCommunication::on_cw_calender_selectionChanged()
+void Communication::on_cw_calender_selectionChanged()
 {
     ui->le_when->setText(ui->cw_calender->selectedDate().toString("yyyy-MM-dd"));
 }
 
-void createCommunication::on_pb_okay_clicked()
+void Communication::on_pb_okay_clicked()
 {
     int communicationID = ui->cb_communication->currentIndex();
     int personID = ui->cb_person->currentIndex();
@@ -135,13 +135,13 @@ void createCommunication::on_pb_okay_clicked()
     insertCommunicationQuery.exec();
 
     if (insertCommunicationQuery.next()) {
-        error errorWindow;
+        Error errorWindow;
         errorWindow.setText("QSQLITE error: " + insertCommunicationQuery.lastError().text() + ",\nQSQLITE error code: " + insertCommunicationQuery.lastError().nativeErrorCode());
         errorWindow.setModal(true);
         errorWindow.exec();
     } else {
         // TODO
-        addFile file;
+        AddFile file;
         file.setModal(true);
         file.exec();
 
@@ -149,7 +149,7 @@ void createCommunication::on_pb_okay_clicked()
     }
 }
 
-QString createCommunication::getCompanyId () {
+QString Communication::getCompanyId () {
     QSqlQuery queryCompanyId;
     QString companyName = ui->cb_company->currentText();
     queryCompanyId.prepare("SELECT id FROM firmen WHERE name = :companyName");
@@ -163,7 +163,7 @@ QString createCommunication::getCompanyId () {
     return companyId;
 }
 
-void createCommunication::set_cb_company(QString company) {
+void Communication::set_cb_company(QString company) {
     QSqlQuery selectName;
     QVector<QString> companyNames;
 
@@ -189,7 +189,7 @@ void createCommunication::set_cb_company(QString company) {
     }
 }
 
-void createCommunication::set_cb_person(QString person) {
+void Communication::set_cb_person(QString person) {
     QSqlQuery selectName;
     QVector<QString> personNames;
 

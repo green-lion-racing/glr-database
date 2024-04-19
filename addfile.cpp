@@ -5,21 +5,21 @@
 static QString fileName;
 static QFile file;
 
-addFile::addFile(QWidget *parent) :
+AddFile::AddFile(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::addFile)
+    ui(new Ui::AddFile)
 {
     ui->setupUi(this);
 
     QWidget::setWindowTitle("Dateien hinzufügen");
 }
 
-addFile::~addFile()
+AddFile::~AddFile()
 {
     delete ui;
 }
 
-void addFile::on_pb_selectFile_clicked()
+void AddFile::on_pb_selectFile_clicked()
 {
     //QString fileName = QFileDialog::getOpenFileName(this, "Datei öffnen", "C://");
     //fileName = (this, "Datei öffnen", "C://");
@@ -34,7 +34,7 @@ void addFile::on_pb_selectFile_clicked()
     ui->l_fileName->setText(fileName);
 }
 
-void addFile::saveFileToDatabase() {
+void AddFile::saveFileToDatabase() {
     //aktuelles Datum
     //time_t now = time(0);
     //tm *ltm = localtime(&now);
@@ -59,7 +59,7 @@ void addFile::saveFileToDatabase() {
     QFileInfo onlyFileName(fileName);
     QString fileNameWithoutPath = onlyFileName.fileName();  //Dateiname ohne Pfad
 
-    QSqlQuery createCommunicationFileQuery("CREATE TABLE IF NOT EXISTS kommunikation_dateien (id INTEGER PRIMARY KEY, kommunikation_id INTEGER, datei BLOB, dateiname TEXT, FOREIGN KEY (kommunikation_id) REFERENCES kommunikationen(id))");
+    QSqlQuery  CommunicationFileQuery("CREATE TABLE IF NOT EXISTS kommunikation_dateien (id INTEGER PRIMARY KEY, kommunikation_id INTEGER, datei BLOB, dateiname TEXT, FOREIGN KEY (kommunikation_id) REFERENCES kommunikationen(id))");
     QSqlQuery insertCommunicationFileQuery;
     insertCommunicationFileQuery.prepare("INSERT INTO kommunikation_dateien(kommunikation_id, datei, dateiname) VALUES (:communicationId, :fileContent, :fileNameWithoutPath)");
     insertCommunicationFileQuery.bindValue(":communicationId", communicationId);
@@ -74,12 +74,12 @@ void addFile::saveFileToDatabase() {
     }
 }
 
-void addFile::on_buttonBox_accepted()
+void AddFile::on_buttonBox_accepted()
 {
     saveFileToDatabase();
 }
 
-void addFile::on_pb_next_clicked()
+void AddFile::on_pb_next_clicked()
 {
     saveFileToDatabase();
     ui->l_fileName->clear();

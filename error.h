@@ -4,23 +4,23 @@
 #include <QDialog>
 
 namespace Ui {
-class error;
+class Error;
 }
 
-class error : public QDialog
+class Error : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit error(QWidget *parent = nullptr);
+    explicit Error(QWidget *parent = nullptr);
     void setText(QString error);
-    ~error();
+    ~Error();
 
 private slots:
     void on_pb_okay_clicked();
 
 private:
-    Ui::error *ui;
+    Ui::Error *ui;
 };
 
 #endif // ERROR_H

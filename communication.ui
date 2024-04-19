@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>createCommunication</class>
- <widget class="QDialog" name="createCommunication">
+ <class>Communication</class>
+ <widget class="QDialog" name="Communication">
   <property name="geometry">
    <rect>
     <x>0</x>

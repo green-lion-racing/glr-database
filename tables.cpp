@@ -5,9 +5,9 @@
 #include <QMessageBox>
 #include "error.h"
 
-tables::tables(QWidget *parent, bool editMode) :
+Tables::Tables(QWidget *parent, bool editMode) :
     QMainWindow(parent),
-    ui(new Ui::tables)
+    ui(new Ui::Tables)
 {
     ui->setupUi(this);
 
@@ -36,13 +36,13 @@ tables::tables(QWidget *parent, bool editMode) :
     }
 }
 
-tables::~tables()
+Tables::~Tables()
 {
     delete ui;
     this->destroy();
 }
 
-void tables::closeEvent(QCloseEvent *event) {
+void Tables::closeEvent(QCloseEvent *event) {
     if (tableModel->isDirty()) {
         QMessageBox::StandardButton box = unsaved_changes_notify();
 
@@ -55,7 +55,7 @@ void tables::closeEvent(QCloseEvent *event) {
     }
 }
 
-QString tables::getCompanyId () {
+QString Tables::getCompanyId () {
     QSqlQuery queryCompanyId;
     QString companyName = ui->cb_filter->currentText();
     queryCompanyId.prepare("SELECT id FROM firmen WHERE name = :companyName");
@@ -69,7 +69,7 @@ QString tables::getCompanyId () {
     return companyId;
 }
 
-void tables::on_cb_table_currentTextChanged()
+void Tables::on_cb_table_currentTextChanged()
 {
     if (tableModel != NULL && tableModel->isDirty()) {
         if (ui->cb_table->currentText() == tableModel->tableName())
@@ -144,7 +144,7 @@ void tables::on_cb_table_currentTextChanged()
     ui->tv_table->setModel(tableModel);
 }
 
-void tables::on_cb_filter_currentTextChanged()
+void Tables::on_cb_filter_currentTextChanged()
 {
     ui->cb_filter->setVisible(true);
     QString companyName = ui->cb_filter->currentText();
@@ -166,23 +166,23 @@ void tables::on_cb_filter_currentTextChanged()
     */
 }
 
-void tables::on_cb_filter_gold_stateChanged() {
+void Tables::on_cb_filter_gold_stateChanged() {
     update_cb_filter();
 }
 
-void tables::on_cb_filter_silver_stateChanged() {
+void Tables::on_cb_filter_silver_stateChanged() {
     update_cb_filter();
 }
 
-void tables::on_cb_filter_bronze_stateChanged() {
+void Tables::on_cb_filter_bronze_stateChanged() {
     update_cb_filter();
 }
 
-void tables::on_cb_filter_supporter_stateChanged() {
+void Tables::on_cb_filter_supporter_stateChanged() {
     update_cb_filter();
 }
 
-void tables::update_cb_filter() {
+void Tables::update_cb_filter() {
     QVector<QString> checks;
     QString filter = "";
 
@@ -214,14 +214,14 @@ void tables::update_cb_filter() {
     ui->tv_table->setModel(tableModel);
 }
 
-void tables::on_tv_table_clicked(const QModelIndex &index)
+void Tables::on_tv_table_clicked(const QModelIndex &index)
 {
     int row = index.row();
     QSqlRecord record = tableModel->record(row);
     id = record.value(0).toInt();
 }
 
-void tables::on_pb_download_clicked() {
+void Tables::on_pb_download_clicked() {
     QString fileName;
     QString fileContent;
     QFile file;
@@ -279,7 +279,7 @@ void tables::on_pb_download_clicked() {
     }
 }
 
-void tables::on_pb_download_all_clicked() {
+void Tables::on_pb_download_all_clicked() {
     QVector<QString> fileName;
     QVector<QString> fileContent;
     QString filePath;
@@ -336,7 +336,7 @@ void tables::on_pb_download_all_clicked() {
     }
 }
 
-void tables::on_cb_editMode_stateChanged() {
+void Tables::on_cb_editMode_stateChanged() {
     if (ui->cb_editMode->isChecked()) {
         QWidget::setWindowTitle("GLR Datenbank - Einträge bearbeiten");
         ui->l_dialogTitle->setText("Tabellen bearbeiten");
@@ -364,12 +364,12 @@ void tables::on_cb_editMode_stateChanged() {
     }
 }
 
-void tables::unsaved_changes() {
+void Tables::unsaved_changes() {
     ui->cb_editMode->setEnabled(false);
     ui->pb_save->setEnabled(true);
 }
 
-QMessageBox::StandardButton tables::unsaved_changes_notify() {
+QMessageBox::StandardButton Tables::unsaved_changes_notify() {
     QMessageBox::StandardButton box = QMessageBox::Yes;
     box = QMessageBox::warning(this, "Ungespeicherte Änderungen",
                          tr("Noch ungespeicherte Änderungen.\n Sollen diese verworfen werden?"),
@@ -378,12 +378,12 @@ QMessageBox::StandardButton tables::unsaved_changes_notify() {
     return box;
 }
 
-void tables::on_pb_save_clicked() {
+void Tables::on_pb_save_clicked() {
     bool status = tableModel->submitAll();
     if (!status) {
         QString lastError = tableModel->lastError().text();
 
-        error errorWindow;
+        Error errorWindow;
         errorWindow.setText(lastError);
         errorWindow.setModal(true);
         errorWindow.exec();
