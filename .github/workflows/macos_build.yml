@@ -246,7 +246,7 @@ jobs:
     name: '🍎 macOS'
     runs-on: macos-latest
     env:
-      QT_VERSION: 6.4.3
+      QT_VERSION: 6.5.0
     steps:
 
       - name: 'Checkout'
@@ -255,20 +255,19 @@ jobs:
           submodules: recursive
 
       # https://download.qt.io/online/qtsdkrepository/mac_x64/desktop/
-      - name: 'Cache Qt'
-        id: cache-qt
-        uses: actions/cache@v4
-        with:
-          path: Qt
-          key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
+      #- name: 'Cache Qt'
+      #  id: cache-qt
+      #  uses: actions/cache@v4
+      #  with:
+      #    path: Qt
+      #    key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
 
+      # cache: ${{steps.cache-qt.outputs.cache-hit}}
       - name: 'Install Qt'
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{env.QT_VERSION}}
           modules: ${{env.QT_MODULES}}
-          aqtversion: '==2.0.0'
-          cache: ${{steps.cache-qt.outputs.cache-hit}}
 
       # - name: 'Set Env'
         # shell: bash
