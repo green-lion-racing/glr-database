@@ -283,6 +283,7 @@ jobs:
           # printenv
       
       # bug in build, workaround: https://stackoverflow.com/questions/77136519/qmake-failing-with-sdk-14-ventura-13-5-2
+      # ${{env.QMAKE}} -early QMAKE_DEFAULT_LIBDIRS=$(xcrun -show-sdk-path)/usr/lib
       - name: 'Compile application'
         run: |
           brew install libiodbc
@@ -290,7 +291,7 @@ jobs:
           sudo ln -s /usr/local/opt/postgresql@14/lib/postgresql@14/libpq.5.dylib /Applications/Postgres.app/Contents/Versions/14/lib/libpq.5.dylib
           echo "#define RELEASE \"GitHub Actions\"" > release.h
           lrelease glr-database.pro
-          ${{env.QMAKE}} -early QMAKE_DEFAULT_LIBDIRS=$(xcrun -show-sdk-path)/usr/lib
+          ${{env.QMAKE}} 
           make -j ${{env.CORES}}
           ${Qt6_DIR}/bin/macdeployqt ./glr-database.app -dmg
 
