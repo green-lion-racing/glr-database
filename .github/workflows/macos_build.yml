@@ -290,7 +290,8 @@ jobs:
           sudo mkdir -p /Applications/Postgres.app/Contents/Versions/14/lib/
           sudo ln -s /usr/local/opt/postgresql@14/lib/postgresql@14/libpq.5.dylib /Applications/Postgres.app/Contents/Versions/14/lib/libpq.5.dylib
           rm ${Qt6_DIR}/mkspecs/features/toolchain.prf && (cd ${Qt6_DIR}/mkspecs/features/ && curl -O https://raw.githubusercontent.com/qt/qtbase/cdf64b0e47115cc473e1afd1472b4b09e130b2a5/mkspecs/features/toolchain.prf)
-          ls ${Qt6_DIR}/plugins/sqldrivers/
+          rm ${Qt6_DIR}/plugins/sqldrivers/libqsqlodbc.dylib
+          rm ${Qt6_DIR}/plugins/sqldrivers/libqsqlpsql.dylib
           echo "#define RELEASE \"GitHub Actions\"" > release.h
           lrelease glr-database.pro
           ${{env.QMAKE}} 
