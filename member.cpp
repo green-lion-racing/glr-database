@@ -120,7 +120,11 @@ void Member::on_pb_okay_clicked()
     QString phone = ui->le_phone->text();
     QString address = ui->le_address->text();
     QString language = ui->le_language->text();
-    bool active = 1;     //neu angelegte Objekte immer aktiv
+    if (!editMode) {
+        //neu angelegte Sponosoren sind immer aktiv
+        ui->cb_active->setChecked(true);
+    };
+    bool active = ui->cb_active->isChecked();
 
     QSqlQuery insertMemberQuery;
     if (editMode) {

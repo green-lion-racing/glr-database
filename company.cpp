@@ -140,7 +140,11 @@ void Company::on_pb_okay_clicked()
 {
     int companyID = ui->cb_company->currentIndex();
     QString name = ui->le_name->text();
-    bool active = 1;     //neu angelegte Sponosoren sind immer aktiv
+    if (!editMode) {
+        //neu angelegte Sponosoren sind immer aktiv
+        ui->cb_active->setChecked(true);
+    };
+    bool active = ui->cb_active->isChecked();
     QString since = ui->le_since->text();
     QString until = ui->le_until->text();
     QString type = ui->le_typ->text();

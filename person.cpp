@@ -162,7 +162,11 @@ void Person::on_pb_okay_clicked()
     QString you = ui->cb_you->currentText();
     QString company_name = ui->cb_company->currentText();
     QString language = ui->le_language->text();
-    bool activ = 1;     //neu angelgte Personen immer aktiv
+    if (!editMode) {
+        //neu angelegte Sponosoren sind immer aktiv
+        ui->cb_active->setChecked(true);
+    };
+    bool activ = ui->cb_active->isChecked();
     int companyID = ui->cb_company->currentIndex();
 
     // issue on update with key?
