@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="sw_main">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_main">
        <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -68,7 +68,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Mitglied bearbeiten</string>
+             <string>Mitglied verwalten</string>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -132,7 +132,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Unternehmen bearbeiten</string>
+               <string>Unternehmen verwalten</string>
               </property>
               <property name="toolButtonStyle">
                <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -177,7 +177,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Person bearbeiten</string>
+               <string>Person verwalten</string>
               </property>
               <property name="iconSize">
                <size>
@@ -222,7 +222,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Kommunikation bearbeiten</string>
+               <string>Kommunikation verwalten</string>
               </property>
               <property name="toolButtonStyle">
                <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -258,7 +258,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Leistung bearbeiten</string>
+               <string>Leistung verwalten</string>
               </property>
               <property name="toolButtonStyle">
                <enum>Qt::ToolButtonTextUnderIcon</enum>

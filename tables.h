@@ -14,14 +14,11 @@ class Tables : public QMainWindow
     Q_OBJECT
 
 public:
-
     explicit Tables(QWidget *parent = nullptr, bool editMode = false);
 
     ~Tables();
 
 private slots:
-    void on_tv_table_clicked(const QModelIndex &index);
-
     void on_cb_table_currentTextChanged();
 
     void on_cb_filter_currentTextChanged();
@@ -38,11 +35,11 @@ private slots:
 
     void on_pb_download_clicked();
 
-    void on_pb_download_all_clicked();
-
     void on_cb_editMode_stateChanged();
 
     void on_pb_save_clicked();
+
+    void selection_changed();
 
     void unsaved_changes();
 
@@ -52,8 +49,6 @@ private:
     void closeEvent(QCloseEvent *event);
 
     QSqlTableModel *tableModel;
-
-    int id;
 
     QString selectedTable;
 

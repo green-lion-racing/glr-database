@@ -20,9 +20,8 @@ int main(int argc, char *argv[])
 }
 
 // TODOs
-// use ids not names to reference between tables
-// combine/create creating and modifying of objects
+// use ids not names to reference between tables, tidy up database structure
 // add password/cypher mode, changing, adding, removing
-// adjust filtering in table view
+// remove filtering in table view?
 // add nice way to log changes in sponsors/members/persons
 // Use QStyle instead of Qt Style Sheets https://www.kdab.com/say-no-to-qt-style-sheets/

@@ -93,13 +93,6 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pb_download_all">
-      <property name="text">
-       <string>Alle herunterladen</string>
-      </property>
-     </widget>
-    </item>
-    <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="leftMargin">
        <number>0</number>
@@ -142,7 +135,6 @@
   <tabstop>le_search</tabstop>
   <tabstop>tv_table</tabstop>
   <tabstop>pb_download</tabstop>
-  <tabstop>pb_download_all</tabstop>
   <tabstop>pb_save</tabstop>
   <tabstop>cb_editMode</tabstop>
  </tabstops>
