@@ -64,7 +64,8 @@ QTextEdit {
     background-color: palette(base);
 }
 
-.QToolButton {
+/* Not nice, but it gets the job done */
+#tb_modifyTables, #tb_displayTables, #tb_modifyCompany, #tb_createCompany, #tb_modifyPerson, #tb_createPerson, #tb_modifyCommunication, #tb_createCommunication, #tb_modifyActivity, #tb_createActivity, #tb_modifyMember, #tb_createMember {
     border: 0px;
     background-color: #E5E5E5;
     border-radius: 10px;

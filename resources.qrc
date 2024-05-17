@@ -1,8 +1,7 @@
 <RCC>
-    <qresource>
+    <qresource prefix="/">
         <file>stylesheet/stylesheet.qss</file>
         <file>stylesheet/stylesheet_main.qss</file>
-        <file>img/icon_close.png</file>
         <file>img/icon_person.png</file>
         <file>img/icon_company.png</file>
         <file>img/icon_edit.png</file>
@@ -12,5 +11,7 @@
         <file>img/logo_glr_white.png</file>
         <file>img/icon_arrow.png</file>
         <file>img/icon_arrow_down.png</file>
+        <file>img/icon_add.png</file>
+        <file>img/icon_remove.png</file>
     </qresource>
 </RCC>

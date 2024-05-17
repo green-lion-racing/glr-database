@@ -42,6 +42,22 @@ Communication::Communication(QWidget *parent, bool editMode) :
             ui->cb_communication->setDisabled(true);
         }
 
+        QSqlQuery selectCommunicationFiles;
+        selectCommunicationFiles.prepare("SELECT id, kommunikation_id, dateiname, datei FROM kommunikation_dateien");
+        selectCommunicationFiles.exec();
+
+        int empty = true;
+        while(selectCommunicationFiles.next()) {
+            QListWidgetItem *item = new QListWidgetItem(selectCommunicationFiles.value(2).toString());
+            // item->setData(Qt::UserRole, file.absolutePath());
+            ui->lw_files->addItem(item);
+            empty = false;
+        }
+
+        if (!empty) {
+            ui->tb_remove->setDisabled(false);
+        }
+
         ui->cb_company->setDisabled(true);
         ui->cb_person->setDisabled(true);
         ui->cw_calender->setDisabled(true);
@@ -54,6 +70,7 @@ Communication::Communication(QWidget *parent, bool editMode) :
         ui->l_dialogTitle->setText("GLR Datenbank - Kommunikation hinzufügen");
         ui->cb_communication->setVisible(false);
         ui->label_5->setVisible(false);
+        ui->tb_remove->setDisabled(true);
 
         set_cb_company();
     }
