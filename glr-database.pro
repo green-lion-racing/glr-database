@@ -21,7 +21,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     about.cpp \
     activity.cpp \
-    addfile.cpp \
     communication.cpp \
     company.cpp \
     error.cpp \
@@ -35,7 +34,6 @@ SOURCES += \
 HEADERS += \
     about.h \
     activity.h \
-    addfile.h \
     communication.h \
     company.h \
     error.h \
@@ -48,7 +46,6 @@ HEADERS += \
 FORMS += \
     about.ui \
     activity.ui \
-    addfile.ui \
     communication.ui \
     company.ui \
     error.ui \

@@ -161,6 +161,7 @@ void MainWindow::openDatabase(bool first_try) {
     QFile db_file(currentFile);
     db_file.open(QFile::ReadOnly);
     QByteArray bytes = db_file.read(16);
+    db_file.close();
     if (bytes == QByteArray::fromHex("53 51 4c 69 74 65 20 66 6f 72 6d 61 74 20 33 00") or bytes == QByteArray::fromHex("")) {
         // Uncyphered valid Sqlite database
 
@@ -200,6 +201,7 @@ void MainWindow::openDatabase(bool first_try) {
     QFile file(":stylesheet/stylesheet_main.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
+    file.close();
     qApp->setStyleSheet(stylesheet);
 }
 
@@ -227,6 +229,7 @@ void MainWindow::on_actionOpenDatabase_triggered()
     QFile file(":stylesheet/stylesheet.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
+    file.close();
     qApp->setStyleSheet(stylesheet);
 
     openDatabase(true);
@@ -247,6 +250,7 @@ void MainWindow::on_actionCloseDatabase_triggered() {
     QFile file(":stylesheet/stylesheet.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
+    file.close();
     qApp->setStyleSheet(stylesheet);
 }
 

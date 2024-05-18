@@ -4,20 +4,23 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QDir>
-#include "addfile.h"
 #include "error.h"
+#include <QMessageBox>
 
 Communication::Communication(QWidget *parent, bool editMode) :
     QDialog(parent),
     ui(new Ui::Communication)
 {
     QSqlQuery  CommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, PersonenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id), FOREIGN KEY(PersonenID) REFERENCES personen(id))");
+    QSqlQuery  CommunicationFileQuery("CREATE TABLE IF NOT EXISTS kommunikation_dateien (id INTEGER PRIMARY KEY, kommunikation_id INTEGER, datei BLOB, dateiname TEXT, FOREIGN KEY (kommunikation_id) REFERENCES kommunikationen(id))");
 
     ui->setupUi(this);
 
     Communication::editMode = editMode;
 
     QVector<QString> communicationNames;
+
+    ui->tb_remove->setDisabled(true);
 
     if (editMode) {
         QWidget::setWindowTitle("GLR Datenbank - Kommunikation bearbeiten");
@@ -42,22 +45,7 @@ Communication::Communication(QWidget *parent, bool editMode) :
             ui->cb_communication->setDisabled(true);
         }
 
-        QSqlQuery selectCommunicationFiles;
-        selectCommunicationFiles.prepare("SELECT id, kommunikation_id, dateiname, datei FROM kommunikation_dateien");
-        selectCommunicationFiles.exec();
-
-        int empty = true;
-        while(selectCommunicationFiles.next()) {
-            QListWidgetItem *item = new QListWidgetItem(selectCommunicationFiles.value(2).toString());
-            // item->setData(Qt::UserRole, file.absolutePath());
-            ui->lw_files->addItem(item);
-            empty = false;
-        }
-
-        if (!empty) {
-            ui->tb_remove->setDisabled(false);
-        }
-
+        ui->tb_add->setDisabled(true);
         ui->cb_company->setDisabled(true);
         ui->cb_person->setDisabled(true);
         ui->cw_calender->setDisabled(true);
@@ -70,7 +58,8 @@ Communication::Communication(QWidget *parent, bool editMode) :
         ui->l_dialogTitle->setText("GLR Datenbank - Kommunikation hinzufügen");
         ui->cb_communication->setVisible(false);
         ui->label_5->setVisible(false);
-        ui->tb_remove->setDisabled(true);
+
+        QObject::connect(ui->lw_files, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
 
         set_cb_company();
     }
@@ -105,7 +94,30 @@ void Communication::on_cb_communication_currentTextChanged()
     ui->le_when->setDisabled(false);
     ui->le_what->setDisabled(false);
     ui->pb_okay->setDisabled(false);
+    ui->tb_add->setDisabled(false);
+    ui->tb_remove->setDisabled(true);
 
+    QSqlQuery selectCommunicationFiles;
+    selectCommunicationFiles.prepare("SELECT id, kommunikation_id, dateiname, datei FROM kommunikation_dateien WHERE kommunikation_id = :communicationID");
+    selectCommunicationFiles.bindValue(":communicationID", communicationID);
+    selectCommunicationFiles.exec();
+
+    ui->lw_files->clear();
+    ui->tb_remove->setDisabled(true);
+    while(selectCommunicationFiles.next()) {
+        QListWidgetItem *item = new QListWidgetItem(selectCommunicationFiles.value(2).toString());
+        int file_id = selectCommunicationFiles.value(0).toInt();
+        QString file_content = NULL;
+
+        QList<QVariant> list;
+        list.append(QVariant(file_id));
+        list.append(QVariant(file_content));
+
+        item->setData(Qt::UserRole, list);
+        ui->lw_files->addItem(item);
+    }
+
+    QObject::connect(ui->lw_files, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
 
     set_cb_company(selectCommunication.value(1).toString());
     set_cb_person(selectCommunication.value(2).toString());
@@ -148,8 +160,22 @@ void Communication::on_pb_okay_clicked()
     insertCommunicationQuery.bindValue(":what", what);
     insertCommunicationQuery.bindValue(":companyID", companyID);
     insertCommunicationQuery.bindValue(":personID", personID);
-
     insertCommunicationQuery.exec();
+
+    if (!editMode) {
+        communicationID = insertCommunicationQuery.lastInsertId().toInt();
+        for (auto item : ui->lw_files->findItems("*", Qt::MatchWildcard)) {
+            QList<QVariant> list = item->data(Qt::UserRole).toList();
+            QString fileName = item->text();
+
+            QSqlQuery insertCommunicationFileQuery;
+            insertCommunicationFileQuery.prepare("INSERT INTO kommunikation_dateien(kommunikation_id, datei, dateiname) VALUES (:communicationId, :fileContent, :fileName)");
+            insertCommunicationFileQuery.bindValue(":communicationId", communicationID);
+            insertCommunicationFileQuery.bindValue(":fileContent", list.at(1).toString());
+            insertCommunicationFileQuery.bindValue(":fileName", fileName);
+            insertCommunicationFileQuery.exec();
+        }
+    }
 
     if (insertCommunicationQuery.next()) {
         Error errorWindow;
@@ -157,12 +183,86 @@ void Communication::on_pb_okay_clicked()
         errorWindow.setModal(true);
         errorWindow.exec();
     } else {
-        // TODO
-        AddFile file;
-        file.setModal(true);
-        file.exec();
-
         this->accept();
+    }
+}
+
+void Communication::on_tb_add_clicked() {
+    static QString fileName;
+    static QFile file;
+    fileName = QFileDialog::getOpenFileName(this, "Datei öffnen");
+    file.setFileName(fileName);
+    file.open(QIODevice::ReadOnly);
+
+
+    int communicationId = ui->cb_communication->currentIndex();
+
+    QString date = ui->le_when->text();
+
+    QByteArray fileContent = file.readAll();
+
+    QFileInfo onlyFileName(fileName);
+    QString fileNameWithoutPath = onlyFileName.fileName();  // filename without path
+    fileNameWithoutPath = date + "-" + fileNameWithoutPath;
+
+    if (editMode) {
+        QSqlQuery insertCommunicationFileQuery;
+        insertCommunicationFileQuery.prepare("INSERT INTO kommunikation_dateien(kommunikation_id, datei, dateiname) VALUES (:communicationId, :fileContent, :fileNameWithoutPath)");
+        insertCommunicationFileQuery.bindValue(":communicationId", communicationId + 1);
+        insertCommunicationFileQuery.bindValue(":fileContent", fileContent);
+        insertCommunicationFileQuery.bindValue(":fileNameWithoutPath", fileNameWithoutPath);
+        insertCommunicationFileQuery.exec();
+    }
+
+    QListWidgetItem *item = new QListWidgetItem(fileNameWithoutPath);
+
+    int file_id = communicationId + 1;
+    if (!editMode) {
+        file_id = 0;
+    }
+    QByteArray file_content = NULL;
+    if (!editMode) {
+        file_content = fileContent;
+    }
+
+    QList<QVariant> list;
+    list.append(QVariant(file_id));
+    list.append(QVariant(file_content));
+
+    item->setData(Qt::UserRole, list);
+    ui->lw_files->addItem(item);
+
+    file.close();
+}
+
+void Communication::on_tb_remove_clicked() {
+    QList<QVariant> list = ui->lw_files->currentItem()->data(Qt::UserRole).toList();
+
+    QMessageBox::StandardButton box = QMessageBox::Yes;
+    box = QMessageBox::warning(this, "Löschen bestätigen",
+                               tr("Möchtest du diese Datei wirklich löschen?"),
+                               QMessageBox::No | QMessageBox::Yes,
+                               QMessageBox::No);
+
+    if (box == QMessageBox::Yes) {
+        if (editMode) {
+            QSqlQuery removeFile;
+            removeFile.prepare("DELETE FROM kommunikation_dateien WHERE id = :id;");
+            removeFile.bindValue(":id", list.at(0).toInt());
+            removeFile.exec();
+        }
+
+        ui->lw_files->takeItem(ui->lw_files->row(ui->lw_files->currentItem()));
+        ui->lw_files->clearSelection();
+        ui->tb_remove->setDisabled(true);
+    }
+}
+
+void Communication::selectionChanged() {
+    if (ui->lw_files->currentItem() != NULL) {
+        ui->tb_remove->setDisabled(false);
+    } else {
+        ui->tb_remove->setDisabled(true);
     }
 }
 

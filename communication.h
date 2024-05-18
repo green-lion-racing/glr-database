@@ -25,6 +25,12 @@ private slots:
 
     void on_pb_okay_clicked();
 
+    void on_tb_add_clicked();
+
+    void on_tb_remove_clicked();
+
+    void selectionChanged();
+
 private:
     Ui::Communication *ui;
 
