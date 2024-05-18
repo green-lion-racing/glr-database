@@ -23,6 +23,7 @@ SOURCES += \
     activity.cpp \
     communication.cpp \
     company.cpp \
+    databaseporting.cpp \
     error.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     activity.h \
     communication.h \
     company.h \
+    databaseporting.h \
     error.h \
     mainwindow.h \
     member.h \

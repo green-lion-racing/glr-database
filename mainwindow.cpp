@@ -6,6 +6,7 @@
 #include "member.h"
 #include "activity.h"
 #include "communication.h"
+#include "databaseporting.h"
 #include <QFileDialog>
 #include <QPixmap>
 #include <QKeyEvent>
@@ -171,6 +172,11 @@ void MainWindow::openDatabase(bool first_try) {
         ui->le_password->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
         ui->le_password->setEchoMode(QLineEdit::Normal);
 
+        dbconn.close();
+
+        // memory leak???
+        new DatabasePorting(currentFile);
+
         dbconn.open();
     } else {
         // uhhh for sql cypher you need to build the plugin first
@@ -191,8 +197,16 @@ void MainWindow::openDatabase(bool first_try) {
         if (q.lastError().text() == "file is not a database Unable to execute statement" and first_try == false) {
             // either cyphered db file or invalid db file
             ui->l_error->setText("Falsches Passwort oder keine Datenbank.");
+            return;
         }
-        return;
+
+        dbconn.close();
+
+        new DatabasePorting(currentFile, enteredPassword);
+
+        // memory leak???
+        dbconn.open();
+        return; // return as long cyphered mode is not implemented
     }
 
     ui->actionCloseDatabase->setEnabled(true);
