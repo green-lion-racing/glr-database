@@ -58,6 +58,7 @@ Communication::Communication(QWidget *parent, bool editMode) :
         ui->l_dialogTitle->setText("GLR Datenbank - Kommunikation hinzufügen");
         ui->cb_communication->setVisible(false);
         ui->label_5->setVisible(false);
+        ui->cb_person->setDisabled(true);
 
         QObject::connect(ui->lw_files, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
 

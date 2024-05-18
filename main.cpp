@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 // TODOs
 // use ids not names to reference between tables, tidy up database structure
 // write port file from old db to new db
-// add nice way to log changes in sponsors/members/persons
+// add nice way to log changes in sponsors/members
 // add password/cypher mode, changing, adding, removing
 // remove filtering in table view?
 // Use QStyle instead of Qt Style Sheets https://www.kdab.com/say-no-to-qt-style-sheets/

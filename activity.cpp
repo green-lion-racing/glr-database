@@ -51,6 +51,7 @@ Activity::Activity(QWidget *parent, bool editMode):
         ui->l_dialogTitle->setText("GLR Datenbank - Leistung hinzufügen");
         ui->cb_activity->setVisible(false);
         ui->label_7->setVisible(false);
+        ui->cb_person->setDisabled(true);
 
         set_cb_company();
     }
