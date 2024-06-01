@@ -172,12 +172,10 @@ void MainWindow::openDatabase(bool first_try) {
         ui->le_password->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
         ui->le_password->setEchoMode(QLineEdit::Normal);
 
-        dbconn.close();
-
-        // memory leak???
-        new DatabasePorting(currentFile);
-
         dbconn.open();
+
+        new DatabasePorting();
+
     } else {
         // uhhh for sql cypher you need to build the plugin first
         // https://github.com/devbean/QtCipherSqlitePlugin
@@ -200,13 +198,11 @@ void MainWindow::openDatabase(bool first_try) {
             return;
         }
 
-        dbconn.close();
-
-        new DatabasePorting(currentFile, enteredPassword);
-
-        // memory leak???
         dbconn.open();
+
         return; // return as long cyphered mode is not implemented
+
+        new DatabasePorting();
     }
 
     ui->actionCloseDatabase->setEnabled(true);

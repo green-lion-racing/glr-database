@@ -6,7 +6,10 @@
 class DatabasePorting
 {
 public:
-    DatabasePorting(QString currentFile, QString enteredPassword = "");
+    DatabasePorting();
+
+private:
+    bool checkTable(QString tableName, QString tableStructure);
 };
 
 #endif // DATABASEPORTING_H
