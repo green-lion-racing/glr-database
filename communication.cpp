@@ -77,9 +77,8 @@ Communication::~Communication()
     delete ui;
 }
 
-void Communication::on_cb_communication_currentTextChanged()
-{
     QSqlQuery selectCommunication;
+void Communication::on_cb_communication_currentIndexChanged() {
 
     static QRegularExpression regex(" - ");
     int communicationID = ui->cb_communication->currentText().split(regex)[0].toInt();
@@ -127,7 +126,7 @@ void Communication::on_cb_communication_currentTextChanged()
     ui->le_what->setText(selectCommunication.value(4).toString());
 }
 
-void Communication::on_cb_company_currentTextChanged()
+void Communication::on_cb_company_currentIndexChanged()
 {
     set_cb_person();
 }

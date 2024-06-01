@@ -17,9 +17,9 @@ public:
     ~Communication();
 
 private slots:
-    void on_cb_communication_currentTextChanged();
+    void on_cb_communication_currentIndexChanged();
 
-    void on_cb_company_currentTextChanged();
+    void on_cb_company_currentIndexChanged();
 
     void on_cw_calender_selectionChanged();
 

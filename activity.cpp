@@ -68,7 +68,7 @@ Activity::~Activity()
     delete ui;
 }
 
-void Activity::on_cb_activity_currentTextChanged()
+void Activity::on_cb_activity_currentIndexChanged()
 {
     QSqlQuery selectActivity;
 
@@ -99,7 +99,7 @@ void Activity::on_cb_activity_currentTextChanged()
     ui->te_info->setText(selectActivity.value(6).toString());
 }
 
-void Activity::on_cb_company_currentTextChanged()
+void Activity::on_cb_company_currentIndexChanged()
 {
     set_cb_person();
 }

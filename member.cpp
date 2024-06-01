@@ -65,7 +65,7 @@ Member::~Member()
     delete ui;
 }
 
-void Member::on_cb_member_currentTextChanged()
+void Member::on_cb_member_currentIndexChanged()
 {
     QSqlQuery selectMember;
 

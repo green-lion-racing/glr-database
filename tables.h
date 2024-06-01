@@ -19,9 +19,9 @@ public:
     ~Tables();
 
 private slots:
-    void on_cb_table_currentTextChanged();
+    void on_cb_table_currentIndexChanged();
 
-    void on_cb_filter_currentTextChanged();
+    void on_cb_filter_currentIndexChanged();
 
     void on_cb_filter_gold_stateChanged();
 

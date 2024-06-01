@@ -71,7 +71,7 @@ Company::~Company()
     delete ui;
 }
 
-void Company::on_cb_company_currentTextChanged()
+void Company::on_cb_company_currentIndexChanged()
 {
     QSqlQuery selectCompany;
 

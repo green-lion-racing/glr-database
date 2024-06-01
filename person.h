@@ -19,7 +19,7 @@ public:
 private slots:
     void on_pb_okay_clicked();
 
-    void on_cb_person_currentTextChanged();
+    void on_cb_person_currentIndexChanged();
 
 private:
     Ui::Person *ui;

@@ -19,7 +19,7 @@ public:
 private slots:
     void on_pb_okay_clicked();
 
-    void on_cb_company_currentTextChanged();
+    void on_cb_company_currentIndexChanged();
 
 private:
     Ui::Company *ui;

@@ -84,7 +84,7 @@ Person::~Person()
     delete ui;
 }
 
-void Person::on_cb_person_currentTextChanged()
+void Person::on_cb_person_currentIndexChanged()
 {
     QSqlQuery selectPerson;
 

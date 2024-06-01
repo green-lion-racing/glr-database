@@ -29,7 +29,7 @@ Tables::Tables(QWidget *parent, bool editMode) :
 
     ui->pb_save->setVisible(false);
 
-    on_cb_table_currentTextChanged();
+    on_cb_table_currentIndexChanged();
 
     if (editMode) {
         ui->cb_editMode->setCheckState(Qt::CheckState(2));
@@ -70,7 +70,7 @@ QString Tables::getCompanyId () {
     return companyId;
 }
 
-void Tables::on_cb_table_currentTextChanged()
+void Tables::on_cb_table_currentIndexChanged()
 {
     if (tableModel != NULL && tableModel->isDirty()) {
         if (ui->cb_table->currentText() == tableModel->tableName())
@@ -146,7 +146,7 @@ void Tables::on_cb_table_currentTextChanged()
     connect(ui->tv_table->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)), this, SLOT(selection_changed()));
 }
 
-void Tables::on_cb_filter_currentTextChanged()
+void Tables::on_cb_filter_currentIndexChanged()
 {
     ui->cb_filter->setVisible(true);
     QString companyName = ui->cb_filter->currentText();

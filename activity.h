@@ -18,9 +18,9 @@ public:
 
 private slots:
 
-    void on_cb_activity_currentTextChanged();
+    void on_cb_activity_currentIndexChanged();
 
-    void on_cb_company_currentTextChanged();
+    void on_cb_company_currentIndexChanged();
 
     void on_cw_calender_selectionChanged();
 
