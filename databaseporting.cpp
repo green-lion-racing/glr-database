@@ -65,6 +65,23 @@ DatabasePorting::DatabasePorting() {
                          "FOREIGN KEY('firmen_id') REFERENCES 'firmen'('id'),"
                          "FOREIGN KEY('personen_id') REFERENCES 'personen'('id'))");
         QSqlQuery Query5("INSERT INTO kommunikationen_temp SELECT id, FirmenID, PersonenID, wann, was FROM kommunikationen");
+
+        QSqlQuery Query26("SELECT id, firma, ansprechpartner FROM kommunikationen");
+        QSqlQuery Query27("SELECT id, vorname, nachname FROM personen");
+        QSqlQuery Query28;
+
+        while (Query26.next()) {
+            Query27.exec();
+            while (Query27.next()) {
+                if (Query26.value(2) == Query27.value(1).toString() + " " + Query27.value(2).toString()) {
+                    Query28.prepare("UPDATE kommunikationen_temp SET personen_id = :personen_id WHERE id = :id");
+                    Query28.bindValue(":id", Query26.value(0));
+                    Query28.bindValue(":personen_id", Query27.value(0));
+                    Query28.exec();
+                }
+            }
+        }
+
         QSqlQuery Query6("DROP TABLE kommunikationen");
         QSqlQuery Query7("ALTER TABLE kommunikationen_temp RENAME TO kommunikationen");
 
@@ -72,6 +89,9 @@ DatabasePorting::DatabasePorting() {
         qDebug() << "5  " + Query5.lastError().text();
         qDebug() << "6  " + Query6.lastError().text();
         qDebug() << "7  " + Query7.lastError().text();
+        qDebug() << "26  " + Query26.lastError().text();
+        qDebug() << "27  " + Query27.lastError().text();
+        qDebug() << "28  " + Query28.lastError().text();
     }
 
 
