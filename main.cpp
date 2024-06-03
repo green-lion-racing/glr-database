@@ -21,8 +21,8 @@ int main(int argc, char *argv[])
 }
 
 // TODOs
-// use ids not names to reference between tables, tidy up database structure
-// write port file from old db to new db
+// check on edit/insert if values valid/not null
+// add sql exception catch
 // add nice way to log changes in sponsors/members
 // add password/cypher mode, changing, adding, removing
 // remove filtering in table view?

@@ -29,7 +29,6 @@ SOURCES += \
     mainwindow.cpp \
     member.cpp \
     person.cpp \
-    pushbuttonicon.cpp \
     tables.cpp
 
 HEADERS += \
@@ -42,7 +41,6 @@ HEADERS += \
     mainwindow.h \
     member.h \
     person.h \
-    pushbuttonicon.h \
     tables.h
 
 FORMS += \

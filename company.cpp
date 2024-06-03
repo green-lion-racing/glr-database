@@ -35,6 +35,7 @@ Company::Company(QWidget *parent, bool editMode) :
         ui->rb_silver->setDisabled(true);
         ui->rb_bronze->setDisabled(true);
         ui->rb_supporter->setDisabled(true);
+        ui->le_typ->setDisabled(true);
         ui->le_info->setDisabled(true);
         ui->le_address->setDisabled(true);
         ui->cb_active->setDisabled(true);
@@ -72,6 +73,7 @@ void Company::on_cb_company_currentIndexChanged()
     ui->rb_silver->setDisabled(false);
     ui->rb_bronze->setDisabled(false);
     ui->rb_supporter->setDisabled(false);
+    ui->le_typ->setDisabled(false);
     ui->le_info->setDisabled(false);
     ui->le_address->setDisabled(false);
     ui->cb_active->setDisabled(false);
