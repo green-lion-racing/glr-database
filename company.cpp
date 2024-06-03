@@ -10,11 +10,7 @@ Company::Company(QWidget *parent, bool editMode) :
 {
     ui->setupUi(this);
 
-    QSqlQuery  CompanyQquery("CREATE TABLE IF NOT EXISTS firmen (id INTEGER PRIMARY KEY, name TEXT, aktiv BOOL, seit TEXT, bis TEXT, Rang TEXT, Leistungstyp TEXT, Str TEXT, Hausnummer TEXT, Ort TEXT, PLZ INTEGER, Land TEXT, Infos TEXT)");
-
     Company::editMode = editMode;
-
-    QVector<QString> companyNames;
 
     if (editMode) {
         QWidget::setWindowTitle("GLR Datenbank - Unternehmen bearbeiten");
@@ -25,32 +21,22 @@ Company::Company(QWidget *parent, bool editMode) :
         selectCompany.exec();
 
         while(selectCompany.next()) {
-            companyNames.push_back(selectCompany.value(0).toString() + " - " + selectCompany.value(1).toString());
+            ui->cb_company->addItem(selectCompany.value(1).toString(), selectCompany.value(0).toInt());
         }
 
-        for (int i = 0; i < companyNames.size(); i++) {
-            ui->cb_company->addItem(companyNames[i]);
-        }
-
-        if (companyNames.size() < 1) {
+        if (ui->cb_company->count() < 1) {
             ui->cb_company->setDisabled(true);
         }
 
         ui->le_name->setDisabled(true);
         ui->le_since->setDisabled(true);
         ui->le_until->setDisabled(true);
-
         ui->rb_gold->setDisabled(true);
         ui->rb_silver->setDisabled(true);
         ui->rb_bronze->setDisabled(true);
         ui->rb_supporter->setDisabled(true);
-
-        ui->le_street->setDisabled(true);
-        ui->le_houseNumber->setDisabled(true);
-        ui->le_zip->setDisabled(true);
-        ui->le_city->setDisabled(true);
-        ui->le_country->setDisabled(true);
         ui->le_info->setDisabled(true);
+        ui->le_address->setDisabled(true);
         ui->cb_active->setDisabled(true);
 
         ui->pb_okay->setDisabled(true);
@@ -74,39 +60,29 @@ Company::~Company()
 void Company::on_cb_company_currentIndexChanged()
 {
     QSqlQuery selectCompany;
-
-    static QRegularExpression regex(" - ");
-    int companyID = ui->cb_company->currentText().split(regex)[0].toInt();
-
-    selectCompany.prepare("SELECT * FROM firmen WHERE id = :companyID");
-    selectCompany.bindValue(":companyID", companyID);
+    selectCompany.prepare("SELECT id, name, seit, bis, rang, leistungstyp, infos, anschrift, aktiv FROM firmen WHERE id = :companyID");
+    selectCompany.bindValue(":companyID", ui->cb_company->currentData().toInt());
     selectCompany.exec();
     selectCompany.next();
 
     ui->le_name->setDisabled(false);
     ui->le_since->setDisabled(false);
     ui->le_until->setDisabled(false);
-
     ui->rb_gold->setDisabled(false);
     ui->rb_silver->setDisabled(false);
     ui->rb_bronze->setDisabled(false);
     ui->rb_supporter->setDisabled(false);
-
-    ui->le_street->setDisabled(false);
-    ui->le_houseNumber->setDisabled(false);
-    ui->le_zip->setDisabled(false);
-    ui->le_city->setDisabled(false);
-    ui->le_country->setDisabled(false);
     ui->le_info->setDisabled(false);
+    ui->le_address->setDisabled(false);
     ui->cb_active->setDisabled(false);
 
     ui->pb_okay->setDisabled(false);
 
     ui->le_name->setText(selectCompany.value(1).toString());
-    ui->le_since->setText(selectCompany.value(3).toString());
-    ui->le_until->setText(selectCompany.value(4).toString());
+    ui->le_since->setText(selectCompany.value(2).toString());
+    ui->le_until->setText(selectCompany.value(3).toString());
 
-    QString rank = selectCompany.value(5).toString();
+    QString rank = selectCompany.value(4).toString();
     if (rank == "Gold") {
         ui->rb_gold->setChecked(true);
     } else if (rank == "Silber") {
@@ -126,46 +102,18 @@ void Company::on_cb_company_currentIndexChanged()
         ui->buttonGroup->setExclusive(true);
     }
 
-    ui->le_typ->setText(selectCompany.value(6).toString());
-    ui->le_street->setText(selectCompany.value(7).toString());
-    ui->le_houseNumber->setText(selectCompany.value(8).toString());
-    ui->le_zip->setText(selectCompany.value(10).toString());
-    ui->le_city->setText(selectCompany.value(9).toString());
-    ui->le_country->setText(selectCompany.value(11).toString());
-    ui->le_info->setText(selectCompany.value(12).toString());
-    ui->cb_active->setChecked(selectCompany.value(2).toBool());
+    ui->le_typ->setText(selectCompany.value(5).toString());
+    ui->le_info->setText(selectCompany.value(6).toString());
+    ui->le_address->setText(selectCompany.value(7).toString());
+    ui->cb_active->setChecked(selectCompany.value(8).toBool());
 }
 
 void Company::on_pb_okay_clicked()
 {
-    int companyID = ui->cb_company->currentIndex();
+    int companyID = ui->cb_company->currentData().toInt();
     QString name = ui->le_name->text();
-    if (!editMode) {
-        //neu angelegte Sponosoren sind immer aktiv
-        ui->cb_active->setChecked(true);
-    };
-    bool active = ui->cb_active->isChecked();
     QString since = ui->le_since->text();
     QString until = ui->le_until->text();
-    QString type = ui->le_typ->text();
-    QString street = ui->le_street->text();
-    QString houseNumber = ui->le_houseNumber->text();
-    QString city = ui->le_city->text();
-    QString country = ui->le_country->text();
-    QString info = ui->le_info->text();
-
-    QSqlQuery insertCompanyQuery;
-    if (editMode) {
-        insertCompanyQuery.prepare("UPDATE firmen SET name = :name, aktiv = :active, seit = :since, bis = :until, Rang = :rank, Leistungstyp = :type, Str = :street, Hausnummer = :houseNumber, Ort = :city, PLZ = :zip, Land = :country, Infos = :info WHERE id = :companyID");
-        insertCompanyQuery.bindValue(":companyID", companyID + 1);
-    } else {
-        insertCompanyQuery.prepare("INSERT INTO firmen(name, aktiv, seit, bis, Rang, Leistungstyp, Str, Hausnummer, Ort, PLZ, Land, Infos) VALUES (:name, :active, :since, :until, :rank, :type, :street, :houseNumber, :city, :zip, :country, :info)");
-    }
-    insertCompanyQuery.bindValue(":name", name);
-    insertCompanyQuery.bindValue(":active", active);
-    insertCompanyQuery.bindValue(":since", since);
-    insertCompanyQuery.bindValue(":until", until);
-
     QString rank = "";
     if (ui->rb_gold->isChecked()) {
         rank = "Gold";
@@ -176,21 +124,30 @@ void Company::on_pb_okay_clicked()
     } else if (ui->rb_supporter->isChecked()) {
         rank = "Supporter";
     }
-    insertCompanyQuery.bindValue(":rank", rank);
+    QString type = ui->le_typ->text();
+    QString info = ui->le_info->text();
+    QString address = ui->le_address->text();
+    bool active = ui->cb_active->isChecked();
 
-    insertCompanyQuery.bindValue(":type", type);
-    insertCompanyQuery.bindValue(":street", street);
-    insertCompanyQuery.bindValue(":houseNumber", houseNumber);
-    insertCompanyQuery.bindValue(":city", city);
+    // neu angelegte Sponosoren sind immer aktiv
+    if (!editMode)
+        active = true;
 
-    if (ui->le_zip->text() != "") {
-        insertCompanyQuery.bindValue(":zip", ui->le_zip->text().toInt());
+    QSqlQuery insertCompanyQuery;
+    if (editMode) {
+        insertCompanyQuery.prepare("UPDATE firmen SET name = :name, seit = :since, bis = :until, rang = :rank, leistungstyp = :type, infos = :info, anschrift = :address, aktiv = :active WHERE id = :companyID");
+        insertCompanyQuery.bindValue(":companyID", companyID);
     } else {
-        insertCompanyQuery.bindValue(":zip", QVariant(QMetaType::fromType<int>()));
+        insertCompanyQuery.prepare("INSERT INTO firmen(name, seit, bis, rang, leistungstyp, infos, anschrift, aktiv) VALUES (:name, :since, :until, :rank, :type, :info, :address, :active)");
     }
-
-    insertCompanyQuery.bindValue(":country", country);
+    insertCompanyQuery.bindValue(":name", name);
+    insertCompanyQuery.bindValue(":since", since);
+    insertCompanyQuery.bindValue(":until", until);
+    insertCompanyQuery.bindValue(":rank", rank);
+    insertCompanyQuery.bindValue(":type", type);
     insertCompanyQuery.bindValue(":info", info);
+    insertCompanyQuery.bindValue(":address", address);
+    insertCompanyQuery.bindValue(":active", active);
 
     insertCompanyQuery.exec();
 

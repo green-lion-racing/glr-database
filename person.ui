@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>477</width>
-    <height>428</height>
+    <width>495</width>
+    <height>416</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,6 +34,20 @@
        <property name="rightMargin">
         <number>100</number>
        </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Person</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="cb_person">
+         <property name="placeholderText">
+          <string>Person...</string>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_1">
          <property name="text">
@@ -78,7 +92,10 @@
        <item row="4" column="1">
         <widget class="QLineEdit" name="le_surname"/>
        </item>
-       <item row="5" column="0">
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="le_phone"/>
+       </item>
+       <item row="6" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>Telefon</string>
@@ -86,17 +103,17 @@
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QLineEdit" name="le_phone"/>
+        <widget class="QLineEdit" name="le_position"/>
        </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_5">
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_10">
          <property name="text">
-          <string>Fax</string>
+          <string>Position</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="le_fax"/>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="le_email"/>
        </item>
        <item row="7" column="0">
         <widget class="QLabel" name="label_6">
@@ -105,34 +122,60 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="le_email"/>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>Position</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QLineEdit" name="le_position"/>
-       </item>
-       <item row="10" column="0">
+       <item row="8" column="0">
         <widget class="QLabel" name="label_7">
          <property name="text">
           <string>Du/Sie</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="0">
+       <item row="8" column="1">
+        <widget class="QComboBox" name="cb_you">
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+         <property name="currentText">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="placeholderText">
+          <string>Anrede...</string>
+         </property>
+         <property name="frame">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
         <widget class="QLabel" name="label_9">
          <property name="text">
           <string>Sprache</string>
          </property>
         </widget>
        </item>
-       <item row="15" column="1">
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="le_language"/>
+       </item>
+       <item row="10" column="1">
+        <widget class="QCheckBox" name="cb_active">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Aktiv</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <spacer name="horizontalSpacer">
@@ -159,59 +202,6 @@
          </item>
         </layout>
        </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="cb_person">
-         <property name="placeholderText">
-          <string>Person...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Person</string>
-         </property>
-        </widget>
-       </item>
-       <item row="14" column="1">
-        <widget class="QCheckBox" name="cb_active">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="14" column="0">
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>Aktiv</string>
-         </property>
-        </widget>
-       </item>
-       <item row="13" column="1">
-        <widget class="QLineEdit" name="le_language"/>
-       </item>
-       <item row="10" column="1">
-        <widget class="QComboBox" name="cb_you">
-         <property name="editable">
-          <bool>false</bool>
-         </property>
-         <property name="currentText">
-          <string/>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>16</width>
-           <height>16</height>
-          </size>
-         </property>
-         <property name="placeholderText">
-          <string>Anrede...</string>
-         </property>
-         <property name="frame">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
     </layout>
@@ -224,13 +214,8 @@
   <tabstop>le_title</tabstop>
   <tabstop>le_first_name</tabstop>
   <tabstop>le_surname</tabstop>
-  <tabstop>le_phone</tabstop>
-  <tabstop>le_fax</tabstop>
-  <tabstop>le_email</tabstop>
   <tabstop>le_position</tabstop>
-  <tabstop>cb_you</tabstop>
-  <tabstop>le_language</tabstop>
-  <tabstop>cb_active</tabstop>
+  <tabstop>le_phone</tabstop>
   <tabstop>pb_okay</tabstop>
  </tabstops>
  <resources/>

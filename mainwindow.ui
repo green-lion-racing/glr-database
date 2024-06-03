@@ -554,6 +554,15 @@
  <tabstops>
   <tabstop>le_password</tabstop>
   <tabstop>tb_createMember</tabstop>
+  <tabstop>tb_modifyMember</tabstop>
+  <tabstop>tb_createCompany</tabstop>
+  <tabstop>tb_modifyCompany</tabstop>
+  <tabstop>tb_createPerson</tabstop>
+  <tabstop>tb_modifyPerson</tabstop>
+  <tabstop>tb_createCommunication</tabstop>
+  <tabstop>tb_modifyCommunication</tabstop>
+  <tabstop>tb_createActivity</tabstop>
+  <tabstop>tb_modifyActivity</tabstop>
   <tabstop>tb_displayTables</tabstop>
   <tabstop>tb_modifyTables</tabstop>
  </tabstops>

@@ -1,39 +1,31 @@
 #include "activity.h"
 #include "ui_activity.h"
-#include <QVector>
 #include "error.h"
 
 Activity::Activity(QWidget *parent, bool editMode):
     QDialog(parent),
     ui(new Ui::Activity)
 {
-    QSqlQuery ActivityQquery("CREATE TABLE IF NOT EXISTS leistungen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, wert TEXT, was TEXT, infos TEXT, FOREIGN KEY (firma) REFERENCES firmen(name))");
-    QVector<QString> activityNames;
+    ui->setupUi(this);
 
     Activity::editMode = editMode;
-
-    ui->setupUi(this);
 
     if (editMode) {
         QWidget::setWindowTitle("GLR Datenbank - Leistung bearbeiten");
         ui->l_dialogTitle->setText("GLR Datenbank - Leistung bearbeiten");
 
         QSqlQuery selectActivity;
-        selectActivity.prepare("SELECT id, firma, ansprechpartner, wann FROM leistungen");
+        selectActivity.prepare("SELECT leistungen.id, firmen.name, personen.vorname, personen.nachname, wann FROM leistungen JOIN firmen ON leistungen.firmen_id = firmen.id JOIN personen ON leistungen.personen_id = personen.id");
         selectActivity.exec();
 
         while(selectActivity.next()) {
-            activityNames.push_back(selectActivity.value(0).toString() + " - " +
-                                    selectActivity.value(1).toString() + " - " +
-                                    selectActivity.value(2).toString() + " - " +
-                                    selectActivity.value(3).toString());
+            ui->cb_activity->addItem(selectActivity.value(1).toString() + " - " +
+                                     selectActivity.value(2).toString() + " " + selectActivity.value(3).toString() + " - " +
+                                     selectActivity.value(4).toString(),
+                                     selectActivity.value(0).toInt());
         }
 
-        for (int i = 0; i < activityNames.size(); i++) {
-            ui->cb_activity->addItem(activityNames[i]);
-        }
-
-        if (activityNames.size() < 1) {
+        if (ui->cb_activity->count() < 1) {
             ui->cb_activity->setDisabled(true);
         }
 
@@ -41,8 +33,8 @@ Activity::Activity(QWidget *parent, bool editMode):
         ui->cb_person->setDisabled(true);
         ui->cw_calender->setDisabled(true);
         ui->le_when->setDisabled(true);
-        ui->le_value->setDisabled(true);
         ui->le_what->setDisabled(true);
+        ui->le_value->setDisabled(true);
         ui->te_info->setDisabled(true);
         ui->pb_okay->setDisabled(true);
 
@@ -71,12 +63,8 @@ Activity::~Activity()
 void Activity::on_cb_activity_currentIndexChanged()
 {
     QSqlQuery selectActivity;
-
-    static QRegularExpression regex(" - ");
-    int activityID = ui->cb_activity->currentText().split(regex)[0].toInt();
-
-    selectActivity.prepare("SELECT * FROM leistungen WHERE id = :activityID");
-    selectActivity.bindValue(":activityID", activityID);
+    selectActivity.prepare("SELECT id, firmen_id, personen_id, wann, was, wert, infos FROM leistungen WHERE id = :activityID");
+    selectActivity.bindValue(":activityID", ui->cb_activity->currentData().toInt());
     selectActivity.exec();
     selectActivity.next();
 
@@ -84,18 +72,17 @@ void Activity::on_cb_activity_currentIndexChanged()
     ui->cb_person->setDisabled(false);
     ui->cw_calender->setDisabled(false);
     ui->le_when->setDisabled(false);
-    ui->le_value->setDisabled(false);
     ui->le_what->setDisabled(false);
+    ui->le_value->setDisabled(false);
     ui->te_info->setDisabled(false);
     ui->pb_okay->setDisabled(false);
 
-
-    set_cb_company(selectActivity.value(1).toString());
-    set_cb_person(selectActivity.value(2).toString());
+    set_cb_company(selectActivity.value(1).toInt());
+    set_cb_person(selectActivity.value(2).toInt());
     ui->le_when->setText(selectActivity.value(3).toString());
     ui->cw_calender->setSelectedDate(selectActivity.value(3).toDate());
-    ui->le_value->setText(selectActivity.value(4).toString());
-    ui->le_what->setText(selectActivity.value(5).toString());
+    ui->le_what->setText(selectActivity.value(4).toString());
+    ui->le_value->setText(selectActivity.value(5).toString());
     ui->te_info->setText(selectActivity.value(6).toString());
 }
 
@@ -111,27 +98,27 @@ void Activity::on_cw_calender_selectionChanged()
 
 void Activity::on_pb_okay_clicked()
 {
-    int activityIndex = ui->cb_activity->currentIndex();
-    QString company = ui->cb_company->currentText();
-    QString person = ui->cb_person->currentText();
+    int activityID = ui->cb_activity->currentData().toInt();
+    int companyID = ui->cb_company->currentData().toInt();
+    int personID = ui->cb_person->currentData().toInt();
     QString when = ui->le_when->text();
-    QString value = ui->le_value->text();
     QString what = ui->le_what->text();
+    QString value = ui->le_value->text();
     QString info = ui->te_info->toPlainText();
 
     QSqlQuery insertActivityQuery;
     if (editMode) {
-        insertActivityQuery.prepare("UPDATE leistungen SET firma = :company, ansprechpartner = :person, wann = :when, wert = :value, was = :what, infos = :info WHERE id = :activityID");
-        insertActivityQuery.bindValue(":activityID", activityIndex + 1);
+        insertActivityQuery.prepare("UPDATE leistungen SET firmen_id = :companyID, personen_id = :personID, wann = :when, was = :what, wert = :value, infos = :info WHERE id = :activityID");
+        insertActivityQuery.bindValue(":activityID", activityID);
     } else {
-        insertActivityQuery.prepare("INSERT INTO leistungen(firma, ansprechpartner, wann, wert, was, infos) VALUES (:company, :person, :when, :value, :what, :info)");
+        insertActivityQuery.prepare("INSERT INTO leistungen(firmen_id, personen_id, wann, was, wert, infos) VALUES (:companyID, :personID, :when, :what, :value, :info)");
     }
 
-    insertActivityQuery.bindValue(":company", company);
-    insertActivityQuery.bindValue(":person", person);
+    insertActivityQuery.bindValue(":companyID", companyID);
+    insertActivityQuery.bindValue(":personID", personID);
     insertActivityQuery.bindValue(":when", when);
-    insertActivityQuery.bindValue(":value", value);
     insertActivityQuery.bindValue(":what", what);
+    insertActivityQuery.bindValue(":value", value);
     insertActivityQuery.bindValue(":info", info);
 
     insertActivityQuery.exec();
@@ -146,65 +133,41 @@ void Activity::on_pb_okay_clicked()
     }
 }
 
-QString Activity::getCompanyId () {
-    QSqlQuery queryCompanyId;
-    QString companyName = ui->cb_company->currentText();
-    queryCompanyId.prepare("SELECT id FROM firmen WHERE name = :companyName");
-    queryCompanyId.bindValue(":companyName", companyName);
-    queryCompanyId.exec();
-
-    QString companyId;
-    while (queryCompanyId.next())
-        companyId = queryCompanyId.value(0).toString();
-
-    return companyId;
-}
-
-void Activity::set_cb_company(QString company) {
-    QSqlQuery selectName;
-    QVector<QString> companyNames;
-
+void Activity::set_cb_company(int id) {
     ui->cb_company->clear();
 
+    QSqlQuery selectName;
     selectName.prepare("SELECT id, name FROM firmen");
     selectName.exec();
     while(selectName.next()) {
-        companyNames.push_back(selectName.value(1).toString());
-    }
-
-    for (int i = 0; i < companyNames.size(); i++) {
-        ui->cb_company->addItem(companyNames[i]);
-        if (!QString::compare(company, companyNames[i], Qt::CaseInsensitive)) {
-            ui->cb_company->setCurrentIndex(i);
+        ui->cb_company->addItem(selectName.value(1).toString(), selectName.value(0));
+        if (id == selectName.value(0)) {
+            ui->cb_company->setCurrentIndex(ui->cb_company->count() - 1);
         }
     }
 
-    if (companyNames.size() > 0) {
+    if (ui->cb_company->count() > 0) {
         ui->cb_company->setEnabled(true);
     } else {
         ui->cb_company->setDisabled(true);
     }
 }
 
-void Activity::set_cb_person(QString person) {
-    QSqlQuery selectName;
-    QVector<QString> personNames;
-
+void Activity::set_cb_person(int id) {
     ui->cb_person->clear();
 
-    selectName.prepare("SELECT id, vorname, nachname FROM personen WHERE FirmenID = :companyID");
-    selectName.bindValue(":companyID", getCompanyId());
+    QSqlQuery selectName;
+    selectName.prepare("SELECT id, vorname, nachname FROM personen WHERE firmen_id = :companyID");
+    selectName.bindValue(":companyID", ui->cb_company->currentData().toInt());
     selectName.exec();
+
     while(selectName.next()) {
-        personNames.push_back(selectName.value(1).toString() + " " + selectName.value(2).toString());
-    }
-    for (int i = 0; i < personNames.size(); i++) {
-        ui->cb_person->addItem(personNames[i]);
-        if (!QString::compare(person, personNames[i], Qt::CaseInsensitive))
-            ui->cb_person->setCurrentIndex(i);
+        ui->cb_person->addItem(selectName.value(1).toString() + " " + selectName.value(2).toString(), selectName.value(0));
+        if (id == selectName.value(0))
+            ui->cb_person->setCurrentIndex(ui->cb_person->count() - 1);
     }
 
-    if (personNames.size() > 0) {
+    if (ui->cb_person->count() > 0) {
         ui->cb_person->setEnabled(true);
     } else {
         ui->cb_person->setDisabled(true);

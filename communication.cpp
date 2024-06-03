@@ -11,37 +11,27 @@ Communication::Communication(QWidget *parent, bool editMode) :
     QDialog(parent),
     ui(new Ui::Communication)
 {
-    QSqlQuery  CommunicationQuery("CREATE TABLE IF NOT EXISTS kommunikationen (id INTEGER PRIMARY KEY, firma TEXT, ansprechpartner TEXT, wann TEXT, was TEXT, FirmenID INTEGER, PersonenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id), FOREIGN KEY(PersonenID) REFERENCES personen(id))");
-    QSqlQuery  CommunicationFileQuery("CREATE TABLE IF NOT EXISTS kommunikation_dateien (id INTEGER PRIMARY KEY, kommunikation_id INTEGER, datei BLOB, dateiname TEXT, FOREIGN KEY (kommunikation_id) REFERENCES kommunikationen(id))");
-
     ui->setupUi(this);
 
     Communication::editMode = editMode;
-
-    QVector<QString> communicationNames;
-
-    ui->tb_remove->setDisabled(true);
 
     if (editMode) {
         QWidget::setWindowTitle("GLR Datenbank - Kommunikation bearbeiten");
         ui->l_dialogTitle->setText("GLR Datenbank - Kommunikation bearbeiten");
 
         QSqlQuery selectCommunication;
-        selectCommunication.prepare("SELECT id, firma, ansprechpartner, wann FROM kommunikationen");
+        selectCommunication.prepare("SELECT kommunikationen.id, firmen.name, personen.vorname, personen.nachname, wann FROM kommunikationen JOIN firmen ON kommunikationen.firmen_id = firmen.id JOIN personen ON kommunikationen.personen_id = personen.id");
         selectCommunication.exec();
 
         while(selectCommunication.next()) {
-            communicationNames.push_back(selectCommunication.value(0).toString() + " - " +
-                                    selectCommunication.value(1).toString() + " - " +
-                                    selectCommunication.value(2).toString() + " - " +
-                                    selectCommunication.value(3).toString());
+            ui->cb_communication->addItem(selectCommunication.value(0).toString() + " - " +
+                                          selectCommunication.value(1).toString() + " - " +
+                                          selectCommunication.value(2).toString() + " " + selectCommunication.value(3).toString() + " - " +
+                                          selectCommunication.value(4).toString(),
+                                          selectCommunication.value(0).toInt());
         }
 
-        for (int i = 0; i < communicationNames.size(); i++) {
-            ui->cb_communication->addItem(communicationNames[i]);
-        }
-
-        if (communicationNames.size() < 1) {
+        if (ui->cb_communication->count() < 1) {
             ui->cb_communication->setDisabled(true);
         }
 
@@ -70,6 +60,8 @@ Communication::Communication(QWidget *parent, bool editMode) :
 
     // print initially selected date (today)
     ui->le_when->setText(ui->cw_calender->selectedDate().toString("yyyy-MM-dd"));
+
+    ui->tb_remove->setDisabled(true);
 }
 
 Communication::~Communication()
@@ -77,14 +69,10 @@ Communication::~Communication()
     delete ui;
 }
 
-    QSqlQuery selectCommunication;
 void Communication::on_cb_communication_currentIndexChanged() {
-
-    static QRegularExpression regex(" - ");
-    int communicationID = ui->cb_communication->currentText().split(regex)[0].toInt();
-
-    selectCommunication.prepare("SELECT * FROM kommunikationen WHERE id = :communicationID");
-    selectCommunication.bindValue(":communicationID", communicationID);
+    QSqlQuery selectCommunication;
+    selectCommunication.prepare("SELECT kommunikationen.id, firmen.id, personen.id, wann, was FROM kommunikationen JOIN firmen ON kommunikationen.firmen_id = firmen.id JOIN personen ON kommunikationen.personen_id = personen.id WHERE kommunikationen.id = :communicationID");
+    selectCommunication.bindValue(":communicationID", ui->cb_communication->currentData().toInt());
     selectCommunication.exec();
     selectCommunication.next();
 
@@ -98,8 +86,8 @@ void Communication::on_cb_communication_currentIndexChanged() {
     ui->tb_remove->setDisabled(true);
 
     QSqlQuery selectCommunicationFiles;
-    selectCommunicationFiles.prepare("SELECT id, kommunikation_id, dateiname, datei FROM kommunikation_dateien WHERE kommunikation_id = :communicationID");
-    selectCommunicationFiles.bindValue(":communicationID", communicationID);
+    selectCommunicationFiles.prepare("SELECT id, kommunikationen_id, dateiname, datei FROM kommunikationen_dateien WHERE kommunikationen_id = :communicationID");
+    selectCommunicationFiles.bindValue(":communicationID", ui->cb_communication->currentData().toInt());
     selectCommunicationFiles.exec();
 
     ui->lw_files->clear();
@@ -119,8 +107,8 @@ void Communication::on_cb_communication_currentIndexChanged() {
 
     QObject::connect(ui->lw_files, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
 
-    set_cb_company(selectCommunication.value(1).toString());
-    set_cb_person(selectCommunication.value(2).toString());
+    set_cb_company(selectCommunication.value(1).toInt());
+    set_cb_person(selectCommunication.value(2).toInt());
     ui->le_when->setText(selectCommunication.value(3).toString());
     ui->cw_calender->setSelectedDate(selectCommunication.value(3).toDate());
     ui->le_what->setText(selectCommunication.value(4).toString());
@@ -138,28 +126,24 @@ void Communication::on_cw_calender_selectionChanged()
 
 void Communication::on_pb_okay_clicked()
 {
-    int communicationID = ui->cb_communication->currentIndex();
-    int personID = ui->cb_person->currentIndex();
-    int companyID = ui->cb_company->currentIndex();
-    QString company = ui->cb_company->currentText();
-    QString person = ui->cb_person->currentText();
+    int communicationID = ui->cb_communication->currentData().toInt();
+    int companyID = ui->cb_company->currentData().toInt();
+    int personID = ui->cb_person->currentData().toInt();
     QString when = ui->le_when->text();
     QString what = ui->le_what->text();
 
     QSqlQuery insertCommunicationQuery;
     if (editMode) {
-        insertCommunicationQuery.prepare("UPDATE kommunikationen SET firma = :company, ansprechpartner = :person, wann = :when, was = :what, FirmenID = :companyID, PersonenID = :personID WHERE id = :communicationID");
-        insertCommunicationQuery.bindValue(":communicationID", communicationID + 1);
+        insertCommunicationQuery.prepare("UPDATE kommunikationen SET firmen_id = :companyID, personen_id = :personID, wann = :when, was = :what WHERE id = :communicationID");
+        insertCommunicationQuery.bindValue(":communicationID", communicationID);
     } else {
-        insertCommunicationQuery.prepare("INSERT INTO kommunikationen(firma, ansprechpartner, wann, was, FirmenID, PersonenID) VALUES (:company, :person, :when, :what, :companyID, :personID)");
+        insertCommunicationQuery.prepare("INSERT INTO kommunikationen(firmen_id, personen_id, wann, was) VALUES (:companyID, :personID, :when, :what)");
     }
 
-    insertCommunicationQuery.bindValue(":person", person);
-    insertCommunicationQuery.bindValue(":company", company);
-    insertCommunicationQuery.bindValue(":when", when);
-    insertCommunicationQuery.bindValue(":what", what);
     insertCommunicationQuery.bindValue(":companyID", companyID);
     insertCommunicationQuery.bindValue(":personID", personID);
+    insertCommunicationQuery.bindValue(":when", when);
+    insertCommunicationQuery.bindValue(":what", what);
     insertCommunicationQuery.exec();
 
     if (!editMode) {
@@ -169,10 +153,10 @@ void Communication::on_pb_okay_clicked()
             QString fileName = item->text();
 
             QSqlQuery insertCommunicationFileQuery;
-            insertCommunicationFileQuery.prepare("INSERT INTO kommunikation_dateien(kommunikation_id, datei, dateiname) VALUES (:communicationId, :fileContent, :fileName)");
+            insertCommunicationFileQuery.prepare("INSERT INTO kommunikationen_dateien(kommunikationen_id, dateiname, datei) VALUES (:communicationId, :fileName, :fileContent)");
             insertCommunicationFileQuery.bindValue(":communicationId", communicationID);
-            insertCommunicationFileQuery.bindValue(":fileContent", list.at(1).toString());
             insertCommunicationFileQuery.bindValue(":fileName", fileName);
+            insertCommunicationFileQuery.bindValue(":fileContent", list.at(1).toString());
             insertCommunicationFileQuery.exec();
         }
     }
@@ -194,29 +178,27 @@ void Communication::on_tb_add_clicked() {
     file.setFileName(fileName);
     file.open(QIODevice::ReadOnly);
 
-
-    int communicationId = ui->cb_communication->currentIndex();
+    int communicationID = ui->cb_communication->currentData().toInt();
 
     QString date = ui->le_when->text();
 
     QByteArray fileContent = file.readAll();
 
-    QFileInfo onlyFileName(fileName);
-    QString fileNameWithoutPath = onlyFileName.fileName();  // filename without path
-    fileNameWithoutPath = date + "-" + fileNameWithoutPath;
+    QFileInfo fileInfo(fileName);
+    QString fileNameWithoutPath = date + "-" + fileInfo.fileName();
 
     if (editMode) {
         QSqlQuery insertCommunicationFileQuery;
-        insertCommunicationFileQuery.prepare("INSERT INTO kommunikation_dateien(kommunikation_id, datei, dateiname) VALUES (:communicationId, :fileContent, :fileNameWithoutPath)");
-        insertCommunicationFileQuery.bindValue(":communicationId", communicationId + 1);
+        insertCommunicationFileQuery.prepare("INSERT INTO kommunikationen_dateien(kommunikationen_id, dateiname, datei) VALUES (:communicationID, :fileName, :fileContent)");
+        insertCommunicationFileQuery.bindValue(":communicationID", communicationID);
+        insertCommunicationFileQuery.bindValue(":fileName", fileNameWithoutPath);
         insertCommunicationFileQuery.bindValue(":fileContent", fileContent);
-        insertCommunicationFileQuery.bindValue(":fileNameWithoutPath", fileNameWithoutPath);
         insertCommunicationFileQuery.exec();
     }
 
     QListWidgetItem *item = new QListWidgetItem(fileNameWithoutPath);
 
-    int file_id = communicationId + 1;
+    int file_id = communicationID;
     if (!editMode) {
         file_id = 0;
     }
@@ -247,7 +229,7 @@ void Communication::on_tb_remove_clicked() {
     if (box == QMessageBox::Yes) {
         if (editMode) {
             QSqlQuery removeFile;
-            removeFile.prepare("DELETE FROM kommunikation_dateien WHERE id = :id;");
+            removeFile.prepare("DELETE FROM kommunikationen_dateien WHERE id = :id;");
             removeFile.bindValue(":id", list.at(0).toInt());
             removeFile.exec();
         }
@@ -266,65 +248,40 @@ void Communication::selectionChanged() {
     }
 }
 
-QString Communication::getCompanyId () {
-    QSqlQuery queryCompanyId;
-    QString companyName = ui->cb_company->currentText();
-    queryCompanyId.prepare("SELECT id FROM firmen WHERE name = :companyName");
-    queryCompanyId.bindValue(":companyName", companyName);
-    queryCompanyId.exec();
-
-    QString companyId;
-    while (queryCompanyId.next())
-        companyId = queryCompanyId.value(0).toString();
-
-    return companyId;
-}
-
-void Communication::set_cb_company(QString company) {
-    QSqlQuery selectName;
-    QVector<QString> companyNames;
-
+void Communication::set_cb_company(int id) {
     ui->cb_company->clear();
 
+    QSqlQuery selectName;
     selectName.prepare("SELECT id, name FROM firmen");
     selectName.exec();
     while(selectName.next()) {
-        companyNames.push_back(selectName.value(1).toString());
-    }
-
-    for (int i = 0; i < companyNames.size(); i++) {
-        ui->cb_company->addItem(companyNames[i]);
-        if (!QString::compare(company, companyNames[i], Qt::CaseInsensitive)) {
-            ui->cb_company->setCurrentIndex(i);
+        ui->cb_company->addItem(selectName.value(1).toString(), selectName.value(0));
+        if (id == selectName.value(0)) {
+            ui->cb_company->setCurrentIndex(ui->cb_company->count() - 1);
         }
     }
 
-    if (companyNames.size() > 0) {
+    if (ui->cb_company->count() > 0) {
         ui->cb_company->setEnabled(true);
     } else {
         ui->cb_company->setDisabled(true);
     }
 }
 
-void Communication::set_cb_person(QString person) {
-    QSqlQuery selectName;
-    QVector<QString> personNames;
-
+void Communication::set_cb_person(int id) {
     ui->cb_person->clear();
 
-    selectName.prepare("SELECT id, vorname, nachname FROM personen WHERE FirmenID = :companyID");
-    selectName.bindValue(":companyID", getCompanyId());
+    QSqlQuery selectName;
+    selectName.prepare("SELECT id, vorname, nachname FROM personen WHERE firmen_id = :companyID");
+    selectName.bindValue(":companyID", ui->cb_company->currentData().toInt());
     selectName.exec();
     while(selectName.next()) {
-        personNames.push_back(selectName.value(1).toString() + " " + selectName.value(2).toString());
-    }
-    for (int i = 0; i < personNames.size(); i++) {
-        ui->cb_person->addItem(personNames[i]);
-        if (!QString::compare(person, personNames[i], Qt::CaseInsensitive))
-            ui->cb_person->setCurrentIndex(i);
+        ui->cb_person->addItem(selectName.value(1).toString() + " " + selectName.value(2).toString(), selectName.value(0));
+        if (id == selectName.value(0))
+            ui->cb_person->setCurrentIndex(ui->cb_person->count() - 1);
     }
 
-    if (personNames.size() > 0) {
+    if (ui->cb_person->count() > 0) {
         ui->cb_person->setEnabled(true);
     } else {
         ui->cb_person->setDisabled(true);

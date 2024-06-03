@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>477</width>
-    <height>452</height>
+    <width>495</width>
+    <height>464</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,6 +34,20 @@
        <property name="rightMargin">
         <number>100</number>
        </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Mitglied</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="cb_member">
+         <property name="placeholderText">
+          <string>Mitglied...</string>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
@@ -114,27 +128,47 @@
        <item row="8" column="1">
         <widget class="QLineEdit" name="le_address"/>
        </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Sprache</string>
-         </property>
-        </widget>
-       </item>
        <item row="9" column="1">
-        <widget class="QLineEdit" name="le_language"/>
+        <widget class="QLineEdit" name="le_shirt_size"/>
        </item>
-       <item row="10" column="0">
+       <item row="9" column="0">
         <widget class="QLabel" name="label_11">
          <property name="text">
           <string>Hemdgröße</string>
          </property>
         </widget>
        </item>
-       <item row="11" column="0">
+       <item row="10" column="1">
+        <widget class="QLineEdit" name="le_vdi_number"/>
+       </item>
+       <item row="10" column="0">
         <widget class="QLabel" name="label_12">
          <property name="text">
           <string>VDI-Nummer</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
+        <widget class="QLineEdit" name="le_language"/>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Sprache</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="1">
+        <widget class="QCheckBox" name="cb_active">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Aktiv</string>
          </property>
         </widget>
        </item>
@@ -165,40 +199,6 @@
          </item>
         </layout>
        </item>
-       <item row="10" column="1">
-        <widget class="QLineEdit" name="le_shirt_size"/>
-       </item>
-       <item row="11" column="1">
-        <widget class="QLineEdit" name="le_vdi_number"/>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="cb_member">
-         <property name="placeholderText">
-          <string>Mitglied...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>Mitglied</string>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="1">
-        <widget class="QCheckBox" name="cb_active">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="0">
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>Aktiv</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
     </layout>
@@ -215,10 +215,6 @@
   <tabstop>le_email_private</tabstop>
   <tabstop>le_phone</tabstop>
   <tabstop>le_address</tabstop>
-  <tabstop>le_language</tabstop>
-  <tabstop>le_shirt_size</tabstop>
-  <tabstop>le_vdi_number</tabstop>
-  <tabstop>cb_active</tabstop>
   <tabstop>pb_okay</tabstop>
  </tabstops>
  <resources/>

@@ -36,11 +36,9 @@ private:
 
     bool editMode;
 
-    QString getCompanyId();
+    void set_cb_company(int id = -1);
 
-    void set_cb_company(QString company = "");
-
-    void set_cb_person(QString person = "");
+    void set_cb_person(int id = -1);
 };
 
 #endif // COMMUNICATION_H

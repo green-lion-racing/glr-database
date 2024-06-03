@@ -54,8 +54,6 @@ private:
 
     int download_mode;
 
-    QString getCompanyId();
-
     QMessageBox::StandardButton unsaved_changes_notify();
 };
 

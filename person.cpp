@@ -8,15 +8,7 @@ Person::Person(QWidget *parent, bool editMode) :
 {
     ui->setupUi(this);
 
-    QSqlQuery  PersonQuery("CREATE TABLE IF NOT EXISTS personen (id INTEGER PRIMARY KEY, titel TEXT, vorname TEXT, nachname TEXT, telefon TEXT, fax TEXT, email TEXT, Position TEXT, du_sie TEXT, sprache TEXT, aktiv BOOL, FirmenID INTEGER, FOREIGN KEY (FirmenID) REFERENCES firmen(id))");
-
     Person::editMode = editMode;
-
-    ui->cb_you->addItem("Du");
-    ui->cb_you->addItem("Sie");
-
-    QVector<QString> personNames;
-    QVector<QString> companyNames;
 
     if (editMode) {
         QWidget::setWindowTitle("GLR Datenbank - Person bearbeiten");
@@ -27,14 +19,10 @@ Person::Person(QWidget *parent, bool editMode) :
         selectPerson.exec();
 
         while(selectPerson.next()) {
-            personNames.push_back(selectPerson.value(0).toString() + " - " + selectPerson.value(1).toString() + " " + selectPerson.value(2).toString());
+            ui->cb_person->addItem(selectPerson.value(1).toString() + " " + selectPerson.value(2).toString(), selectPerson.value(0).toInt());
         }
 
-        for (int i = 0; i < personNames.size(); i++) {
-            ui->cb_person->addItem(personNames[i]);
-        }
-
-        if (personNames.size() < 1) {
+        if (ui->cb_person->count() < 1) {
             ui->cb_person->setDisabled(true);
         }
 
@@ -42,10 +30,9 @@ Person::Person(QWidget *parent, bool editMode) :
         ui->le_title->setDisabled(true);
         ui->le_first_name->setDisabled(true);
         ui->le_surname->setDisabled(true);
-        ui->le_phone->setDisabled(true);
-        ui->le_fax->setDisabled(true);
-        ui->le_email->setDisabled(true);
         ui->le_position->setDisabled(true);
+        ui->le_phone->setDisabled(true);
+        ui->le_email->setDisabled(true);
         ui->cb_you->setDisabled(true);
         ui->le_language->setDisabled(true);
         ui->cb_active->setDisabled(true);
@@ -66,17 +53,16 @@ Person::Person(QWidget *parent, bool editMode) :
         selectCompany.exec();
 
         while(selectCompany.next()) {
-            companyNames.push_back(selectCompany.value(1).toString());
+            ui->cb_company->addItem(selectCompany.value(1).toString(), selectCompany.value(0).toInt());
         }
 
-        for (int i = 0; i < companyNames.size(); i++) {
-            ui->cb_company->addItem(companyNames[i]);
-        }
-
-        if (companyNames.size() < 1) {
+        if (ui->cb_company->count() < 1) {
             ui->cb_company->setDisabled(true);
         }
     }
+
+    ui->cb_you->addItem("Du");
+    ui->cb_you->addItem("Sie");
 }
 
 Person::~Person()
@@ -87,12 +73,8 @@ Person::~Person()
 void Person::on_cb_person_currentIndexChanged()
 {
     QSqlQuery selectPerson;
-
-    static QRegularExpression regex(" - ");
-    int personenID = ui->cb_person->currentText().split(regex)[0].toInt();
-
-    selectPerson.prepare("SELECT * FROM personen WHERE id = :personenID");
-    selectPerson.bindValue(":personenID", personenID);
+    selectPerson.prepare("SELECT id , firmen_id, titel, vorname, nachname, position, telefon, email, du_sie, sprache, aktiv FROM personen WHERE id = :personenID");
+    selectPerson.bindValue(":personenID", ui->cb_person->currentData().toInt());
     selectPerson.exec();
     selectPerson.next();
 
@@ -100,95 +82,82 @@ void Person::on_cb_person_currentIndexChanged()
     ui->le_title->setDisabled(false);
     ui->le_first_name->setDisabled(false);
     ui->le_surname->setDisabled(false);
-    ui->le_phone->setDisabled(false);
-    ui->le_fax->setDisabled(false);
-    ui->le_email->setDisabled(false);
     ui->le_position->setDisabled(false);
+    ui->le_phone->setDisabled(false);
+    ui->le_email->setDisabled(false);
     ui->cb_you->setDisabled(false);
     ui->le_language->setDisabled(false);
     ui->cb_active->setDisabled(false);
 
     ui->pb_okay->setDisabled(false);
 
-
-    QVector<QString> companyNames;
+    ui->cb_company->clear();
     QSqlQuery selectCompany;
     selectCompany.prepare("SELECT id, name FROM firmen");
     selectCompany.exec();
 
-    ui->cb_company->clear();
-
     while(selectCompany.next()) {
-        companyNames.push_back(selectCompany.value(1).toString());
+        ui->cb_company->addItem(selectCompany.value(1).toString(), selectCompany.value(0).toInt());
+        if (selectCompany.value(0) == selectPerson.value(1).toInt())
+            ui->cb_company->setCurrentIndex(ui->cb_company->count() - 1);
     }
 
-    for (int i = 0; i < companyNames.size(); i++) {
-        ui->cb_company->addItem(companyNames[i]);
-        if (i == selectPerson.value(12).toInt() - 1)
-            ui->cb_company->setCurrentIndex(i);
-    }
-
-    if (companyNames.size() < 1) {
+    if (ui->cb_company->count() < 1) {
         ui->cb_company->setDisabled(true);
     }
 
     ui->le_title->setText(selectPerson.value(2).toString());
     ui->le_first_name->setText(selectPerson.value(3).toString());
     ui->le_surname->setText(selectPerson.value(4).toString());
-    ui->le_phone->setText(selectPerson.value(5).toString());
-    ui->le_fax->setText(selectPerson.value(6).toString());
+    ui->le_position->setText(selectPerson.value(5).toString());
+    ui->le_phone->setText(selectPerson.value(6).toString());
     ui->le_email->setText(selectPerson.value(7).toString());
-    ui->le_position->setText(selectPerson.value(8).toString());
 
-    if (selectPerson.value(9).toString() == "Du")
+    if (selectPerson.value(8).toString() == "Du")
         ui->cb_you->setCurrentIndex(0);
     else
         ui->cb_you->setCurrentIndex(1);
 
-    ui->le_language->setText(selectPerson.value(10).toString());
-    ui->cb_active->setChecked(selectPerson.value(11).toBool());
+    ui->le_language->setText(selectPerson.value(9).toString());
+    ui->cb_active->setChecked(selectPerson.value(10).toBool());
 }
 
 void Person::on_pb_okay_clicked()
 {
-    int personID = ui->cb_person->currentIndex();
+    int personID = ui->cb_person->currentData().toInt();
+    int companyID = ui->cb_company->currentData().toInt();
     QString title = ui->le_title->text();
     QString first_name = ui->le_first_name->text();
     QString surname = ui->le_surname->text();
-    QString phone = ui->le_phone->text();
-    QString fax = ui->le_fax->text();
-    QString email = ui->le_email->text();
     QString position = ui->le_position->text();
+    QString phone = ui->le_phone->text();
+    QString email = ui->le_email->text();
     QString you = ui->cb_you->currentText();
-    QString company_name = ui->cb_company->currentText();
     QString language = ui->le_language->text();
-    if (!editMode) {
-        //neu angelegte Sponosoren sind immer aktiv
-        ui->cb_active->setChecked(true);
-    };
     bool activ = ui->cb_active->isChecked();
-    int companyID = ui->cb_company->currentIndex();
 
-    // issue on update with key?
+    //neu angelegte Sponosoren sind immer aktiv
+    if (!editMode)
+        activ = true;
+
     QSqlQuery insertPersonQuery;
     if (editMode) {
-        insertPersonQuery.prepare("UPDATE personen SET titel = :title, vorname = :first_name, nachname = :surname, Position = :position, email = :email, fax = :fax, telefon = :phone, du_sie = :you, sprache = :language, aktiv = :active, FirmenID = :companyID WHERE id = :personID");
-        insertPersonQuery.bindValue(":personID", personID + 1);
+        insertPersonQuery.prepare("UPDATE personen SET firmen_id = :companyID, titel = :title, vorname = :first_name, nachname = :surname, position = :position, telefon = :phone, email = :email, du_sie = :you, sprache = :language, aktiv = :active WHERE id = :personID");
+        insertPersonQuery.bindValue(":personID", personID);
     } else {
-        insertPersonQuery.prepare("INSERT INTO personen(titel, vorname, nachname, telefon, fax, email, Position, du_sie, sprache, aktiv, FirmenID) VALUES (:title, :first_name, :surname, :phone, :fax, :email, :position, :you, :language, :active, :companyID)");
+        insertPersonQuery.prepare("INSERT INTO personen(firmen_id, titel, vorname, nachname, position, telefon, email, du_sie, sprache, aktiv) VALUES (:companyID, :title, :first_name, :surname, :position, :phone, :email, :you, :language, :active)");
     }
 
+    insertPersonQuery.bindValue(":companyID", companyID);
     insertPersonQuery.bindValue(":title", title);
     insertPersonQuery.bindValue(":first_name", first_name);
     insertPersonQuery.bindValue(":surname", surname);
-    insertPersonQuery.bindValue(":phone", phone);
-    insertPersonQuery.bindValue(":fax", fax);
-    insertPersonQuery.bindValue(":email", email);
     insertPersonQuery.bindValue(":position", position);
+    insertPersonQuery.bindValue(":phone", phone);
+    insertPersonQuery.bindValue(":email", email);
     insertPersonQuery.bindValue(":you", you);
     insertPersonQuery.bindValue(":language", language);
     insertPersonQuery.bindValue(":active", activ);
-    insertPersonQuery.bindValue(":companyID", companyID + 1);
 
     insertPersonQuery.exec();
 

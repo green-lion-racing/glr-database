@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>462</width>
-    <height>452</height>
+    <width>495</width>
+    <height>338</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -79,114 +79,6 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Leistungstyp</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="le_typ"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Straße</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="le_street"/>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Hausnummer</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="le_houseNumber"/>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>PLZ</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QLineEdit" name="le_zip"/>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Ort</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QLineEdit" name="le_city"/>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>Land</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <widget class="QLineEdit" name="le_country"/>
-       </item>
-       <item row="11" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Infos</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="1">
-        <widget class="QLineEdit" name="le_info"/>
-       </item>
-       <item row="12" column="0">
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>Aktiv</string>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="1">
-        <widget class="QCheckBox" name="cb_active">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="13" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pb_okay">
-           <property name="text">
-            <string>Okay</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
        <item row="4" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
@@ -231,6 +123,74 @@
          </item>
         </layout>
        </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Leistungstyp</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="le_typ"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Infos</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="le_info"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Anschrift</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="le_address"/>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Aktiv</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QCheckBox" name="cb_active">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_okay">
+           <property name="text">
+            <string>Okay</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </item>
     </layout>
@@ -247,12 +207,8 @@
   <tabstop>rb_bronze</tabstop>
   <tabstop>rb_supporter</tabstop>
   <tabstop>le_typ</tabstop>
-  <tabstop>le_street</tabstop>
-  <tabstop>le_houseNumber</tabstop>
-  <tabstop>le_zip</tabstop>
-  <tabstop>le_city</tabstop>
-  <tabstop>le_country</tabstop>
   <tabstop>le_info</tabstop>
+  <tabstop>le_address</tabstop>
   <tabstop>cb_active</tabstop>
   <tabstop>pb_okay</tabstop>
  </tabstops>
