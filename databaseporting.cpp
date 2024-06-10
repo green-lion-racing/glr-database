@@ -249,16 +249,15 @@ DatabasePorting::DatabasePorting() {
 
     // remove columns von, bis, rang, leistungstyp from firmen
     // integrate into firmen_aenderungen
-    current = checkTable("firmen", "id INTEGER, name TEXT, infos TEXT, anschrift TEXT, aktiv BOOLEAN");
+    current = checkTable("firmen", "id INTEGER, name TEXT, infos TEXT, anschrift TEXT");
     if (!current) {
         QSqlQuery Query29("CREATE TABLE firmen_temp ("
                           "id INTEGER,"
                           "name TEXT,"
                           "infos TEXT,"
                           "anschrift TEXT,"
-                          "aktiv BOOLEAN,"
                           "PRIMARY KEY('id'))");
-        QSqlQuery Query30("INSERT INTO firmen_temp SELECT id, name, infos, anschrift, aktiv FROM firmen");
+        QSqlQuery Query30("INSERT INTO firmen_temp SELECT id, name, infos, anschriftFROM firmen");
 
         QSqlQuery Query31("SELECT id, seit, bis, rang, leistungstyp FROM firmen");
         QSqlQuery Query32;
@@ -286,7 +285,7 @@ DatabasePorting::DatabasePorting() {
 
     // remove columns position from mitglieder
     // integrate into mitglieder_aenderungen
-    current = checkTable("mitglieder", "id INTEGER, vorname TEXT, nachname TEXT, matrikelnummer TEXT, email_glr TEXT, email_privat TEXT, telefon TEXT, anschrift TEXT, hemdgroesse TEXT, vdi_nummer TEXT, sprache TEXT, aktiv BOOL");
+    current = checkTable("mitglieder", "id INTEGER, vorname TEXT, nachname TEXT, matrikelnummer TEXT, email_glr TEXT, email_privat TEXT, telefon TEXT, anschrift TEXT, hemdgroesse TEXT, vdi_nummer TEXT, sprache TEXT");
     if (!current) {
         QSqlQuery Query35("CREATE TABLE IF NOT EXISTS mitglieder_temp ("
                           "id INTEGER PRIMARY KEY, "
@@ -299,9 +298,8 @@ DatabasePorting::DatabasePorting() {
                           "anschrift TEXT, "
                           "hemdgroesse TEXT, "
                           "vdi_nummer TEXT, "
-                          "sprache TEXT, "
-                          "aktiv BOOL)");
-        QSqlQuery Query36("INSERT INTO mitglieder_temp SELECT id, vorname, nachname, matrikelnummer, email_glr, email_privat, telefon, anschrift, hemdgroesse, vdi_nummer, sprache, aktiv FROM mitglieder");
+                          "sprache TEXT)");
+        QSqlQuery Query36("INSERT INTO mitglieder_temp SELECT id, vorname, nachname, matrikelnummer, email_glr, email_privat, telefon, anschrift, hemdgroesse, vdi_nummer, sprache FROM mitglieder");
 
         QSqlQuery Query37("SELECT id, position FROM mitglieder");
         QSqlQuery Query38;
