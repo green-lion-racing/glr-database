@@ -7,189 +7,236 @@
     <x>0</x>
     <y>0</y>
     <width>495</width>
-    <height>338</height>
+    <height>409</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="l_dialogTitle">
+    <widget class="QLabel" name="l_dialogTitle">
+     <property name="text">
+      <string>Unternehmen hinzufügen</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <property name="rightMargin">
+      <number>100</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_11">
        <property name="text">
-        <string>Unternehmen hinzufügen</string>
+        <string>Unternehmen</string>
        </property>
       </widget>
      </item>
-     <item>
-      <layout class="QFormLayout" name="formLayout">
-       <property name="rightMargin">
-        <number>100</number>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="cb_company">
+       <property name="placeholderText">
+        <string>Unternehmen...</string>
        </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Unternehmen</string>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_1">
+       <property name="text">
+        <string>Firmenname</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="le_name"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Infos</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="le_info"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Anschrift</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="le_address"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="text">
+        <string>Verlauf</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTableWidget" name="tw_changes"/>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="cb_company">
-         <property name="placeholderText">
-          <string>Unternehmen...</string>
+         <property name="topMargin">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_1">
-         <property name="text">
-          <string>Firmenname</string>
+         <property name="rightMargin">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="le_name"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Seit</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="le_since"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Bis</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="le_until"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>Rang</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QRadioButton" name="rb_gold">
+          <widget class="QToolButton" name="tb_add">
            <property name="text">
-            <string>Gold</string>
+            <string/>
            </property>
-           <attribute name="buttonGroup">
-            <string notr="true">buttonGroup</string>
-           </attribute>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/img/icon_add.png</normaloff>:/img/icon_add.png</iconset>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="rb_silver">
+          <widget class="QToolButton" name="tb_remove">
            <property name="text">
-            <string>Silber</string>
+            <string/>
            </property>
-           <attribute name="buttonGroup">
-            <string notr="true">buttonGroup</string>
-           </attribute>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/img/icon_remove.png</normaloff>:/img/icon_remove.png</iconset>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="rb_bronze">
-           <property name="text">
-            <string>Bronze</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">buttonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="rb_supporter">
-           <property name="text">
-            <string>Supporter</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">buttonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Leistungstyp</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="le_typ"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Infos</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="le_info"/>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Anschrift</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="le_address"/>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>Aktiv</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QCheckBox" name="cb_active">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <spacer name="horizontalSpacer">
+          <spacer name="verticalSpacer">
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Vertical</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>20</width>
+             <height>40</height>
             </size>
            </property>
           </spacer>
          </item>
-         <item>
-          <widget class="QPushButton" name="pb_okay">
-           <property name="text">
-            <string>Okay</string>
-           </property>
-          </widget>
-         </item>
         </layout>
+       </item>
+      </layout>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Bis</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="le_since"/>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Seit</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLineEdit" name="le_until"/>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>Rang</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QRadioButton" name="rb_gold">
+         <property name="text">
+          <string>Gold</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="rb_silver">
+         <property name="text">
+          <string>Silber</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="rb_bronze">
+         <property name="text">
+          <string>Bronze</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="rb_supporter">
+         <property name="text">
+          <string>Supporter</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Leistungstyp</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QLineEdit" name="le_typ"/>
+     </item>
+     <item row="9" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pb_okay">
+         <property name="text">
+          <string>Okay</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -200,6 +247,11 @@
  <tabstops>
   <tabstop>cb_company</tabstop>
   <tabstop>le_name</tabstop>
+  <tabstop>le_info</tabstop>
+  <tabstop>le_address</tabstop>
+  <tabstop>tw_changes</tabstop>
+  <tabstop>tb_add</tabstop>
+  <tabstop>tb_remove</tabstop>
   <tabstop>le_since</tabstop>
   <tabstop>le_until</tabstop>
   <tabstop>rb_gold</tabstop>
@@ -207,12 +259,11 @@
   <tabstop>rb_bronze</tabstop>
   <tabstop>rb_supporter</tabstop>
   <tabstop>le_typ</tabstop>
-  <tabstop>le_info</tabstop>
-  <tabstop>le_address</tabstop>
-  <tabstop>cb_active</tabstop>
   <tabstop>pb_okay</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
