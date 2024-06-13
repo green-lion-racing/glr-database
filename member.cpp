@@ -37,7 +37,6 @@ Member::Member(QWidget *parent, bool editMode) :
         ui->le_shirt_size->setDisabled(true);
         ui->le_vdi_number->setDisabled(true);
         ui->le_language->setDisabled(true);
-        ui->cb_active->setDisabled(true);
 
         ui->pb_okay->setDisabled(true);
 
@@ -48,7 +47,6 @@ Member::Member(QWidget *parent, bool editMode) :
         ui->label_13->setVisible(false);
         ui->label_14->setVisible(false);
         ui->cb_member->setVisible(false);
-        ui->cb_active->setVisible(false);
     }
 }
 
@@ -60,7 +58,7 @@ Member::~Member()
 void Member::on_cb_member_currentIndexChanged()
 {
     QSqlQuery selectMember;
-    selectMember.prepare("SELECT id, vorname, nachname, position, matrikelnummer, email_glr, email_privat, telefon, anschrift, hemdgroesse, vdi_nummer, sprache, aktiv FROM mitglieder WHERE id = :mitgliederID");
+    selectMember.prepare("SELECT id, vorname, nachname, position, matrikelnummer, email_glr, email_privat, telefon, anschrift, hemdgroesse, vdi_nummer, sprache FROM mitglieder WHERE id = :mitgliederID");
     selectMember.bindValue(":mitgliederID", ui->cb_member->currentData().toInt());
     selectMember.exec();
     selectMember.next();
@@ -76,7 +74,6 @@ void Member::on_cb_member_currentIndexChanged()
     ui->le_shirt_size->setDisabled(false);
     ui->le_vdi_number->setDisabled(false);
     ui->le_language->setDisabled(false);
-    ui->cb_active->setDisabled(false);
 
     ui->pb_okay->setDisabled(false);
 
@@ -91,7 +88,6 @@ void Member::on_cb_member_currentIndexChanged()
     ui->le_shirt_size->setText(selectMember.value(9).toString());
     ui->le_vdi_number->setText(selectMember.value(10).toString());
     ui->le_language->setText(selectMember.value(11).toString());
-    ui->cb_active->setChecked(selectMember.value(12).toBool());
 }
 
 void Member::on_pb_okay_clicked()
@@ -108,18 +104,13 @@ void Member::on_pb_okay_clicked()
     QString shirtSize = ui->le_shirt_size->text();
     QString vdiNumber = ui->le_vdi_number->text();
     QString language = ui->le_language->text();
-    if (!editMode) {
-        //neu angelegte Sponosoren sind immer aktiv
-        ui->cb_active->setChecked(true);
-    };
-    bool active = ui->cb_active->isChecked();
 
     QSqlQuery insertMemberQuery;
     if (editMode) {
-        insertMemberQuery.prepare("UPDATE mitglieder SET vorname = :firstName, nachname = :surname, position = :position, matrikelnummer = :studentNumber, email_glr = :emailGLR, email_privat = :emailPrivate, telefon = :phone, anschrift = :address, hemdgroesse = :shirtSize, vdi_nummer = :vdiNumber, sprache = :language, aktiv = :active WHERE id = :memberID");
+        insertMemberQuery.prepare("UPDATE mitglieder SET vorname = :firstName, nachname = :surname, position = :position, matrikelnummer = :studentNumber, email_glr = :emailGLR, email_privat = :emailPrivate, telefon = :phone, anschrift = :address, hemdgroesse = :shirtSize, vdi_nummer = :vdiNumber, sprache = :language WHERE id = :memberID");
         insertMemberQuery.bindValue(":memberID", memberID);
     } else {
-        insertMemberQuery.prepare("INSERT INTO mitglieder (vorname, nachname, position, matrikelnummer, email_glr, email_privat, telefon, anschrift, hemdgroesse, vdi_nummer, sprache, aktiv) VALUES (:firstName, :surname, :position, :studentNumber, :emailGLR, :emailPrivate, :phone, :address, :shirtSize, :vdiNumber, :language, :active)");
+        insertMemberQuery.prepare("INSERT INTO mitglieder (vorname, nachname, position, matrikelnummer, email_glr, email_privat, telefon, anschrift, hemdgroesse, vdi_nummer, sprache) VALUES (:firstName, :surname, :position, :studentNumber, :emailGLR, :emailPrivate, :phone, :address, :shirtSize, :vdiNumber, :language)");
     }
     insertMemberQuery.bindValue(":firstName", firstName);
     insertMemberQuery.bindValue(":surname", surname);
@@ -132,7 +123,6 @@ void Member::on_pb_okay_clicked()
     insertMemberQuery.bindValue(":shirtSize", shirtSize);
     insertMemberQuery.bindValue(":vdiNumber", vdiNumber);
     insertMemberQuery.bindValue(":language", language);
-    insertMemberQuery.bindValue(":active", active);
     insertMemberQuery.exec();
 
     if (insertMemberQuery.next()) {

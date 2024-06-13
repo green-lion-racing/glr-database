@@ -192,7 +192,8 @@ DatabasePorting::DatabasePorting() {
     // rename column Infos to infos in firmen
     // reorder columns from id, name, aktiv, seit, bis, rang, leistungstyp, anschrift, infos to id, name, seit, bis, rang, leistungstyp, infos, anschrift, aktiv in firmen
     current = checkTable("firmen", "id INTEGER, name TEXT, seit TEXT, bis TEXT, rang TEXT, leistungstyp TEXT, infos TEXT, anschrift TEXT, aktiv BOOLEAN") ||
-        checkTable("firmen", "id INTEGER, name TEXT, infos TEXT, anschrift TEXT, aktiv BOOLEAN");
+        checkTable("firmen", "id INTEGER, name TEXT, infos TEXT, anschrift TEXT, aktiv BOOLEAN") ||
+        checkTable("firmen", "id INTEGER, name TEXT, infos TEXT, anschrift TEXT");
     if (!current) {
         QSqlQuery Query23("CREATE TABLE firmen_temp ("
                           "id INTEGER,"
@@ -257,7 +258,7 @@ DatabasePorting::DatabasePorting() {
                           "infos TEXT,"
                           "anschrift TEXT,"
                           "PRIMARY KEY('id'))");
-        QSqlQuery Query30("INSERT INTO firmen_temp SELECT id, name, infos, anschriftFROM firmen");
+        QSqlQuery Query30("INSERT INTO firmen_temp SELECT id, name, infos, anschrift FROM firmen");
 
         QSqlQuery Query31("SELECT id, seit, bis, rang, leistungstyp FROM firmen");
         QSqlQuery Query32;

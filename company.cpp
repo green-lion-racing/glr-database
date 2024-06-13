@@ -38,7 +38,6 @@ Company::Company(QWidget *parent, bool editMode) :
         ui->le_typ->setDisabled(true);
         ui->le_info->setDisabled(true);
         ui->le_address->setDisabled(true);
-        ui->cb_active->setDisabled(true);
 
         ui->pb_okay->setDisabled(true);
 
@@ -49,7 +48,6 @@ Company::Company(QWidget *parent, bool editMode) :
         ui->label_11->setVisible(false);
         ui->label_12->setVisible(false);
         ui->cb_company->setVisible(false);
-        ui->cb_active->setVisible(false);
     }
 }
 
@@ -61,7 +59,7 @@ Company::~Company()
 void Company::on_cb_company_currentIndexChanged()
 {
     QSqlQuery selectCompany;
-    selectCompany.prepare("SELECT id, name, seit, bis, rang, leistungstyp, infos, anschrift, aktiv FROM firmen WHERE id = :companyID");
+    selectCompany.prepare("SELECT id, name, seit, bis, rang, leistungstyp, infos, anschrift FROM firmen WHERE id = :companyID");
     selectCompany.bindValue(":companyID", ui->cb_company->currentData().toInt());
     selectCompany.exec();
     selectCompany.next();
@@ -76,7 +74,6 @@ void Company::on_cb_company_currentIndexChanged()
     ui->le_typ->setDisabled(false);
     ui->le_info->setDisabled(false);
     ui->le_address->setDisabled(false);
-    ui->cb_active->setDisabled(false);
 
     ui->pb_okay->setDisabled(false);
 
@@ -107,7 +104,6 @@ void Company::on_cb_company_currentIndexChanged()
     ui->le_typ->setText(selectCompany.value(5).toString());
     ui->le_info->setText(selectCompany.value(6).toString());
     ui->le_address->setText(selectCompany.value(7).toString());
-    ui->cb_active->setChecked(selectCompany.value(8).toBool());
 }
 
 void Company::on_pb_okay_clicked()
@@ -129,18 +125,13 @@ void Company::on_pb_okay_clicked()
     QString type = ui->le_typ->text();
     QString info = ui->le_info->text();
     QString address = ui->le_address->text();
-    bool active = ui->cb_active->isChecked();
-
-    // neu angelegte Sponosoren sind immer aktiv
-    if (!editMode)
-        active = true;
 
     QSqlQuery insertCompanyQuery;
     if (editMode) {
-        insertCompanyQuery.prepare("UPDATE firmen SET name = :name, seit = :since, bis = :until, rang = :rank, leistungstyp = :type, infos = :info, anschrift = :address, aktiv = :active WHERE id = :companyID");
+        insertCompanyQuery.prepare("UPDATE firmen SET name = :name, seit = :since, bis = :until, rang = :rank, leistungstyp = :type, infos = :info, anschrift = :address WHERE id = :companyID");
         insertCompanyQuery.bindValue(":companyID", companyID);
     } else {
-        insertCompanyQuery.prepare("INSERT INTO firmen(name, seit, bis, rang, leistungstyp, infos, anschrift, aktiv) VALUES (:name, :since, :until, :rank, :type, :info, :address, :active)");
+        insertCompanyQuery.prepare("INSERT INTO firmen(name, seit, bis, rang, leistungstyp, infos, anschrift) VALUES (:name, :since, :until, :rank, :type, :info, :address)");
     }
     insertCompanyQuery.bindValue(":name", name);
     insertCompanyQuery.bindValue(":since", since);
@@ -149,7 +140,6 @@ void Company::on_pb_okay_clicked()
     insertCompanyQuery.bindValue(":type", type);
     insertCompanyQuery.bindValue(":info", info);
     insertCompanyQuery.bindValue(":address", address);
-    insertCompanyQuery.bindValue(":active", active);
 
     insertCompanyQuery.exec();
 
