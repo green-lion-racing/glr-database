@@ -45,7 +45,7 @@ QComboBox::down-arrow:on {
 }
 
 /* Not the nicest... */
-#l_dialogTitle, #l_fileName, #label_1, #label_2, #label_3, #label_4, #label_5, #label_6, #label_7, #label_8, #label_9, #label_10, #label_11, #label_12, #label_13, #label_14, #label_15 {
+#l_dialogTitle, #l_fileName, #label_1, #label_2, #label_3, #label_4, #label_5, #label_6, #label_7, #label_8, #label_9, #label_10, #label_11, #label_12, #label_13, #label_14, #label_15, #label_16 {
     background-color: #E5E5E5;
     font: 18px;
 }
