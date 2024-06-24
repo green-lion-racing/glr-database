@@ -2,6 +2,7 @@
 #define COMPANY_H
 
 #include <QDialog>
+#include <QListWidgetItem>
 #include <QtSql>
 
 namespace Ui {
@@ -21,10 +22,18 @@ private slots:
 
     void on_cb_company_currentIndexChanged();
 
+    void on_tb_add_clicked();
+
+    void on_tb_remove_clicked();
+
+    void selectionChanged();
+
 private:
     Ui::Company *ui;
 
     bool editMode;
+
+    QListWidgetItem *selected = NULL;
 };
 
 #endif // COMPANY_H
