@@ -50,6 +50,14 @@ Company::Company(QWidget *parent, bool editMode) :
         ui->label_11->setVisible(false);
         ui->cb_company->setVisible(false);
         ui->tb_remove->setDisabled(true);
+        ui->lw_changes->setDisabled(true);
+        ui->le_since->setDisabled(true);
+        ui->le_until->setDisabled(true);
+        ui->rb_gold->setDisabled(true);
+        ui->rb_silver->setDisabled(true);
+        ui->rb_bronze->setDisabled(true);
+        ui->rb_supporter->setDisabled(true);
+        ui->le_typ->setDisabled(true);
 
         QObject::connect(ui->lw_changes, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
     }
@@ -86,10 +94,12 @@ void Company::on_cb_company_currentIndexChanged()
     ui->le_info->setDisabled(false);
     ui->le_address->setDisabled(false);
     ui->tb_add->setDisabled(false);
+    ui->tb_remove->setDisabled(true);
 
     if (ui->lw_changes->count() > 0) {
         ui->lw_changes->setDisabled(false);
-        ui->tb_remove->setDisabled(false);
+    } else {
+        ui->lw_changes->setDisabled(true);
     }
 
     ui->le_since->setDisabled(true);
@@ -123,6 +133,7 @@ void Company::on_cb_company_currentIndexChanged()
 
 
 void Company::on_tb_add_clicked() {
+    ui->lw_changes->setDisabled(false);
     if (editMode) {
         QSqlQuery insertCompanyChangesQuery;
         insertCompanyChangesQuery.prepare("INSERT INTO firmen_aenderungen(firmen_id, von, bis, rang, leistungstyp) VALUES (:companyID, '', '', '', '')");
@@ -162,6 +173,10 @@ void Company::on_tb_remove_clicked() {
         selected = NULL;
         ui->lw_changes->takeItem(ui->lw_changes->row(temp));
     }
+    if (ui->lw_changes->count() == 0) {
+        ui->lw_changes->setDisabled(true);
+        ui->tb_remove->setDisabled(true);
+    }
 }
 
 void Company::on_pb_okay_clicked() {
@@ -198,8 +213,25 @@ void Company::on_pb_okay_clicked() {
     insertCompanyQuery.bindValue(":address", ui->le_address->text());
     insertCompanyQuery.exec();
 
-    if (!editMode) {
+    if (!editMode && ui->lw_changes->count() > 0) {
         int id = insertCompanyQuery.lastInsertId().toInt();
+
+        QList<QVariant> list;
+        list.append(ui->le_since->text());
+        list.append(ui->le_until->text());
+        QString rank = "";
+        if (ui->rb_gold->isChecked()) {
+            rank = "Gold";
+        } else if (ui->rb_silver->isChecked()) {
+            rank = "Silber";
+        } else if (ui->rb_bronze->isChecked()) {
+            rank = "Bronze";
+        } else if (ui->rb_supporter->isChecked()) {
+            rank = "Supporter";
+        }
+        list.append(rank);
+        list.append(ui->le_typ->text());
+        ui->lw_changes->currentItem()->setData(Qt::UserRole, list);
 
         foreach (QListWidgetItem* listItem, ui->lw_changes->findItems("*", Qt::MatchWildcard)) {
             QList<QVariant> list = listItem->data(Qt::UserRole).toList();
