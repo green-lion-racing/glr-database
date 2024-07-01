@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>458</width>
-    <height>423</height>
+    <width>753</width>
+    <height>454</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,55 +26,6 @@
      <widget class="QComboBox" name="cb_table">
       <property name="placeholderText">
        <string>Tabellen...</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="filterHorizontalLayout">
-      <item>
-       <widget class="QCheckBox" name="cb_filter_gold">
-        <property name="text">
-         <string>Gold</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="cb_filter_silver">
-        <property name="text">
-         <string>Silber</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="cb_filter_bronze">
-        <property name="text">
-         <string>Bronze</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="cb_filter_supporter">
-        <property name="text">
-         <string>Supporter</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <widget class="QComboBox" name="cb_filter">
-      <property name="placeholderText">
-       <string>Filtern nach...</string>
-      </property>
-      <property name="frame">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="le_search">
-      <property name="placeholderText">
-       <string>Suche...</string>
       </property>
      </widget>
     </item>
@@ -123,12 +74,6 @@
  </widget>
  <tabstops>
   <tabstop>cb_table</tabstop>
-  <tabstop>cb_filter_gold</tabstop>
-  <tabstop>cb_filter_silver</tabstop>
-  <tabstop>cb_filter_bronze</tabstop>
-  <tabstop>cb_filter_supporter</tabstop>
-  <tabstop>cb_filter</tabstop>
-  <tabstop>le_search</tabstop>
   <tabstop>tv_table</tabstop>
   <tabstop>pb_download</tabstop>
   <tabstop>pb_save</tabstop>

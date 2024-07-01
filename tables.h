@@ -21,18 +21,6 @@ public:
 private slots:
     void on_cb_table_currentIndexChanged();
 
-    void on_cb_filter_currentIndexChanged();
-
-    void on_cb_filter_gold_stateChanged();
-
-    void on_cb_filter_silver_stateChanged();
-
-    void on_cb_filter_bronze_stateChanged();
-
-    void on_cb_filter_supporter_stateChanged();
-
-    void update_cb_filter();
-
     void on_pb_download_clicked();
 
     void on_cb_editMode_stateChanged();

@@ -24,7 +24,6 @@ Tables::Tables(QWidget *parent, bool editMode) :
 
     ui->tv_table->verticalHeader()->setVisible(false);
     ui->tv_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tv_table->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tv_table->setSortingEnabled(true);
 
     ui->pb_save->setVisible(false);
@@ -68,17 +67,6 @@ void Tables::on_cb_table_currentIndexChanged()
         }
     }
     ui->pb_download->setVisible(false);
-    // ui->pb_download_all->setVisible(false);
-
-    // Are filters even needed? But they look nice... and make everthing complex
-    ui->cb_filter->setVisible(false); // maybe TODO
-    ui->le_search->setVisible(false); // maybe TODO https://www.google.com/search?client=firefox-b-d&q=sql+search+value+in+all+table
-
-    // Checkboxes
-    ui->cb_filter_gold->setVisible(false);
-    ui->cb_filter_silver->setVisible(false);
-    ui->cb_filter_bronze->setVisible(false);
-    ui->cb_filter_supporter->setVisible(false);
 
     selectedTable = ui->cb_table->currentText();
     tableModel = new QSqlTableModel();
@@ -92,24 +80,10 @@ void Tables::on_cb_table_currentIndexChanged()
         ui->pb_download->setText("Ausgewählte Kommunikationen speichern");
         ui->pb_download->setVisible(true);
         ui->pb_download->setDisabled(true);
+
         // hiding files because it creates massive lags
         // there is probably a better solution, creating a new view and only use what needed
         ui->tv_table->setColumnHidden(3, true);
-    } else if (selectedTable == "firmen") {
-        // Are filters really needed?
-        // ui->cb_filter_gold->setVisible(true);
-        // ui->cb_filter_silver->setVisible(true);
-        // ui->cb_filter_bronze->setVisible(true);
-        // ui->cb_filter_supporter->setVisible(true);
-    } else if (selectedTable == "personen" || selectedTable=="kommunikationen") {
-        // Are filters really needed?
-        //QSqlQuery selectName;
-        //selectName.prepare("SELECT name FROM firmen");
-        //selectName.exec();
-        //QSqlQueryModel * modalComboBox = new QSqlQueryModel();
-        //modalComboBox->setQuery(selectName);
-        //ui->cb_filter->setModel(modalComboBox);
-        //ui->cb_filter->setVisible(true);
     } else if (selectedTable == "mitglieder") {
         download_mode = 1;
         ui->pb_download->setText("Ausgewählte Signaturen speichern");
@@ -123,78 +97,6 @@ void Tables::on_cb_table_currentIndexChanged()
 
     // Selction changed signal only works if QTableView got already a model set!!!!
     connect(ui->tv_table->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)), this, SLOT(selection_changed()));
-}
-
-void Tables::on_cb_filter_currentIndexChanged()
-{
-    // Are filters really needed?
-    // ui->cb_filter->setVisible(true);
-    // QString companyName = ui->cb_filter->currentText();
-    // QString companyId = getCompanyId();
-    // if (selectedTable == "kommunikationen")
-    //     tableModel->setQuery("SELECT k.id, k.firma, k.ansprechpartner, k.wann, k.was, count(*) FROM kommunikationen k, kommunikationen_dateien d  WHERE k.FirmenID = '" + companyId + "' AND k.id = d.kommunikation_id GROUP BY kommunikation_id");
-    // else
-    //     tableModel->setQuery("SELECT * FROM " + selectedTable + " WHERE firma = '" + companyName  + "'");
-
-    // tableModel->filter()
-    // QString filter = "firma = '" + companyName + "'";
-
-    // modal->select();
-    // ui->tv_table->setModel(modal);
-    // modal->setFilter(filter);
-    // modal->setFilter(filter);
-    // modal->select();
-    // ui->tv_table->setModel(modal);
-
-}
-
-void Tables::on_cb_filter_gold_stateChanged() {
-    update_cb_filter();
-}
-
-void Tables::on_cb_filter_silver_stateChanged() {
-    update_cb_filter();
-}
-
-void Tables::on_cb_filter_bronze_stateChanged() {
-    update_cb_filter();
-}
-
-void Tables::on_cb_filter_supporter_stateChanged() {
-    update_cb_filter();
-}
-
-void Tables::update_cb_filter() {
-    // Are filters really needed?
-    // QVector<QString> checks;
-    // QString filter = "";
-
-    // if (ui->cb_filter_gold->isChecked()) {
-    //     checks.push_back("rang = 'Gold'");
-    // }
-
-    // if (ui->cb_filter_silver->isChecked()) {
-    //     checks.push_back("rang = 'Silber'");
-    // }
-
-    // if (ui->cb_filter_bronze->isChecked()) {
-    //     checks.push_back("rang = 'Bronze'");
-    // }
-
-    // if (ui->cb_filter_supporter->isChecked()) {
-    //     checks.push_back("rang = 'Supporter'");
-    // }
-
-    // for (int i = 0; i < checks.length() - 1; i++) {
-    //     filter += checks[i] + " OR ";
-    // }
-    // if (!checks.isEmpty())
-    //     filter += checks.constLast();
-
-    // tableModel->setTable("firmen");
-    // tableModel->setFilter(filter);
-    // tableModel->select();
-    // ui->tv_table->setModel(tableModel);
 }
 
 void Tables::on_pb_download_clicked() {
@@ -295,12 +197,6 @@ void Tables::on_cb_editMode_stateChanged() {
         ui->l_dialogTitle->setText("Tabellen bearbeiten");
         ui->tv_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
         ui->pb_save->setVisible(true);
-        ui->le_search->setEnabled(false);
-        ui->cb_filter->setEnabled(false);
-        ui->cb_filter_gold->setEnabled(false);
-        ui->cb_filter_silver->setEnabled(false);
-        ui->cb_filter_bronze->setEnabled(false);
-        ui->cb_filter_supporter->setEnabled(false);
         ui->pb_save->setEnabled(false);
         connect(ui->tv_table->model(), SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(unsaved_changes()));
     } else {
@@ -308,12 +204,6 @@ void Tables::on_cb_editMode_stateChanged() {
         ui->l_dialogTitle->setText("Tabellen ansehen");
         ui->tv_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ui->pb_save->setVisible(false);
-        ui->le_search->setEnabled(true);
-        ui->cb_filter->setEnabled(true);
-        ui->cb_filter_gold->setEnabled(true);
-        ui->cb_filter_silver->setEnabled(true);
-        ui->cb_filter_bronze->setEnabled(true);
-        ui->cb_filter_supporter->setEnabled(true);
     }
 }
 
