@@ -13,5 +13,6 @@
         <file>img/icon_arrow_down.png</file>
         <file>img/icon_add.png</file>
         <file>img/icon_remove.png</file>
+        <file>img/icon_download.png</file>
     </qresource>
 </RCC>

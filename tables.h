@@ -21,13 +21,9 @@ public:
 private slots:
     void on_cb_table_currentIndexChanged();
 
-    void on_pb_download_clicked();
-
     void on_cb_editMode_stateChanged();
 
     void on_pb_save_clicked();
-
-    void selection_changed();
 
     void unsaved_changes();
 
@@ -39,8 +35,6 @@ private:
     QSqlTableModel *tableModel;
 
     QString selectedTable;
-
-    int download_mode;
 
     QMessageBox::StandardButton unsaved_changes_notify();
 };

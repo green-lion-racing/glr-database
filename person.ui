@@ -206,6 +206,10 @@
   <tabstop>le_surname</tabstop>
   <tabstop>le_position</tabstop>
   <tabstop>le_phone</tabstop>
+  <tabstop>le_email</tabstop>
+  <tabstop>cb_you</tabstop>
+  <tabstop>le_language</tabstop>
+  <tabstop>cb_active</tabstop>
   <tabstop>pb_okay</tabstop>
  </tabstops>
  <resources/>

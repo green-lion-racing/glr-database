@@ -33,13 +33,6 @@
      <widget class="QTableView" name="tv_table"/>
     </item>
     <item>
-     <widget class="QPushButton" name="pb_download">
-      <property name="text">
-       <string>Ausgewähltes herunterladen</string>
-      </property>
-     </widget>
-    </item>
-    <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="leftMargin">
        <number>0</number>
@@ -75,7 +68,6 @@
  <tabstops>
   <tabstop>cb_table</tabstop>
   <tabstop>tv_table</tabstop>
-  <tabstop>pb_download</tabstop>
   <tabstop>pb_save</tabstop>
   <tabstop>cb_editMode</tabstop>
  </tabstops>

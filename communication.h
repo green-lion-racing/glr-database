@@ -29,6 +29,8 @@ private slots:
 
     void on_tb_remove_clicked();
 
+    void on_tb_download_clicked();
+
     void selectionChanged();
 
 private:

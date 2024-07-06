@@ -168,6 +168,9 @@
          </property>
          <item>
           <widget class="QToolButton" name="tb_add">
+           <property name="toolTip">
+            <string>Verlaufsangabe hinzufügen</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -179,6 +182,9 @@
          </item>
          <item>
           <widget class="QToolButton" name="tb_remove">
+           <property name="toolTip">
+            <string>Verlaufsangabe entfernen</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -225,11 +231,51 @@
      <item row="13" column="1">
       <widget class="QLineEdit" name="le_until"/>
      </item>
+     <item row="14" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Position</string>
+       </property>
+      </widget>
+     </item>
      <item row="14" column="1">
       <widget class="QLineEdit" name="le_position"/>
      </item>
      <item row="15" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="verticalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_signature_export">
+           <property name="text">
+            <string>Signatur exportieren</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
        <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
@@ -254,13 +300,6 @@
         </widget>
        </item>
       </layout>
-     </item>
-     <item row="14" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Position</string>
-       </property>
-      </widget>
      </item>
      <item row="16" column="1">
       <spacer name="verticalSpacer_2">
@@ -297,6 +336,7 @@
   <tabstop>le_since</tabstop>
   <tabstop>le_until</tabstop>
   <tabstop>le_position</tabstop>
+  <tabstop>pb_signature_export</tabstop>
   <tabstop>pb_okay</tabstop>
  </tabstops>
  <resources>

@@ -20,6 +20,8 @@ public:
 private slots:
     void on_pb_okay_clicked();
 
+    void on_pb_signature_export_clicked();
+
     void on_cb_member_currentIndexChanged();
 
     void on_tb_add_clicked();

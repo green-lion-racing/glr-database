@@ -62,6 +62,10 @@ Communication::Communication(QWidget *parent, bool editMode) :
     ui->le_when->setText(ui->cw_calender->selectedDate().toString("yyyy-MM-dd"));
 
     ui->tb_remove->setDisabled(true);
+    ui->tb_download->setDisabled(true);
+    ui->lw_files->setDisabled(true);
+
+    ui->lw_files->setSelectionMode(QAbstractItemView::ExtendedSelection);
 }
 
 Communication::~Communication()
@@ -83,7 +87,9 @@ void Communication::on_cb_communication_currentIndexChanged() {
     ui->le_what->setDisabled(false);
     ui->pb_okay->setDisabled(false);
     ui->tb_add->setDisabled(false);
+
     ui->tb_remove->setDisabled(true);
+    ui->tb_download->setDisabled(true);
 
     QSqlQuery selectCommunicationFiles;
     selectCommunicationFiles.prepare("SELECT id, kommunikationen_id, dateiname, datei FROM kommunikationen_dateien WHERE kommunikationen_id = :communicationID");
@@ -103,6 +109,12 @@ void Communication::on_cb_communication_currentIndexChanged() {
 
         item->setData(Qt::UserRole, list);
         ui->lw_files->addItem(item);
+    }
+
+    if (ui->lw_files->count() > 0) {
+        ui->lw_files->setDisabled(false);
+    } else {
+        ui->lw_files->setDisabled(true);
     }
 
     QObject::connect(ui->lw_files, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
@@ -187,8 +199,8 @@ void Communication::on_tb_add_clicked() {
     QFileInfo fileInfo(fileName);
     QString fileNameWithoutPath = date + "-" + fileInfo.fileName();
 
+    QSqlQuery insertCommunicationFileQuery;
     if (editMode) {
-        QSqlQuery insertCommunicationFileQuery;
         insertCommunicationFileQuery.prepare("INSERT INTO kommunikationen_dateien(kommunikationen_id, dateiname, datei) VALUES (:communicationID, :fileName, :fileContent)");
         insertCommunicationFileQuery.bindValue(":communicationID", communicationID);
         insertCommunicationFileQuery.bindValue(":fileName", fileNameWithoutPath);
@@ -198,9 +210,9 @@ void Communication::on_tb_add_clicked() {
 
     QListWidgetItem *item = new QListWidgetItem(fileNameWithoutPath);
 
-    int file_id = communicationID;
-    if (!editMode) {
-        file_id = 0;
+    int file_id = 0;
+    if (editMode) {
+        file_id = insertCommunicationFileQuery.lastInsertId().toInt();
     }
     QByteArray file_content = NULL;
     if (!editMode) {
@@ -213,6 +225,7 @@ void Communication::on_tb_add_clicked() {
 
     item->setData(Qt::UserRole, list);
     ui->lw_files->addItem(item);
+    ui->lw_files->setDisabled(false);
 
     file.close();
 }
@@ -237,14 +250,64 @@ void Communication::on_tb_remove_clicked() {
         ui->lw_files->takeItem(ui->lw_files->row(ui->lw_files->currentItem()));
         ui->lw_files->clearSelection();
         ui->tb_remove->setDisabled(true);
+        if (ui->lw_files->count() == 0) {
+            ui->lw_files->setDisabled(true);
+        }
+        ui->tb_download->setDisabled(true);
+    }
+}
+
+void Communication::on_tb_download_clicked() {
+    QString fileName;
+    QByteArray fileContent;
+    QString filePath;
+    QFile file;
+    QSqlQuery selectFileQuery;
+
+    QList<QListWidgetItem *> items = ui->lw_files->selectedItems();
+
+    if (items.length() > 1) {
+        filePath = QFileDialog::getExistingDirectory(this, tr("Ordner benutzen"));
+        if (filePath == "")
+            return;
+    }
+
+    for (int i = 0; i < items.length(); i++) {
+        if (editMode) {
+            qDebug() << items[i]->data(Qt::UserRole).toList()[0];
+            selectFileQuery.prepare("SELECT id, kommunikationen_id, dateiname, datei FROM kommunikationen_dateien WHERE id = :id");
+            selectFileQuery.bindValue(":id", items[i]->data(Qt::UserRole).toList()[0].toInt());
+            selectFileQuery.exec();
+            selectFileQuery.next();
+            fileName = selectFileQuery.value(2).toString();
+            fileContent = selectFileQuery.value(3).toByteArray();
+        } else {
+            fileName = items[i]->text();
+            fileContent = items[i]->data(Qt::UserRole).toList()[1].toByteArray();
+        }
+
+        if (items.length() > 1) {
+            file.setFileName(filePath + "/" + fileName);
+        } else {
+            fileName = QFileDialog::getSaveFileName(this, tr("Kommunikation speichern"), fileName);
+            if (fileName == "")
+                return;
+            file.setFileName(fileName);
+        }
+
+        file.open(QIODevice::ReadWrite | QIODevice::Truncate);
+        file.write(fileContent);
+        file.close();
     }
 }
 
 void Communication::selectionChanged() {
     if (ui->lw_files->currentItem() != NULL) {
         ui->tb_remove->setDisabled(false);
+        ui->tb_download->setDisabled(false);
     } else {
         ui->tb_remove->setDisabled(true);
+        ui->tb_download->setDisabled(true);
     }
 }
 

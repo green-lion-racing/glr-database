@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>495</width>
-    <height>386</height>
+    <height>392</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -104,6 +104,9 @@
          </property>
          <item>
           <widget class="QToolButton" name="tb_add">
+           <property name="toolTip">
+            <string>Verlaufsangabe hinzufügen.</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -115,6 +118,9 @@
          </item>
          <item>
           <widget class="QToolButton" name="tb_remove">
+           <property name="toolTip">
+            <string>Verlaufsangabe entfernen.</string>
+           </property>
            <property name="text">
             <string/>
            </property>

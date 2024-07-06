@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>495</width>
-    <height>465</height>
+    <height>466</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -121,6 +121,9 @@
          </property>
          <item>
           <widget class="QToolButton" name="tb_add">
+           <property name="toolTip">
+            <string>Kommunikation hinzufügen</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -150,6 +153,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="toolTip">
+            <string>Ausgewählte Kommunikationen löschen</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -162,6 +168,20 @@
              <width>16</width>
              <height>16</height>
             </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="tb_download">
+           <property name="toolTip">
+            <string>Ausgewählte Kommunikationen speichern</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/img/icon_download.png</normaloff>:/img/icon_download.png</iconset>
            </property>
           </widget>
          </item>
@@ -218,7 +238,9 @@
   <tabstop>cw_calender</tabstop>
   <tabstop>le_what</tabstop>
   <tabstop>lw_files</tabstop>
+  <tabstop>tb_add</tabstop>
   <tabstop>tb_remove</tabstop>
+  <tabstop>tb_download</tabstop>
   <tabstop>pb_okay</tabstop>
  </tabstops>
  <resources>
