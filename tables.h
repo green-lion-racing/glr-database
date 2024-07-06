@@ -32,8 +32,6 @@ private:
 
     void closeEvent(QCloseEvent *event);
 
-    QSqlTableModel *tableModel;
-
     QString selectedTable;
 
     QMessageBox::StandardButton unsaved_changes_notify();

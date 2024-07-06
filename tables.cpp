@@ -17,10 +17,10 @@ Tables::Tables(QWidget *parent, bool editMode) :
     selectTable.prepare("SELECT name FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master)WHERE type='table' ORDER BY name");
     selectTable.exec();
 
-    QSqlQueryModel * modalComboBox = new QSqlQueryModel();
-    modalComboBox->setQuery(selectTable);
+    QSqlQueryModel * modelComboBox = new QSqlQueryModel();
+    modelComboBox->setQuery(selectTable);
 
-    ui->cb_table->setModel(modalComboBox);
+    ui->cb_table->setModel(modelComboBox);
 
     ui->tv_table->verticalHeader()->setVisible(false);
     ui->tv_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -43,7 +43,8 @@ Tables::~Tables()
 }
 
 void Tables::closeEvent(QCloseEvent *event) {
-    if (tableModel->isDirty()) {
+    QSqlTableModel* model = dynamic_cast<QSqlTableModel*>(ui->tv_table->model());
+    if (model != nullptr && model->isDirty()) {
         QMessageBox::StandardButton box = unsaved_changes_notify();
 
         if (box != QMessageBox::Yes) {
@@ -55,20 +56,20 @@ void Tables::closeEvent(QCloseEvent *event) {
     }
 }
 
-void Tables::on_cb_table_currentIndexChanged()
-{
-    if (tableModel != NULL && tableModel->isDirty()) {
-        if (ui->cb_table->currentText() == tableModel->tableName())
+void Tables::on_cb_table_currentIndexChanged() {
+    QSqlTableModel* model = dynamic_cast<QSqlTableModel*>(ui->tv_table->model());
+    if (model != nullptr && model->isDirty()) {
+        if (ui->cb_table->currentText() == model->tableName())
             return;
         QMessageBox::StandardButton box = unsaved_changes_notify();
         if (box != QMessageBox::Yes) {
-            ui->cb_table->setCurrentText(tableModel->tableName());
+            ui->cb_table->setCurrentText(model->tableName());
             return;
         }
     }
 
     selectedTable = ui->cb_table->currentText();
-    tableModel = new QSqlTableModel();
+    QSqlTableModel* tableModel = new QSqlTableModel();
     tableModel->setTable(selectedTable);
 
     // hiding files because it creates massive lags
@@ -84,6 +85,8 @@ void Tables::on_cb_table_currentIndexChanged()
     tableModel->select();
     tableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
     ui->tv_table->setModel(tableModel);
+
+    connect(ui->tv_table->model(), SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(unsaved_changes()));
 }
 
 void Tables::on_cb_editMode_stateChanged() {
@@ -93,7 +96,6 @@ void Tables::on_cb_editMode_stateChanged() {
         ui->tv_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
         ui->pb_save->setVisible(true);
         ui->pb_save->setEnabled(false);
-        connect(ui->tv_table->model(), SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(unsaved_changes()));
     } else {
         QWidget::setWindowTitle("GLR Datenbank - Einträge ansehen");
         ui->l_dialogTitle->setText("Tabellen ansehen");
@@ -117,9 +119,10 @@ QMessageBox::StandardButton Tables::unsaved_changes_notify() {
 }
 
 void Tables::on_pb_save_clicked() {
-    bool status = tableModel->submitAll();
+    QSqlTableModel* model = dynamic_cast<QSqlTableModel*>(ui->tv_table->model());
+    bool status = model->submitAll();
     if (!status) {
-        QString lastError = tableModel->lastError().text();
+        QString lastError = model->lastError().text();
 
         Error errorWindow;
         errorWindow.setText(lastError);

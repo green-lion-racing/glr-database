@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 }
 
 // TODOs
-// check on edit/insert if values valid/not null
+// check on edit/insert if values valid/not null, unsaved changes
 // add sql exception catch
 // add password/cypher mode, changing, adding, removing
 // Use QStyle instead of Qt Style Sheets https://www.kdab.com/say-no-to-qt-style-sheets/
