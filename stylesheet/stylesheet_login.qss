@@ -1,0 +1,68 @@
+QWidget #centralwidget_main_menu {
+    background-color: #043F53;
+}
+
+QMenuBar {
+    color: white;
+    background-color: #043F53;
+}
+
+QMenuBar::item {
+    margin: 3px;
+    padding: 1px 4px;
+    border-radius: 4px;
+}
+
+QMenuBar::item:selected { /* when selected using mouse or keyboard */
+    background-color: #66d104;
+}
+
+QMenuBar::item:pressed {
+    background: #66d104;
+}
+
+QStatusBar {
+    background-color: #043F53;
+}
+
+#l_title {
+    font: 40px;
+    color: white;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+#le_password {
+    font: 20px;
+    color: black;
+    background-color: white;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#l_error {
+    color: #FF0000;
+    font: 20px;
+    margin-top: 20px;
+}
+
+/* Parity with stylesheet.qss
+ * Used in about dialog */
+
+QDialog {
+    background-color: #E5E5E5;
+}
+
+#label_1, #label_2, #label_3, #label_4 {
+    font: 18px;
+    background-color: #E5E5E5;
+}
+
+#l_dialogTitle {
+    font: 25px;
+    background-color: #E5E5E5;
+    font-weight: bold;
+}

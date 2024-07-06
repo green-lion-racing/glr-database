@@ -79,6 +79,8 @@ void Tables::on_cb_table_currentIndexChanged()
         ui->tv_table->setColumnHidden(3, false);
     }
 
+    ui->pb_save->setEnabled(false);
+
     tableModel->select();
     tableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
     ui->tv_table->setModel(tableModel);

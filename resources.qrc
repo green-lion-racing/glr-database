@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
+        <file>stylesheet/stylesheet_login.qss</file>
         <file>stylesheet/stylesheet.qss</file>
-        <file>stylesheet/stylesheet_main.qss</file>
         <file>img/icon_person.png</file>
         <file>img/icon_company.png</file>
         <file>img/icon_edit.png</file>

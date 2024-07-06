@@ -1,10 +1,5 @@
-QWidget #centralwidget_main_menu {
-    background-color: #043F53;
-}
-
 QMenuBar {
-    color: white;
-    background-color: #043F53;
+    background-color: #f0f0f0;
 }
 
 QMenuBar::item {
@@ -21,23 +16,48 @@ QMenuBar::item:pressed {
     background: #66d104;
 }
 
-QStatusBar {
-    background-color: #043F53;
+#sw_main {
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
-QDialog {
-    background-color: #E5E5E5;
+QDialog, QWidget #centralwidget_modify_tables, QWidget #centralwidget_display_tables {
+    background: #E5E5E5;
 }
 
-QPushButton {
+.QLineEdit, QComboBox {
+    font: 18px;
+    border-radius: 8px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+QTextEdit {
+    font: 18px;
+    border-radius: 8px;
     border: 0px;
+    background-color: palette(base);
+}
+
+QComboBox::drop-down {
+    width: 15px;
     background-color: #66D104;
-    border-radius: 10px;
-    padding: 10px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+QComboBox::down-arrow {
+    image: url(:img/icon_arrow_down.png);
+    width: 12px;
+    height: 12px;
+}
+
+QComboBox::down-arrow:on {
+    top: 1px;
 }
 
 /* Not the nicest... */
-#l_dialogTitle, #l_fileName, #label_1, #label_2, #label_3, #label_4, #label_5, #label_6, #label_7, #label_8, #label_9, #label_10, #label_11, #label_12 {
+#l_dialogTitle, #l_fileName, #label_1, #label_2, #label_3, #label_4, #label_5, #label_6, #label_7, #label_8, #label_9, #label_10, #label_11, #label_12, #label_13, #label_14, #label_15, #label_16 {
     background-color: #E5E5E5;
     font: 18px;
 }
@@ -47,26 +67,29 @@ QPushButton {
     font-weight: bold;
 }
 
-#l_title {
-    font: 40px;
-    color: white;
-    margin-top: 35px;
-    margin-bottom: 35px;
-}
-
-#le_password {
-    font: 20px;
-    color: black;
-    background-color: white;
+QPushButton {
+    border: 0px;
+    background-color: #66D104;
     border-radius: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 10px;
+    min-width: 70px;
 }
 
-#l_error {
-    color: #FF0000;
-    font: 20px;
+#pb_okay {
+    padding: 6px;
+    font: 18px;
     margin-top: 20px;
+}
+
+/* Not nice, but it gets the job done */
+#tb_modifyTables, #tb_displayTables, #tb_modifyCompany, #tb_createCompany, #tb_modifyPerson, #tb_createPerson, #tb_modifyCommunication, #tb_createCommunication, #tb_modifyActivity, #tb_createActivity, #tb_modifyMember, #tb_createMember {
+    border: 0px;
+    background-color: #E5E5E5;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+QCheckBox {
+    background: #E5E5E5;
 }

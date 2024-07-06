@@ -208,7 +208,7 @@ void MainWindow::openDatabase(bool first_try) {
     ui->actionCloseDatabase->setEnabled(true);
 
     ui->sw_main->setCurrentIndex(0);
-    QFile file(":stylesheet/stylesheet_main.qss");
+    QFile file(":stylesheet/stylesheet.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
     file.close();
@@ -236,7 +236,7 @@ void MainWindow::on_actionOpenDatabase_triggered()
     ui->sw_main->setCurrentIndex(1);
     ui->actionCloseDatabase->setEnabled(false);
 
-    QFile file(":stylesheet/stylesheet.qss");
+    QFile file(":stylesheet/stylesheet_login.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
     file.close();
@@ -257,7 +257,7 @@ void MainWindow::on_actionCloseDatabase_triggered() {
 
     ui->actionCloseDatabase->setEnabled(false);
 
-    QFile file(":stylesheet/stylesheet.qss");
+    QFile file(":stylesheet/stylesheet_login.qss");
     file.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(file.readAll());
     file.close();
