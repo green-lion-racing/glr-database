@@ -207,7 +207,7 @@ void Member::on_pb_signature_export_clicked() {
     if (editMode) {
         QSqlQuery selectMemberChangesQuery;
         selectMemberChangesQuery.prepare("SELECT id, mitglieder_id, position FROM mitglieder_aenderungen WHERE id = :id");
-        selectMemberChangesQuery.bindValue(":id", ui->lw_changes->currentItem()->data(Qt::UserRole).toInt());
+        selectMemberChangesQuery.bindValue(":id", ui->lw_changes->item(ui->lw_changes->count() - 1)->data(Qt::UserRole).toInt());
         selectMemberChangesQuery.exec();
         selectMemberChangesQuery.next();
 
