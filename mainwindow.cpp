@@ -125,6 +125,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -407,3 +408,5 @@ void MainWindow::on_tb_modifyTables_clicked()
         tablesWindow->raise();
     }
 }
+
+
