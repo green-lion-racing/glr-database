@@ -60,8 +60,6 @@ private slots:
 
     void on_tb_displayTables_clicked();
 
-    void on_getSizeTest_clicked();
-
 private:
     Ui::MainWindow *ui;
 
