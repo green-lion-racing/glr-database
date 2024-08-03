@@ -289,7 +289,7 @@ public:
         page_logIn->setObjectName("page_logIn");
         verticalLayout_4 = new QVBoxLayout(page_logIn);
         verticalLayout_4->setObjectName("verticalLayout_4");
-        verticalSpacer = new QSpacerItem(20, 223, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+        verticalSpacer = new QSpacerItem(20, 223, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
 
         verticalLayout_4->addItem(verticalSpacer);
 
@@ -390,7 +390,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        sw_main->setCurrentIndex(0);
+        sw_main->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
