@@ -10,3 +10,6 @@
 # Qt Creator backups
 *.autosave
 glr-database.pro.user
+
+# Ignore build folder
+build/
