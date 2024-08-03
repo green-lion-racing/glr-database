@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     MainWindow window;
     window.show();
     window.setAttribute(Qt::WA_QuitOnClose, false);
+
     return application.exec();
 }
 

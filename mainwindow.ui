@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1065</width>
-    <height>635</height>
+    <width>1500</width>
+    <height>1000</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1120</width>
+    <height>650</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -21,14 +27,14 @@
        <number>1</number>
       </property>
       <widget class="QWidget" name="page_main">
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="2,5,2">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="spacing">
            <number>6</number>
           </property>
           <property name="sizeConstraint">
-           <enum>QLayout::SetDefaultConstraint</enum>
+           <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
           </property>
           <item>
            <widget class="QLabel" name="l_TilteTeamManagement">
@@ -46,7 +52,7 @@
           <item>
            <widget class="QToolButton" name="tb_createMember">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -55,14 +61,14 @@
              <string>Mitglied hinzufügen</string>
             </property>
             <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
+             <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QToolButton" name="tb_modifyMember">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -71,22 +77,9 @@
              <string>Mitglied verwalten</string>
             </property>
             <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
+             <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
             </property>
            </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </item>
@@ -106,11 +99,11 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,1">
             <item>
              <widget class="QToolButton" name="tb_createCompany">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -119,14 +112,14 @@
                <string>Unternehmen hinzufügen</string>
               </property>
               <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
+               <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QToolButton" name="tb_modifyCompany">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -135,18 +128,18 @@
                <string>Unternehmen verwalten</string>
               </property>
               <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
+               <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,1">
             <item>
              <widget class="QToolButton" name="tb_createPerson">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -161,7 +154,7 @@
                </size>
               </property>
               <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
+               <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
               </property>
               <property name="autoRaise">
                <bool>false</bool>
@@ -171,7 +164,7 @@
             <item>
              <widget class="QToolButton" name="tb_modifyPerson">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -186,7 +179,7 @@
                </size>
               </property>
               <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
+               <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
               </property>
               <property name="autoRaise">
                <bool>false</bool>
@@ -196,11 +189,11 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,1">
             <item>
              <widget class="QToolButton" name="tb_createCommunication">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -209,14 +202,14 @@
                <string>Kommunikation hinzufügen</string>
               </property>
               <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
+               <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QToolButton" name="tb_modifyCommunication">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -225,18 +218,18 @@
                <string>Kommunikation verwalten</string>
               </property>
               <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
+               <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,1">
             <item>
              <widget class="QToolButton" name="tb_createActivity">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -245,14 +238,14 @@
                <string>Leistung hinzufügen</string>
               </property>
               <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
+               <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QToolButton" name="tb_modifyActivity">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -261,24 +254,11 @@
                <string>Leistung verwalten</string>
               </property>
               <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
+               <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>
            </layout>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </item>
@@ -300,7 +280,7 @@
           <item>
            <widget class="QToolButton" name="tb_displayTables">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -309,14 +289,14 @@
              <string>Tabellen ansehen</string>
             </property>
             <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
+             <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QToolButton" name="tb_modifyTables">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -325,22 +305,9 @@
              <string>Tabellen bearbeiten</string>
             </property>
             <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
+             <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
             </property>
            </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </item>
@@ -352,6 +319,9 @@
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
+
+
+
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -460,6 +430,9 @@
          <spacer name="verticalSpacer_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
+
+
+
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -480,7 +453,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1065</width>
+     <width>1500</width>
      <height>21</height>
     </rect>
    </property>
