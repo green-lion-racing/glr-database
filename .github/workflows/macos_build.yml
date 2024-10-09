@@ -1,5 +1,5 @@
 # Stolen from https://github.com/pbek/QOwnNotes/blob/main/.github/workflows/build-release-qt6.yml
-name: macOS Build
+name: MacOS Build
 
 on:
   workflow_dispatch:
@@ -255,19 +255,20 @@ jobs:
           submodules: recursive
 
       # https://download.qt.io/online/qtsdkrepository/mac_x64/desktop/
-      #- name: 'Cache Qt'
-      #  id: cache-qt
-      #  uses: actions/cache@v4
-      #  with:
-      #    path: Qt
-      #    key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
+      - name: '⚙Cache Qt'
+        id: cache-qt
+        uses: actions/cache@v4
+        with:
+          path: Qt
+          key: ${{runner.os}}-qtcachedir-${{env.QT_VERSION}}
 
-      # cache: ${{steps.cache-qt.outputs.cache-hit}}
       - name: 'Install Qt'
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{env.QT_VERSION}}
           modules: ${{env.QT_MODULES}}
+          aqtversion: '==2.0.0'
+          cache: ${{steps.cache-qt.outputs.cache-hit}}
 
       # - name: 'Set Env'
         # shell: bash
@@ -280,21 +281,15 @@ jobs:
         # run: |
           # echo "VERSION=${VERSION}"
           # printenv
-      
-      # bug in build, workaround: https://stackoverflow.com/questions/77136519/qmake-failing-with-sdk-14-ventura-13-5-2
-      # ${{env.QMAKE}} -early QMAKE_DEFAULT_LIBDIRS=$(xcrun -show-sdk-path)/usr/lib
-      # patch https://raw.githubusercontent.com/qt/qtbase/cdf64b0e47115cc473e1afd1472b4b09e130b2a5/mkspecs/features/toolchain.prf
+
       - name: 'Compile application'
         run: |
           brew install libiodbc
           sudo mkdir -p /Applications/Postgres.app/Contents/Versions/14/lib/
           sudo ln -s /usr/local/opt/postgresql@14/lib/postgresql@14/libpq.5.dylib /Applications/Postgres.app/Contents/Versions/14/lib/libpq.5.dylib
-          rm ${Qt6_DIR}/mkspecs/features/toolchain.prf && (cd ${Qt6_DIR}/mkspecs/features/ && curl -O https://raw.githubusercontent.com/qt/qtbase/cdf64b0e47115cc473e1afd1472b4b09e130b2a5/mkspecs/features/toolchain.prf)
-          rm ${Qt6_DIR}/plugins/sqldrivers/libqsqlodbc.dylib
-          rm ${Qt6_DIR}/plugins/sqldrivers/libqsqlpsql.dylib
           echo "#define RELEASE \"GitHub Actions\"" > release.h
           lrelease glr-database.pro
-          ${{env.QMAKE}} 
+          ${{env.QMAKE}}
           make -j ${{env.CORES}}
           ${Qt6_DIR}/bin/macdeployqt ./glr-database.app -dmg
 
